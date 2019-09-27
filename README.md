@@ -3,6 +3,51 @@ PSPLINE -- a collection of Spline and Hermite interpolation tools for 1D, 2D, an
 
 The spline routines give full control over boundary conditions -- the user may specify "periodic", "not a knot", 1st derivative match, 2nd derivative match, or divided difference based boundary conditions on either end of each grid dimension. Hermite routines take as input the function value and derivatives at each grid point, giving back a representation of the function between grid points. Routines are provided for creating Hermite datasets, with appropriate boundary conditions applied. The 1D spline and Hermite routines are based on standard methods; the 2D and 3D spline or Hermite interpolation functions are constructed from 1D spline or Hermite interpolation functions in a straightforward manner. The splines are continuously twice differentiable in all directions across all grid cell boundaries and over the entire grid domain; Hermite functions are continuously once differentiable in all directions over the entire grid domain. For a representation of dimensionality N, an N-dimensional spline or Hermite function requires 2\*\*N\*(nx1\*nx2\*...\*nxN) memory words. There is also an "explicit spline" representation requiring 4\*\*N\*(nx1\*nx2\*...\*nxN) memory words: much more memory but somewhat faster computationally. Spline and Hermite interpolation functions are often much faster to evaluate than other representations using e.g. Fourier series or otherwise involving transcendental functions.
 
-This version of PSPLINE includes:
-- EZspline, a Fortran-90 interface to the spline and Hermite routines
-- CzSpline, a c-callable interface to the EZspline routines
+This version of PSPLINE includes EZspline, a Fortran-90 interface to the spline and Hermite routines. Currently working on C-bindings for EZspline which will replace CZspline (a c-callable interface to the EZspline routines).
+
+
+CONTACT:  transp_support@pppl.gov
+
+
+
+1. CONTENTS:
+
+Makefile:      GNU make should be used
+Makefile.def   Definitions for the Makefile
+
+Source directories for:
+   pspline     The original pspline F77 routines, reformatted into Fortran 90
+   ezspline    A Fortran-90 interface to the spline and Hermite routines
+
+Test programs are included in the source directories.
+
+
+2. CONFIGURATION
+
+See the sample configuration used at PPPL: pppl-bashrc
+
+If you want to use the NETCDF I/O capability with EZspline then you must have the EZCDF library installed. It is also on github: https://github.com/transp/ezcdf. See the PPPL configuration file for how to include EZCDF with PSPLINE.
+
+
+3. BUILDING INSTRUCTIONS:
+
+make             -- will build libpspline.a and the test programs
+make debug       -- will build a debug version of libpspline.a
+make shared      -- will build a shared library, libpspline.so
+make clean       -- will remove the compiled objects and modules
+make clobber     -- will run clean and remove the libs and test programs
+
+The Makefile.def is set-up for compiling with the GNU, Intel, and Portland group compilers.
+
+
+4. INSTALLATION:
+
+Installation will be put in a location specified by the PREFIX environment variable. The directory './build/' will be used if not specified. Installation done with:
+
+make install     -- will install the code in $PREFIX
+make uninstall   -- to delete the installation
+
+You can specify the PREFIX with the make command:
+
+make PREFIX=/path/to/location install
+make PREFIX=/path/to/location uninstall

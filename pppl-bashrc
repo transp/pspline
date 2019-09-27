@@ -1,0 +1,30 @@
+module purge
+module load git/2.21.0
+
+# Specify compiler (GCC, ICC, PGC):
+export COMPILER=ICC
+
+if [ $COMPILER = 'ICC' ]; then
+    module load intel/2019.u3
+elif [ $COMPILER = 'PGC' ]; then
+    module load pgf/19.1
+else
+    module load gcc/9.1.0
+fi
+
+module load szip/2.1.1
+module load curl/7.59.0
+module load hdf/4.2.14
+module load hdf5-serial/1.10.5
+module load netcdf-c/4.6.3
+module load netcdf-fortran/4.4.5
+export NETCDFLIB=$NETCDF_FORTRAN_HOME
+export NETCDFINC=$NETCDF_FORTRAN_HOME
+
+# You need to set this if you require NetCDF support:
+export EZCDF_HOME=
+if [ ! -z "$EZCDF_HOME" ]; then
+   export EZCDF_FLAGS=" -D_EZCDF"
+   export L_EZCDF=" -L$EZCDF_HOME/lib -lezcdf -L$NETCDFLIB/lib -lnetcdff"
+   export I_EZCDF=" -I$EZCDF_HOME/include -I$NETCDFINC/include"
+fi

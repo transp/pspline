@@ -1,0 +1,34 @@
+ifeq ($(COMPILER),ICC)
+     FFLAGS = -cpp -O2 -stand f08 -real-size 64 -auto-scalar $(EZCDF_FLAGS)
+     LDFLAGS = -cpp
+     DFFLAGS = -g -Wall -traceback
+     SFFLAGS = -fpic
+     SLDFLAGS = -shared
+     CXXFLAGS = -O2 -std=c++11
+     CXXLIBS = -lstdc++ -lgfortran
+     CXXLDFLAGS =
+
+else ifeq ($(COMPILER),PGC)
+     FFLAGS = -cpp -fast -r8 $(EZCDF_FLAGS)
+     LDFLAGS = -cpp -D_PGC
+     DFFLAGS = -g -traceback -Mbounds
+     SFFLAGS = -fpic
+     SLDFLAGS = -shared
+     CXXFLAGS = -O2 -mp -std=c++11
+     CXXLIBS = -lstdc++ -lgfortran
+     CXXLDFLAGS =
+
+else
+     COMPILER = gfortran
+     FFLAGS = -cpp -dM -O2 -std=f2008 -fdefault-real-8 -ffpe-trap=invalid,zero,overflow $(EZCDF_FLAGS)
+     LDFLAGS = -cpp
+     DFFLAGS = -Og -Wall
+     SFFLAGS = -fpic
+     SLDFLAGS = -shared
+     CXXFLAGS = -O2 -std=c++11
+     CXXLIBS = -lstdc++ -lgfortran
+     CXXLDFLAGS = 
+endif
+
+FLIBS = $(L_EZCDF)
+FINCL = $(I_EZCDF)
