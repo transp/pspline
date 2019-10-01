@@ -38,7 +38,8 @@ subroutine spgrid(x_newgrid,nx_new,f_new,nx,xpkg,fspl,iwarn,ier)
   !
   integer ict(3)
   !
-  data ict/1,0,0/
+  ict = 0
+  ict(1) = 1
   !
   !--------------------------------------------
   !

@@ -39,7 +39,8 @@ subroutine gridpc1(x_newgrid,nx_new,f_new,nx,xpkg,fspl, &
   !
   integer ict(2)
   !
-  data ict/1,0/
+  ict(1) = 1
+  ict(2) = 0
   !
   !--------------------------------------------
   !

@@ -150,9 +150,9 @@ subroutine tcspline(x,inx,th,inth,ph,inph,fspl,inf4,inf5, &
   real(fp) :: z0,z1,ztol
   real(fp) :: zcur(1)
   !
-  data z0/0.0_fp/
-  data z1/1.0_fp/
-  data ztol/1.0E-3_fp/
+  z0 = 0.0_fp
+  z1 = 1.0_fp
+  ztol = 1.0E-3_fp
   !
   !---------------------------------
   !

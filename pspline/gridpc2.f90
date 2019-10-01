@@ -47,7 +47,8 @@ subroutine gridpc2( &
   real(fp) :: ytmp(nx_new)
   integer ict(4)
   !
-  data ict/1,0,0,0/
+  ict = 0
+  ict(1) = 1
   !
   !--------------------------------------------
   !

@@ -52,7 +52,8 @@ subroutine tcspgrid( &
   real(fp) :: ytmp(nx_new),ztmp(nx_new)
   integer ict(10)
   !
-  data ict/1,0,0,0,0,0,0,0,0,0/
+  ict = 0
+  ict(1) = 1
   !
   !--------------------------------------------
   !

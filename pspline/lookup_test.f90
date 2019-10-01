@@ -48,24 +48,27 @@ program lookup_test
   !
   integer ict(10)
   !
-  data ivecsize/1,10,100,1000/
+  ivecsize(1) = 1
+  ivecsize(2) = 10
+  ivecsize(3) = 100
+  ivecsize(4) = 1000
   !
-  data albl/ &
-       'pseudo-Newton       ', &
-       'binary search       ', &
-       'linear indexing fcn '/
-  data glbls/ &
-       'evenly spaced grid  ', &
-       'smooth varying grid ', &
-       'irregular grid      '/
-  data tlbls/ &
-       'modestly changing vector     ', &
-       'rapidly changing vector      '/
+  albl(1) = 'pseudo-Newton'
+  albl(2) = 'binary search'
+  albl(3) = 'linear indexing fcn'
   !
-  data ict/1,0,0,0,0,0,0,0,0,0/
+  glbls(1) = 'evenly spaced grid'
+  glbls(2) = 'smooth varying grid'
+  glbls(3) = 'irregular grid'
   !
-  data ztest1/1.0000000000D0/
-  data ztest2/1.0000000001D0/
+  tlbls(1) = 'modestly changing vector'
+  tlbls(2) = 'rapidly changing vector'
+  !
+  ict = 0
+  ict(1) = 1
+  !
+  ztest1 = 1.0_fp
+  ztest2 = 1.0000000001_fp
   !
   !---------------------------------
   !

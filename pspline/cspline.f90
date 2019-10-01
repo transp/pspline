@@ -109,8 +109,8 @@ subroutine cspline(x,nx,fspl,ibcxmin,bcxmin,ibcxmax,bcxmax, &
   !    s'''(x(nx)) equal to the 3rd derivative from the 1st|last 4 points
   !
   !---------------------------------------------------------------------
-  data half/0.5_fp/
-  data sixth/0.166666666666666667_fp/
+  half = 0.5_fp
+  sixth = 0.166666666666666667_fp
   !
   !  error checks
   !

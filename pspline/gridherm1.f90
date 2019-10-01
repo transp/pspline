@@ -37,9 +37,10 @@ subroutine gridherm1(x_newgrid,nx_new,f_new,nx,xpkg,fspl, &
   !--------------------------------------------
   !  local
   !
-  integer ict(2)
+  integer, dimension(2) :: ict
   !
-  data ict/1,0/
+  ict(1) = 1
+  ict(2) = 0
   !
   !--------------------------------------------
   !

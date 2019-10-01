@@ -135,7 +135,8 @@ subroutine mkbicubw(x,nx,y,ny,f,nf2, &
   integer iselect(10)
   integer zvalues(10)
   !
-  data iselect/-1,0,0,0,0,0,0,0,0,0/
+  iselect = 0
+  iselect(1) = -1
   !
   !-----------------------------------------------------
   !
@@ -218,7 +219,8 @@ subroutine mkbicon(fin,nf2,fwk,nx,ny,hxlast,hylast)
   integer iselect(10)
   real(fp) :: zvalues(10)
   !
-  data iselect/-1,0,0,0,0,0,0,0,0,0/
+  iselect = 0
+  iselect(1) = -1
   !
   !-----------------------------------------------------
   !

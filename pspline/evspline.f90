@@ -137,7 +137,7 @@ subroutine fvspline(ict,ivec,ivecd, &
   real(fp) :: sum
   real(fp) :: sixth
   !
-  data sixth/0.166666666666666667_fp/
+  sixth = 0.166666666666666667_fp
   !
   !---------------
   !   ...in x direction

@@ -40,8 +40,8 @@ real(fp) FUNCTION seval3(N, U, X, Y, B, C, D, deriv, deriv2)
   !
   integer I, J, K, ILIN
   real(fp) :: DX
-  DATA I/1/
-  DATA ILIN/0/
+  I = 1
+  ILIN = 0
   !
   IF ( I .GE. N ) I = 1
   IF ( U .LT. X(I) ) GO TO 10

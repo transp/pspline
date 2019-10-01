@@ -29,7 +29,7 @@ real(fp) function speval(N, U, X, Y, B, C, D)
   !
   integer I, J, K
   real(fp) :: DX
-  DATA I/1/
+  I = 1
   IF ( I .GE. N ) I = 1
   IF ( U .LT. X(I) ) GO TO 10
   IF ( U .LE. X(I+1) ) GO TO 30

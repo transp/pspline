@@ -199,7 +199,8 @@ subroutine mktricon(fin,nf2,nf3,fwk,nx,ny,nz, &
   integer iselect(10)
   real(fp) :: zvalues(10)
   !
-  data iselect/-1,0,0,0,0,0,0,0,0,0/
+  iselect = 0
+  iselect(1) = -1
   !
   !-----------------------------------------------------
   !

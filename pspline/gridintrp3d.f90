@@ -61,7 +61,8 @@ subroutine gridintrp3d( &
   real(fp) :: ztmp(nx_new)
   integer ict(10)
   !
-  data ict/1,0,0,0,0,0,0,0,0,0/
+  ict = 0
+  ict(1) = 1
   !
   !--------------------------------------------
   !

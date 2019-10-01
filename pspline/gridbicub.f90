@@ -47,7 +47,8 @@ subroutine gridbicub( &
   real(fp) :: ytmp(nx_new)
   integer ict(6)
   !
-  data ict/1,0,0,0,0,0/
+  ict = 0
+  ict(1) = 1
   !
   !--------------------------------------------
   !

@@ -100,10 +100,13 @@ subroutine pspltest1(zctrl)
   !
   integer isize(4)
   !
-  data isize/10,20,40,80/
+  isize(1) = 10
+  isize(2) = 20
+  isize(3) = 40
+  isize(4) = 80
   !
-  data pi2/6.2831853_fp/
-  data zero/0.0_fp/
+  pi2 = 6.28318530718_fp
+  zero = 0.0_fp
   !
   !  test splining of function:  f(x)=2+sin(x)
   !
@@ -164,7 +167,8 @@ subroutine dotest1(ns,x,f,fd,fspl,fspp,fherm,fs2,nt,xt,ft,xpkg, &
   !
   common/bc_ctrl/ nbc
   !
-  data ict/1,0,0/                   ! just evaluate fcn value
+  ict = 0
+  ict(1) = 1
   !
   !-------------------
   !
@@ -319,8 +323,9 @@ subroutine pspltest2(zctrl)
   real(fp) :: xtest(200),extest(200),ttest(200),stest(200),ctest(200)
   real(fp) :: zero,one
   !
-  data pi2/6.2831853_fp/
-  data zero,one/0.0_fp,1.0_fp/
+  pi2 = 6.28318530718_fp
+  zero = 0.0_fp
+  one = 1.0_fp
   !
   !---------------------------
   !
@@ -633,12 +638,14 @@ subroutine compare(slbl,x,nx,th,nth,f,fh,fl,ilinx,ilinth, &
   !  select spline fcn eval only (no derivatives)
   !
   integer isel(10)
-  data isel/1,0,0,0,0,0,0,0,0,0/
   !
   real(fp) :: fget(10)
   !
   real(fp) :: xpkg(200,1),thpkg(200,1)
   !-------------
+  !
+  isel = 0
+  isel(1) = 1
   !
   icycle=20
   !
@@ -781,8 +788,9 @@ subroutine pspltest3(zctrl)
   real(fp) :: phtest(100),sptest(100)
   real(fp) :: zero,one
   !
-  data pi2/6.2831853_fp/
-  data zero,one/0.0_fp,1.0_fp/
+  pi2 = 6.28318530718_fp
+  zero = 0.0_fp
+  one = 1.0_fp
   !
   !---------------------------
   !
@@ -868,7 +876,8 @@ subroutine dotest3(x,fx,nx,th,fth,dfth,nth,ph,fph,dfph,nph, &
   real(fp) :: zsave(20,20,20)
   real(fp) :: zvals(10)
   integer iselect(10)
-  data iselect/1,1,1,1,0,0,0,0,0,0/
+  iselect = 0
+  iselect(1:4) = 1
   !--------------
   !
   inwk=80*40*40*40
@@ -1167,11 +1176,13 @@ subroutine compare3(slbl,x,nx,th,nth,ph,nph,f,fh,flin, &
   !  select spline fcn eval only (no derivatives)
   !
   integer isel(10)
-  data isel/1,0,0,0,0,0,0,0,0,0/
   !
   real(fp) :: fget(10)
   !
   !-------------
+  !
+  isel = 0
+  isel(1) = 1
   !
   iherm=0
   if(slbl.eq.'hermite') iherm=1
