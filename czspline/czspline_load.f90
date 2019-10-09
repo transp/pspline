@@ -17,9 +17,7 @@ subroutine czspline_load1(handle, filename, ier)
   integer, intent(out) :: ier
   type(czspline1) :: self
   allocate(self % ptr)
-  write(6,*) "before ezspline_load" ; flush(6)
   call ezspline_load(self % ptr, filename, ier)
-  write(6,*) "after ezspline_load" ; flush(6)
   handle = 0
   handle = transfer(self, handle)
 end subroutine czspline_load1
