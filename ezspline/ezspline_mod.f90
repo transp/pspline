@@ -280,27 +280,27 @@ contains
     use EZspline_type
     type(EZspline1) spline_o
     EZspline_allocated1 = allocated(spline_o%fspl) &
-         & .and. allocated(spline_o%x1) .and. allocated(spline_o%x1pkg) &
-         & .and. (spline_o%nguard == 123456789) ! check that ezspline_init has been called
+         .and. allocated(spline_o%x1) .and. allocated(spline_o%x1pkg) &
+         .and. (spline_o%nguard == 123456789) ! check that ezspline_init has been called
   end function EZspline_allocated1
 
   logical function EZspline_allocated2(spline_o)
     use EZspline_type
     type(EZspline2) spline_o
     EZspline_allocated2 = allocated(spline_o%fspl) &
-         & .and. allocated(spline_o%x1) .and. allocated(spline_o%x1pkg) &
-         & .and. allocated(spline_o%x2) .and. allocated(spline_o%x2pkg) &
-         & .and. (spline_o%nguard == 123456789) ! check that ezspline_init has been called
+         .and. allocated(spline_o%x1) .and. allocated(spline_o%x1pkg) &
+         .and. allocated(spline_o%x2) .and. allocated(spline_o%x2pkg) &
+         .and. (spline_o%nguard == 123456789) ! check that ezspline_init has been called
   end function EZspline_allocated2
 
   logical function EZspline_allocated3(spline_o)
     use ezspline_type
     type(EZspline3) spline_o
     EZspline_allocated3 = allocated(spline_o%fspl) &
-         & .and. allocated(spline_o%x1) .and. allocated(spline_o%x1pkg) &
-         & .and. allocated(spline_o%x2) .and. allocated(spline_o%x2pkg) &
-         & .and. allocated(spline_o%x3) .and. allocated(spline_o%x3pkg) &
-         & .and. (spline_o%nguard == 123456789) ! check that ezspline_init has been called
+         .and. allocated(spline_o%x1) .and. allocated(spline_o%x1pkg) &
+         .and. allocated(spline_o%x2) .and. allocated(spline_o%x2pkg) &
+         .and. allocated(spline_o%x3) .and. allocated(spline_o%x3pkg) &
+         .and. (spline_o%nguard == 123456789) ! check that ezspline_init has been called
   end function EZspline_allocated3
 
   subroutine ezmake_ict1(i,ict)
@@ -932,7 +932,7 @@ module EZspline
     end subroutine EZspline_derivative3
 
     subroutine EZspline_derivative3_array(spline_o, i1, i2, i3, &
-         & k1, k2, k3, p1, p2, p3, f, ier)
+         k1, k2, k3, p1, p2, p3, f, ier)
       use EZspline_obj
       type(EZspline3) spline_o
       integer, intent(in) :: i1, i2, i3, k1, k2, k3
@@ -942,7 +942,7 @@ module EZspline
     end subroutine EZspline_derivative3_array
 
     subroutine EZspline_derivative3_cloud(spline_o, i1, i2, i3, &
-         & k, p1, p2, p3, f, ier)
+         k, p1, p2, p3, f, ier)
       use EZspline_obj
       type(EZspline3) spline_o
       integer, intent(in) :: i1, i2, i3, k
@@ -1014,8 +1014,7 @@ module EZspline
       integer, intent(out) :: ier
     end subroutine EZspline_gradient3
 
-    subroutine EZspline_gradient3_array(spline_o, k1, k2, k3, &
-         & p1, p2, p3, df, ier)
+    subroutine EZspline_gradient3_array(spline_o, k1, k2, k3, p1, p2, p3, df, ier)
       use EZspline_obj
       type(EZspline3) spline_o
       integer, intent(in) :: k1, k2, k3
@@ -1024,8 +1023,7 @@ module EZspline
       integer, intent(out) :: ier
     end subroutine EZspline_gradient3_array
 
-    subroutine EZspline_gradient3_cloud(spline_o, k, &
-         & p1, p2, p3, df, ier)
+    subroutine EZspline_gradient3_cloud(spline_o, k, p1, p2, p3, df, ier)
       use EZspline_obj
       type(EZspline3) spline_o
       integer, intent(in) :: k
@@ -1042,8 +1040,7 @@ module EZspline
       integer, intent(out) :: ier
     end subroutine EZspline_gradient2
 
-    subroutine EZspline_gradient2_array(spline_o, k1, k2, &
-         & p1, p2, df, ier)
+    subroutine EZspline_gradient2_array(spline_o, k1, k2, p1, p2, df, ier)
       use EZspline_obj
       type(EZspline2) spline_o
       integer, intent(in)  :: k1, k2
@@ -1052,8 +1049,7 @@ module EZspline
       integer, intent(out) :: ier
     end subroutine EZspline_gradient2_array
 
-    subroutine EZspline_gradient2_cloud(spline_o, k, &
-         & p1, p2, df, ier)
+    subroutine EZspline_gradient2_cloud(spline_o, k, p1, p2, df, ier)
       use EZspline_obj
       type(EZspline2) spline_o
       integer, intent(in)  :: k
@@ -1200,8 +1196,7 @@ module EZspline
     ! no more than 20 characters long-- to allow the names of the spline
     ! object elements to be appended.
     !
-    subroutine EZspline_save3(spline_o, filename, ier, &
-         spl_name,fullsave)
+    subroutine EZspline_save3(spline_o,filename,ier,spl_name,fullsave)
       use EZspline_obj
       use EZcdf
       type(EZspline3) :: spline_o
@@ -1212,8 +1207,7 @@ module EZspline
       logical, intent(in), optional :: fullsave
     end subroutine EZspline_save3
 
-    subroutine EZspline_save2(spline_o, filename, ier, &
-         spl_name,fullsave)
+    subroutine EZspline_save2(spline_o,filename,ier,spl_name,fullsave)
       use EZspline_obj
       use EZcdf
       type(EZspline2) :: spline_o
@@ -1224,8 +1218,7 @@ module EZspline
       logical, intent(in), optional :: fullsave
     end subroutine EZspline_save2
 
-    subroutine EZspline_save1(spline_o, filename, ier, &
-         spl_name,fullsave)
+    subroutine EZspline_save1(spline_o,filename,ier,spl_name,fullsave)
       use EZspline_obj
       use EZcdf
       type(EZspline1) :: spline_o
