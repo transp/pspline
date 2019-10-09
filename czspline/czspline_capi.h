@@ -514,6 +514,7 @@ extern "C" {
 #undef _CZSPL_P
 #undef _CZSPL_S
 
+#ifdef _EZCDF
 /** 
  * Save object in file
  * @param handle array of _ARRSZ integers
@@ -549,6 +550,7 @@ extern "C" {
 #define _CZSPL_S F77NAME(czspline_load3)
   void _CZSPL_S(int handle[], const char *filename, int *ier, size_t sz);
 #undef _CZSPL_S
+#endif
 
 /** 
  * Test if grid is regular, ie axes are monotonically increasing
