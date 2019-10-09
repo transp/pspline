@@ -443,67 +443,65 @@ contains
     !   maxd_lin(j) = max # of differentiations for a linear dimension
     !   maxd_cub(j) = max # of differentiations for a spline dimension
 
-    integer :: i
-
     inum=0   ! actual number of vectors to be evaluated (summed here)
 
     if(ict(1).le.(2)) then
-       if(ict(1).eq.1) then
-          call add1(0,0)
-       end if
-       if(ict(2).eq.1) then
-          call add1(1,0)
-       end if
-       if(ict(3).eq.1) then
-          call add1(0,1)
-       end if
-       if(ict(4).eq.1) then
-          call add1(2,0)
-       end if
-       if(ict(5).eq.1) then
-          call add1(0,2)
-       end if
-       if(ict(6).eq.1) then
-          call add1(1,1)
-       end if
+      if(ict(1).eq.1) then
+        call add1(0,0)
+      end if
+      if(ict(2).eq.1) then
+        call add1(1,0)
+      end if
+      if(ict(3).eq.1) then
+        call add1(0,1)
+      end if
+      if(ict(4).eq.1) then
+        call add1(2,0)
+      end if
+      if(ict(5).eq.1) then
+        call add1(0,2)
+      end if
+      if(ict(6).eq.1) then
+        call add1(1,1)
+      end if
 
     else if(ict(1).eq.3) then
-       if(ict(2).eq.1) then
-          call add1(3,0)
-       end if
-       if(ict(3).eq.1) then
-          call add1(2,1)
-       end if
-       if(ict(4).eq.1) then
-          call add1(1,2)
-       end if
-       if(ict(5).eq.1) then
-          call add1(0,3)
-       end if
+      if(ict(2).eq.1) then
+        call add1(3,0)
+      end if
+      if(ict(3).eq.1) then
+        call add1(2,1)
+      end if
+      if(ict(4).eq.1) then
+        call add1(1,2)
+      end if
+      if(ict(5).eq.1) then
+        call add1(0,3)
+      end if
 
     else if(ict(1).eq.4) then
-       if(ict(2).eq.1) then
-          call add1(3,1)
-       end if
-       if(ict(3).eq.1) then
-          call add1(2,2)
-       end if
-       if(ict(4).eq.1) then
-          call add1(1,3)
-       end if
+      if(ict(2).eq.1) then
+        call add1(3,1)
+      end if
+      if(ict(3).eq.1) then
+        call add1(2,2)
+      end if
+      if(ict(4).eq.1) then
+        call add1(1,3)
+      end if
 
     else if(ict(1).eq.5) then
-       if(ict(2).eq.1) then
-          call add1(3,2)
-       end if
-       if(ict(3).eq.1) then
-          call add1(2,3)
-       end if
+      if(ict(2).eq.1) then
+        call add1(3,2)
+      end if
+      if(ict(3).eq.1) then
+        call add1(2,3)
+      end if
 
     else if(ict(1).eq.6) then
-       if(ict(2).eq.1) then
-          call add1(3,3)
-       end if
+      if(ict(2).eq.1) then
+        call add1(3,3)
+      end if
     end if
 
   end subroutine dtrans

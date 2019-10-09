@@ -58,13 +58,13 @@ subroutine tcspgrid( &
   !--------------------------------------------
   !
   do iz=1,nz_new
-     ztmp=y_newgrid(iz)
-     do iy=1,ny_new
-        ytmp=y_newgrid(iy)
-        call tcspvec(ict,nx_new,x_newgrid,ytmp,ztmp, &
-             nx_new,f_new(1,iy,iz), &
-             nx,xpkg,ny,ypkg,nz,zpkg,fspl,inf4,inf5,iwarn,ier)
-     end do
+    ztmp=y_newgrid(iz)
+    do iy=1,ny_new
+      ytmp=y_newgrid(iy)
+      call tcspvec(ict,nx_new,x_newgrid,ytmp,ztmp, &
+           nx_new,f_new(1,iy,iz), &
+           nx,xpkg,ny,ypkg,nz,zpkg,fspl,inf4,inf5,iwarn,ier)
+    end do
   end do
   !
   return

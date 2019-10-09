@@ -36,8 +36,8 @@ subroutine bcspline(x,inx,th,inth,fspl,inf3, &
   real(fp) :: xo2,xo6,zhxn,zhth,zdiff1,zdiff2
   !============
   real(fp) :: x(inx),th(inth),fspl(4,4,inf3,inth),wk(nwk)
-  real(fp) :: bcxmin(*),bcxmax(*)      ! (inth) if used
-  real(fp) :: bcthmin(*),bcthmax(*)    ! (inx) if used
+  real(fp) :: bcxmin(inth),bcxmax(inth)
+  real(fp) :: bcthmin(inx),bcthmax(inx)
   !
   !  input:
   !    x(1...inx) -- abscissae, first dimension of data

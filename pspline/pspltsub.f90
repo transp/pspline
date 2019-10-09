@@ -1300,7 +1300,6 @@ subroutine smalltest(zctrl)
   real(fp) :: test,zbc1,zbc2
   real(fp) :: feval0(5),feval1(5),feval2(5)
   real(fp) :: feval0p(5),feval1p(5),feval2p(5)
-  integer :: ibc1,ibc2
   integer :: ier,idum,iwarn,ii,jj
 
   real(fp), dimension(5) :: xeval = &

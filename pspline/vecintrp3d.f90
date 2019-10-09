@@ -12,7 +12,6 @@ subroutine vecintrp3d(ict,ivec,xvec,yvec,zvec,ivd,fval, &
   !  input:
   !============
   implicit none
-  real(fp) :: stat
   !============
   integer ict(10)                    ! selector:
   !        ict(1)=1 for f      (don't evaluate if ict(1)=0)

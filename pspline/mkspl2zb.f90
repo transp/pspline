@@ -20,11 +20,12 @@ subroutine mkspl2zb(fun,x,nx,th,nth,fspl,nf2, &
   implicit none
   integer nth,nf2,inwk,nx,ix,ith
   !============
-  real(fp) :: fun,zdummy
+  real(fp) :: fun
   !============
   external fun                      ! passed real function(x,th)
   real(fp) :: x(nx)                        ! x coordinate array
   real(fp) :: th(nth)                      ! th coordinate array
+  real(fp) :: thdummy(nth)
   !
   real(fp) :: fspl(4,nf2,nth)              ! function data / spline coeff array
   real(fp) :: wk(inwk)                     ! workspace for bpsplinb
@@ -53,9 +54,10 @@ subroutine mkspl2zb(fun,x,nx,th,nth,fspl,nf2, &
      end do
   end do
   !
+  thdummy = 0.0_fp
   call mkbicubw(x,nx,th,nth,fspl,nf2, &
        ibcxmin,bcxmin,ibcxmax,bcxmax, &
-       -1,zdummy,-1,zdummy, &
+       -1,thdummy,-1,thdummy, &
        wk,inwk,ilinx,ilinth,ier)
   !
   return

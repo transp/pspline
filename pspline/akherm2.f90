@@ -10,7 +10,7 @@ subroutine akherm2(x,nx,y,ny,fherm,nf2,ilinx,iliny,ier)
   implicit none
   integer ilinx,iliny,ier,nf2
   !============
-  integer nx,ny,nf1                 ! array dimensions
+  integer nx,ny                            ! array dimensions
   real(fp) :: x(nx)                        ! x coordinate array
   real(fp) :: y(ny)                        ! y coordinate array
   real(fp) :: fherm(0:3,nf2,ny)            ! data/Hermite array
@@ -58,7 +58,7 @@ subroutine akherm2p(x,nx,y,ny,fherm,nf2,ilinx,iliny,ipx,ipy,ier)
   real(fp) :: cxp,cxm,cxpp,cxmm,cxtrap0,cxtrapn,cyp,cym,cypp,cymm
   real(fp) :: cytrap0,cytrapn,zansr,cxm2,cxp2
   !============
-  integer nx,ny,nf1                 ! array dimensions
+  integer nx,ny                            ! array dimensions
   real(fp) :: x(nx)                        ! x coordinate array
   real(fp) :: y(ny)                        ! y coordinate array
   real(fp) :: fherm(0:3,nf2,ny)            ! data/Hermite array

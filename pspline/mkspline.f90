@@ -32,7 +32,6 @@ subroutine mkspline(x,nx,fspl,ibcxmin,bcxmin,ibcxmax,bcxmax, &
   real(fp) :: bcxmin                       ! b.c. data @xmin
   !
   integer ibcxmax                   ! b.c. flag @ x=xmax=x(nx)
-  real(fp) :: bcxcmax                      ! b.c. data @xmax
   !
   !  ibcxmin=-1 -- periodic boundary condition
   !                (bcxmin,ibcxmax,bcxmax are ignored)

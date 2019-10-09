@@ -21,7 +21,7 @@ subroutine xlookup(ivec,xvec,nx,xpkg,imode,iv,dxn,hv,hiv,iwarn)
   implicit none
   integer inum,istat,ilin,ialg,iper,imsg,init_guess,iprev,i
   integer init,iprob,isrch,i_sign,inc
-  real(kind=fp) :: stat,ztola,period,hav,havi,hloci,hloc,zdelta,xfac
+  real(kind=fp) :: ztola,period,hav,havi,hloci,hloc,zdelta,xfac
   REAL(kind=fp) :: zindx0,zdindx,zindex
   !============
   integer ivec                      ! size of vector

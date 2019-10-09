@@ -13,8 +13,6 @@ subroutine tcspvec(ict,ivec,xvec,yvec,zvec,ivd,fval, &
   implicit none
   integer iwarn1,iwarn2,iwarn3
   !============
-  real(fp) :: stat
-  !============
   integer ict(10)                    ! selector:
   !        ict(1)=1 for f      (don't evaluate if ict(1)=0)
   !        ict(2)=1 for df/dx  (don't evaluate if ict(2)=0)

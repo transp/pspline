@@ -670,9 +670,7 @@ subroutine spline2_per(ier)
   integer, parameter :: n1=11, n2=11
   integer, parameter :: k1 = 21, k2 = 21, k_cloud = 41
   real(fp) :: x1(n1), x2(n2), f(n1, n2)
-  real(fp) :: x1_point, x2_point, f_point, f_pointx, &
-       fx_point, fx_pointx, fy_point, fy_pointx, &
-       fxx_point, fxx_pointx, fxy_point, fxy_pointx,  fyy_point, fyy_pointx
+  real(fp) :: x1_point, x2_point, f_point, f_pointx
   real(fp) :: x1_cloud(k_cloud), x2_cloud(k_cloud), &
        f_cloud(k_cloud), f_cloudx(k_cloud)
   real(fp) :: x1_array(k1), x2_array(k2), &
@@ -775,9 +773,7 @@ subroutine spline2_mix(ier)
   integer, parameter :: n1=11, n2=11
   integer, parameter :: k1 = 21, k2 = 21, k_cloud = 41
   real(fp) :: x1(n1), x2(n2), f(n1, n2)
-  real(fp) :: x1_point, x2_point, f_point, f_pointx, &
-       fx_point, fx_pointx, fy_point, fy_pointx, &
-       fxx_point, fxx_pointx, fxy_point, fxy_pointx,  fyy_point, fyy_pointx
+  real(fp) :: x1_point, x2_point, f_point, f_pointx
   real(fp) :: x1_cloud(k_cloud), x2_cloud(k_cloud), &
        f_cloud(k_cloud), f_cloudx(k_cloud)
   real(fp) :: x1_array(k1), x2_array(k2), &
@@ -1574,7 +1570,7 @@ subroutine akima2_per(ier)
   integer, parameter :: k1 = 21, k2 = 21, k_cloud = 41
   real(fp) :: x1(n1), x2(n2), f(n1, n2)
   real(fp) :: x1_point, x2_point, f_point, f_pointx, &
-       fx_point, fx_pointx, fy_point, fy_pointx
+       fx_pointx, fy_pointx
   real(fp) :: x1_cloud(k_cloud), x2_cloud(k_cloud), &
        f_cloud(k_cloud), f_cloudx(k_cloud)
   real(fp) :: x1_array(k1), x2_array(k2), &
@@ -1944,7 +1940,7 @@ subroutine pclin2(ier)
   real(fp) :: x1(n1), x2(n2), f(n1, n2)
   real(fp) :: x1_point, x2_point, f_point, f_pointx, &
        fx_point, fx_pointx, fy_point, fy_pointx, &
-       fxx_point, fxx_pointx, fxy_point, fxy_pointx,  fyy_point, fyy_pointx
+       fxy_point, fxy_pointx
   real(fp) :: x1_cloud(k_cloud), x2_cloud(k_cloud), &
        f_cloud(k_cloud), f_cloudx(k_cloud)
   real(fp) :: x1_array(k1), x2_array(k2), &

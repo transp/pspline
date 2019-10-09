@@ -11,11 +11,13 @@ subroutine mkspl2z(fun,x,nx,th,nth,fspl,nf2,wk,inwk, &
   implicit none
   integer nth,nf2,inwk,nx,ix,ith
   !============
-  real(fp) :: fun,zdummy
+  real(fp) :: fun
   !============
   external fun                      ! passed real function(x,th)
   real(fp) :: x(nx)                        ! x coordinate array
   real(fp) :: th(nth)                      ! th coordinate array
+  real(fp) :: xdummy(nx)
+  real(fp) :: thdummy(nth)
   !
   !  output:
   !
@@ -41,8 +43,10 @@ subroutine mkspl2z(fun,x,nx,th,nth,fspl,nf2,wk,inwk, &
      end do
   end do
   !
+  xdummy = 0.0_fp
+  thdummy = 0.0_fp
   call mkbicubw(x,nx,th,nth,fspl,nf2, &
-       0,zdummy,0,zdummy,-1,zdummy,-1,zdummy, &
+       0,xdummy,0,xdummy,-1,thdummy,-1,thdummy, &
        wk,inwk,ilinx,ilinth,ier)
   !
   return

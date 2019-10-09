@@ -21,6 +21,8 @@ program qk_pspline
 
   integer :: ix,iy,iz,ier,iwarn,iwksize,idum,ilinx,iliny,ilinz
   real(fp) :: xr,yr,ztol,zdum
+  real(fp) :: xdum(ny),ydum(nx)
+  real(fp) :: xydum(1,nx*ny), xzdum(1,nx*nz), yzdum(1,ny*nz)
 
   type(ezspline1) :: s1
   type(ezspline2) :: s2,h20,h02
@@ -43,7 +45,7 @@ program qk_pspline
   real(fp), parameter :: zoff = 0.5_fp
 
   real(fp) :: xtarg,ytarg,ztarg,xbrak(6),ybrak(6),zbrak(6),delx,dely,delz
-  real(fp) :: zval,zvec(6),zvalp
+  real(fp) :: zval(6),zvec(6),zvalp
 
   integer :: i1,i2,i3,itest
   integer :: ict(10)
@@ -113,8 +115,9 @@ program qk_pspline
   imsg=1  ! warn on out of bounds interpolation calls
   itol=1  ! set tolerance for even spacing & out of range errors...
   ztol=1.0e-9_fp
-  idum=0
-  zdum=0
+  idum=1
+  xdum=0 ; ydum=0 ; zdum=0
+  xydum = 0 ; xzdum = 0 ; yzdum = 0
   iwksize=16*nx*ny*nz
 
   !  make grids & associated lookup packages...
@@ -230,19 +233,21 @@ program qk_pspline
 
   !  make explicit spline coefficients
 
-  call cspline(x,nx,fspl,ibdy(1),zdum,ibdy(2),zdum,zwk,iwksize,ilinx,ier)
+  call cspline(x,nx,fspl, &
+       ibdy(1),zdum,ibdy(2),zdum, &
+       zwk,iwksize,ilinx,ier)
   if(ier.ne.0) stop 112
 
   call bcspline(x,nx,y,ny,ffspl,nx, &
-       ibdy(1),zdum,ibdy(2),zdum, &
-       ibdy(1),zdum,ibdy(2),zdum, &
+       ibdy(1),xdum,ibdy(2),xdum, &
+       ibdy(1),ydum,ibdy(2),ydum, &
        zwk,iwksize,ilinx,iliny,ier)
   if(ier.ne.0) stop 113
 
   call tcspline(x,nx,y,ny,z,nz,fffspl,nx,ny, &
-       ibdy(1),zdum,ibdy(2),zdum,idum, &
-       ibdy(1),zdum,ibdy(2),zdum,idum, &
-       ibdy(1),zdum,ibdy(2),zdum,idum, &
+       ibdy(1),yzdum,ibdy(2),yzdum,idum, &
+       ibdy(1),xzdum,ibdy(2),xzdum,idum, &
+       ibdy(1),xydum,ibdy(2),xydum,idum, &
        zwk,iwksize,ilinx,iliny,ilinz,ier)
   if(ier.ne.0) stop 114
 
@@ -299,10 +304,10 @@ program qk_pspline
       write(6,*) '...continuity: ',trim(cresult)
     end if
 
-    call ezspline_derivative(s1,i1,xtarg,zval,ier)
+    call ezspline_derivative(s1,i1,xtarg,zval(1),ier)
     if(ier.ne.0) stop 124
-    write(6,1001) ' value: ',zval,trim(zlbl0)
-    zorig=zval
+    write(6,1001) ' value: ',zval(1),trim(zlbl0)
+    zorig=zval(1)
 
     if(i1.gt.0) then
       itest=itest+1
@@ -321,21 +326,21 @@ program qk_pspline
     !----------------
     ! 1d non-compact spline test
 
-    zvalp = zval
+    zvalp = zval(1)
 
     itest=0
     write(6,*) ' '
     write(6,*) ' 1d non-compact spline:'
 
     call ezmake_ict1(i1,ict(1:3))
-    call cspeval(xtarg,ict,zval,x,nx,ilinx,fspl,ier)
+    call cspeval(xtarg,ict(1:3),zval(1:3),x,nx,ilinx,fspl,ier)
     if(ier.ne.0) stop 126
-    write(6,1001) ' value: ',zval,trim(zlbl0)
-    zorig=zval
+    write(6,1001) ' value: ',zval(1),trim(zlbl0)
+    zorig=zval(1)
 
-    if(abs(zval-zvalp)/max(1.0_fp,abs(zval)).gt.1.0d-10) then
+    if(abs(zval(1)-zvalp)/max(1.0_fp,abs(zval(1))).gt.1.0d-10) then
       write(6,*) ' +++++++++> variation: ezspline, non-compact: ', &
-           zvalp,zval
+           zvalp,zval(1)
     end if
 
     if(i1.gt.0) then
@@ -411,10 +416,10 @@ program qk_pspline
               write(6,*) '...continuity: ',trim(cresult)
            end if
 
-           call ezspline_derivative(h02,i1,i2,xtarg,ytarg,zval,ier)
+           call ezspline_derivative(h02,i1,i2,xtarg,ytarg,zval(1),ier)
            if(ier.ne.0) stop 130
-           write(6,1001) ' value: ',zval,trim(zlbl0)
-           zorig=zval
+           write(6,1001) ' value: ',zval(1),trim(zlbl0)
+           zorig=zval(1)
 
            if(i1.gt.0) then
               itest=itest+1
@@ -476,10 +481,10 @@ program qk_pspline
               write(6,*) '...continuity: ',trim(cresult)
            end if
 
-           call ezspline_derivative(h20,i1,i2,xtarg,ytarg,zval,ier)
+           call ezspline_derivative(h20,i1,i2,xtarg,ytarg,zval(1),ier)
            if(ier.ne.0) stop 135
-           write(6,1001) ' value: ',zval,trim(zlbl0)
-           zorig=zval
+           write(6,1001) ' value: ',zval(1),trim(zlbl0)
+           zorig=zval(1)
 
            if(i1.gt.0) then
               itest=itest+1
@@ -540,10 +545,10 @@ program qk_pspline
            write(6,*) '...continuity: ',trim(cresult)
         end if
 
-        call ezspline_derivative(s2,i1,i2,xtarg,ytarg,zval,ier)
+        call ezspline_derivative(s2,i1,i2,xtarg,ytarg,zval(1),ier)
         if(ier.ne.0) stop 140
-        write(6,1001) ' value: ',zval,trim(zlbl0)
-        zorig=zval
+        write(6,1001) ' value: ',zval(1),trim(zlbl0)
+        zorig=zval(1)
 
         if(i1.gt.0) then
            itest=itest+1
@@ -576,21 +581,21 @@ program qk_pspline
         !----------------
         ! 2d non-compact spline test
 
-        zvalp = zval
+        zvalp = zval(1)
         itest=0
         write(6,*) ' '
         write(6,*) ' 2d non-compact spline:'
 
         call ezmake_ict2(i1,i2,ict(1:6))
-        call bcspeval(xtarg,ytarg,ict,zval,x,nx,y,ny, &
+        call bcspeval(xtarg,ytarg,ict,zval,x ,nx,y,ny, &
              ilinx,iliny,ffspl,nx,ier)
         if(ier.ne.0) stop 143
-        write(6,1001) ' value: ',zval,trim(zlbl0)
-        zorig=zval
+        write(6,1001) ' value: ',zval(1),trim(zlbl0)
+        zorig=zval(1)
 
-        if(abs(zval-zvalp)/max(1.0_fp,abs(zval)).gt.1.0e-10_fp) then
+        if(abs(zval(1)-zvalp)/max(1.0_fp,abs(zval(1))).gt.1.0e-10_fp) then
            write(6,*) ' +++++++++> variation: ezspline, non-compact: ', &
-                zvalp,zval
+                zvalp,zval(1)
         end if
 
         if(i1.gt.0) then
@@ -698,11 +703,11 @@ program qk_pspline
                  write(6,*) '...continuity: ',trim(cresult)
               end if
 
-              call ezspline_derivative(h022,i1,i2,i3,xtarg,ytarg,ztarg,zval, &
+              call ezspline_derivative(h022,i1,i2,i3,xtarg,ytarg,ztarg,zval(1), &
                    ier)
               if(ier.ne.0) stop 149
-              write(6,1001) ' value: ',zval,trim(zlbl0)
-              zorig=zval
+              write(6,1001) ' value: ',zval(1),trim(zlbl0)
+              zorig=zval(1)
 
               if(i1.gt.0) then
                  itest=itest+1
@@ -799,11 +804,11 @@ program qk_pspline
                  write(6,*) '...continuity: ',trim(cresult)
               end if
 
-              call ezspline_derivative(h202,i1,i2,i3,xtarg,ytarg,ztarg,zval, &
+              call ezspline_derivative(h202,i1,i2,i3,xtarg,ytarg,ztarg,zval(1), &
                    ier)
               if(ier.ne.0) stop 156
-              write(6,1001) ' value: ',zval,trim(zlbl0)
-              zorig=zval
+              write(6,1001) ' value: ',zval(1),trim(zlbl0)
+              zorig=zval(1)
 
               if(i1.gt.0) then
                  itest=itest+1
@@ -900,11 +905,11 @@ program qk_pspline
                  write(6,*) '...continuity: ',trim(cresult)
               end if
 
-              call ezspline_derivative(h220,i1,i2,i3,xtarg,ytarg,ztarg,zval, &
+              call ezspline_derivative(h220,i1,i2,i3,xtarg,ytarg,ztarg,zval(1), &
                    ier)
               if(ier.ne.0) stop 163
-              write(6,1001) ' value: ',zval,trim(zlbl0)
-              zorig=zval
+              write(6,1001) ' value: ',zval(1),trim(zlbl0)
+              zorig=zval(1)
 
               if(i1.gt.0) then
                  itest=itest+1
@@ -998,10 +1003,10 @@ program qk_pspline
               write(6,*) '...continuity: ',trim(cresult)
            end if
 
-           call ezspline_derivative(s3,i1,i2,i3,xtarg,ytarg,ztarg,zval,ier)
+           call ezspline_derivative(s3,i1,i2,i3,xtarg,ytarg,ztarg,zval(1),ier)
            if(ier.ne.0) stop 170
-           write(6,1001) ' value: ',zval,trim(zlbl0)
-           zorig=zval
+           write(6,1001) ' value: ',zval(1),trim(zlbl0)
+           zorig=zval(1)
 
            if(i1.gt.0) then
               itest=itest+1
@@ -1057,7 +1062,7 @@ program qk_pspline
            !----------------
            ! 3d non-compact spline test
 
-           zvalp = zval
+           zvalp = zval(1)
 
            itest=0
            write(6,*) ' '
@@ -1067,12 +1072,12 @@ program qk_pspline
            call tcspeval(xtarg,ytarg,ztarg,ict,zval,x,nx,y,ny,z,nz, &
                 ilinx,iliny,ilinz,fffspl,nx,ny,ier)
            if(ier.ne.0) stop 174
-           write(6,1001) ' value: ',zval,trim(zlbl0)
-           zorig=zval
+           write(6,1001) ' value: ',zval(1),trim(zlbl0)
+           zorig=zval(1)
 
-           if(abs(zval-zvalp)/max(1.0_fp,abs(zval)).gt.1.0d-10) then
+           if(abs(zval(1)-zvalp)/max(1.0_fp,abs(zval(1))).gt.1.0d-10) then
               write(6,*) ' +++++++++> variation: ezspline, non-compact: ', &
-                   zvalp,zval
+                   zvalp,zval(1)
            end if
 
            if(i1.gt.0) then

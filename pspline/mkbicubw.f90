@@ -133,7 +133,6 @@ subroutine mkbicubw(x,nx,y,ny,f,nf2, &
   !  local arrays
   !
   integer iselect(10)
-  integer zvalues(10)
   !
   iselect = 0
   iselect(1) = -1
@@ -206,9 +205,11 @@ subroutine mkbicon(fin,nf2,fwk,nx,ny,hxlast,hylast)
   !
   !============
   implicit none
-  integer nx,ny,nf2,iy,ix,iflag,ixuse,iyuse,j
+  integer nx,ny,nf2,iy,ix,iflag,j
+  integer, dimension(1) :: ixuse, iyuse
   !============
-  real(fp) :: hxlast,hylast,dxuse,dyuse
+  real(fp) :: hxlast,hylast
+  real(fp), dimension(1) :: dxuse,dyuse
   !============
   real(fp) :: fin(4,nf2,ny)
   real(fp) :: fwk(4,4,nx,ny)
@@ -230,24 +231,24 @@ subroutine mkbicon(fin,nf2,fwk,nx,ny,hxlast,hylast)
         !  copy derivatives from result.  Special treatment needed for end zones
         !
         iflag=0
-        dxuse=0.0_fp
-        dyuse=0.0_fp
-        ixuse=ix
-        iyuse=iy
+        dxuse(1)=0.0_fp
+        dyuse(1)=0.0_fp
+        ixuse(1)=ix
+        iyuse(1)=iy
         if(ix.eq.nx) then
            iflag=1
-           dxuse=hxlast
-           ixuse=ix-1
+           dxuse(1)=hxlast
+           ixuse(1)=ix-1
         end if
         if(iy.eq.ny) then
            iflag=1
-           dyuse=hylast
-           iyuse=iy-1
+           dyuse(1)=hylast
+           iyuse(1)=iy-1
         end if
         !
         if(iflag.eq.1) then
            call bcspevfn(iselect,1,1,zvalues, &
-                ixuse,iyuse,dxuse,dyuse, &
+                ixuse,iyuse,dxuse(1),dyuse(1), &
                 fwk,nx,ny)
            do j=2,4
               fin(j,ix,iy)=zvalues(j)

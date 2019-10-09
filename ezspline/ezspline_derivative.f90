@@ -16,6 +16,7 @@ subroutine EZspline_derivative1(spline_o, i1, p1, f, ier)
 
   integer ict_herm(2)
   integer ict(3)
+  real(fp) :: f2(1)
 
   ier = 0
   ifail=0
@@ -49,16 +50,16 @@ subroutine EZspline_derivative1(spline_o, i1, p1, f, ier)
 
      if(spline_o%isLinear == 0) then
         call herm1ev(p1, &
-             &   spline_o%x1(1), spline_o%n1, &
-             &   spline_o%ilin1, &
-             &   spline_o%fspl(1,1), &
-             &   ict_herm, f, ifail)
+             spline_o%x1(1), spline_o%n1, &
+             spline_o%ilin1, &
+             spline_o%fspl(1,1), &
+             ict_herm, f2, ifail)
      else
         call pc1ev(p1, &
-             &   spline_o%x1(1), spline_o%n1, &
-             &   spline_o%ilin1, &
-             &   spline_o%fspl(1,1), &
-             &   ict_herm, f, ifail)
+             spline_o%x1(1), spline_o%n1, &
+             spline_o%ilin1, &
+             spline_o%fspl(1,1), &
+             ict_herm, f2, ifail)
      end if
 
   else   
@@ -66,12 +67,13 @@ subroutine EZspline_derivative1(spline_o, i1, p1, f, ier)
      call ezmake_ict1(i1,ict)
 
      call evspline(p1, &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%ilin1, &
-          &   spline_o%fspl(1,1), &
-          &   ict, f, ifail)
+          spline_o%x1(1), spline_o%n1, &
+          spline_o%ilin1, &
+          spline_o%fspl(1,1), &
+          ict, f2, ifail)
 
   end if
+  f = f2(1)
   if(ifail /= 0) ier = 96
 
 end subroutine EZspline_derivative1
@@ -124,15 +126,15 @@ subroutine EZspline_derivative1_array(spline_o, i1, k1, p1, f, ier)
      end if
 
      if(spline_o%isLinear == 0) then
-        call vecherm1(ict_herm, k1, p1, k1, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%fspl(1,1), &
-             & iwarn, ifail)
+       call vecherm1(ict_herm, k1, p1, k1, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%fspl(1,1), &
+            iwarn, ifail)
      else
-        call vecpc1(ict_herm, k1, p1, k1, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%fspl(1,1), &
-             & iwarn, ifail)
+       call vecpc1(ict_herm, k1, p1, k1, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%fspl(1,1), &
+            iwarn, ifail)
      end if
 
   else   
@@ -140,9 +142,9 @@ subroutine EZspline_derivative1_array(spline_o, i1, k1, p1, f, ier)
      call ezmake_ict1(i1,ict)
 
      call vecspline(ict, k1, p1, k1, f, &
-          & spline_o%n1, spline_o%x1pkg(1,1), &
-          & spline_o%fspl(1,1), &
-          & iwarn, ifail)
+          spline_o%n1, spline_o%x1pkg(1,1), &
+          spline_o%fspl(1,1), &
+          iwarn, ifail)
 
   end if
 
@@ -170,6 +172,7 @@ subroutine EZspline_derivative2(spline_o, i1, i2, p1, p2, f, ier)
 
   integer ict(6)
   integer ict_herm(4)
+  real(fp) :: f2(1), f6(6)
 
   ier = 0
   ifail=0
@@ -194,15 +197,16 @@ subroutine EZspline_derivative2(spline_o, i1, i2, p1, p2, f, ier)
 
   if(spline_o%isHybrid == 1) then
 
-     call ezmake_ict2(i1,i2,ict)
+    call ezmake_ict2(i1,i2,ict)
 
-     call evintrp2d(p1, p2, &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%x2(1), spline_o%n2, &
-          &   spline_o%hspline, spline_o%fspl(1,1,1), &
-          &   size(spline_o%fspl,1), size(spline_o%fspl,2), &
-          &   size(spline_o%fspl,3),  &
-          &   ict, f, ifail)
+    call evintrp2d(p1, p2, &
+          spline_o%x1(1), spline_o%n1, &
+          spline_o%x2(1), spline_o%n2, &
+          spline_o%hspline, spline_o%fspl(1,1,1), &
+          size(spline_o%fspl,1), size(spline_o%fspl,2), &
+          size(spline_o%fspl,3),  &
+          ict, f6, ifail)
+    f = f6(1)
 
   else if(spline_o%isHermite==1 .or. spline_o%isLinear==1) then
      if(i1 == 1 .AND. i2 == 0) then
@@ -217,30 +221,32 @@ subroutine EZspline_derivative2(spline_o, i1, i2, p1, p2, f, ier)
 
      if(spline_o%isLinear == 0) then
         call herm2ev(p1, p2, &
-             &   spline_o%x1(1), spline_o%n1, &
-             &   spline_o%x2(1), spline_o%n2, &
-             &   spline_o%ilin1, spline_o%ilin2, &
-             &   spline_o%fspl(1,1,1), spline_o%n1, &
-             &   ict_herm, f, ifail)
+             spline_o%x1(1), spline_o%n1, &
+             spline_o%x2(1), spline_o%n2, &
+             spline_o%ilin1, spline_o%ilin2, &
+             spline_o%fspl(1,1,1), spline_o%n1, &
+             ict_herm, f2, ifail)
      else
         call pc2ev(p1, p2, &
-             &   spline_o%x1(1), spline_o%n1, &
-             &   spline_o%x2(1), spline_o%n2, &
-             &   spline_o%ilin1, spline_o%ilin2, &
-             &   spline_o%fspl(1,1,1), spline_o%n1, &
-             &   ict_herm, f, ifail)
+             spline_o%x1(1), spline_o%n1, &
+             spline_o%x2(1), spline_o%n2, &
+             spline_o%ilin1, spline_o%ilin2, &
+             spline_o%fspl(1,1,1), spline_o%n1, &
+             ict_herm, f2, ifail)
      end if
+     f = f2(1)
 
   else
 
      call ezmake_ict2(i1,i2,ict)
 
      call evbicub(p1, p2, &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%x2(1), spline_o%n2, &
-          &   spline_o%ilin1, spline_o%ilin2, &
-          &   spline_o%fspl(1,1,1), spline_o%n1, &
-          &   ict, f, ifail)
+          spline_o%x1(1), spline_o%n1, &
+          spline_o%x2(1), spline_o%n2, &
+          spline_o%ilin1, spline_o%ilin2, &
+          spline_o%fspl(1,1,1), spline_o%n1, &
+          ict, f2, ifail)
+     f = f2(1)
 
   end if
   if(ifail /= 0) ier = 96
@@ -250,7 +256,7 @@ end subroutine EZspline_derivative2
 
 
 subroutine EZspline_derivative2_array(spline_o, i1, i2, &
-     & k1, k2, p1, p2, f, ier)
+     k1, k2, p1, p2, f, ier)
   use precision_mod, only: fp
   use EZspline_obj
   implicit none
@@ -299,23 +305,23 @@ subroutine EZspline_derivative2_array(spline_o, i1, i2, &
   end if
 
   p1_cloud = reshape( &
-       & source=spread(source=p1, dim=2, ncopies=k2), &
-       & shape=(/k12/))
+       source=spread(source=p1, dim=2, ncopies=k2), &
+       shape=(/k12/))
   p2_cloud = reshape( &
-       & source=spread(source=p2, dim=1, ncopies=k1), &
-       & shape=(/k12/))
+       source=spread(source=p2, dim=1, ncopies=k1), &
+       shape=(/k12/))
 
   if(spline_o%isHybrid == 1) then
 
-     call ezmake_ict2(i1,i2,ict)
+    call ezmake_ict2(i1,i2,ict)
 
-     call vecintrp2d(ict, k12, p1_cloud, p2_cloud, k12, f, &
-          & spline_o%n1, spline_o%x1pkg(1,1), &
-          & spline_o%n2, spline_o%x2pkg(1,1), &
-          & spline_o%hspline, spline_o%fspl(1,1,1), &
-          & size(spline_o%fspl,1), size(spline_o%fspl,2), &
-          & size(spline_o%fspl,3),  &
-          & iwarn, ifail)
+    call vecintrp2d(ict, k12, p1_cloud, p2_cloud, k12, f, &
+         spline_o%n1, spline_o%x1pkg(1,1), &
+         spline_o%n2, spline_o%x2pkg(1,1), &
+         spline_o%hspline, spline_o%fspl(1,1,1), &
+         size(spline_o%fspl,1), size(spline_o%fspl,2), &
+         size(spline_o%fspl,3),  &
+         iwarn, ifail)
 
   else if(spline_o%isHermite==1 .or. spline_o%isLinear==1)then
      if(i1 == 1 .AND. i2 == 0) then
@@ -329,28 +335,28 @@ subroutine EZspline_derivative2_array(spline_o, i1, i2, &
      end if
 
      if(spline_o%isLinear == 0) then
-        call vecherm2(ict_herm, k12, p1_cloud, p2_cloud, k12, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%fspl(1,1,1), spline_o%n1, &
-             & iwarn, ifail)
+       call vecherm2(ict_herm, k12, p1_cloud, p2_cloud, k12, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%fspl(1,1,1), spline_o%n1, &
+            iwarn, ifail)
      else
-        call vecpc2(ict_herm, k12, p1_cloud, p2_cloud, k12, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%fspl(1,1,1), spline_o%n1, &
-             & iwarn, ifail)
+       call vecpc2(ict_herm, k12, p1_cloud, p2_cloud, k12, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%fspl(1,1,1), spline_o%n1, &
+            iwarn, ifail)
      end if
 
   else
 
-     call ezmake_ict2(i1,i2,ict)  ! higher derivatives
+    call ezmake_ict2(i1,i2,ict)  ! higher derivatives
 
-     call vecbicub(ict, k12, p1_cloud, p2_cloud, k12, f, &
-          & spline_o%n1,spline_o%x1pkg(1,1), &
-          & spline_o%n2,spline_o%x2pkg(1,1), &
-          & spline_o%fspl(1,1,1), spline_o%n1, &
-          & iwarn, ifail)
+    call vecbicub(ict, k12, p1_cloud, p2_cloud, k12, f, &
+         spline_o%n1,spline_o%x1pkg(1,1), &
+         spline_o%n2,spline_o%x2pkg(1,1), &
+         spline_o%fspl(1,1,1), spline_o%n1, &
+         iwarn, ifail)
 
   end if
 
@@ -368,7 +374,7 @@ end subroutine EZspline_derivative2_array
 
 
 subroutine EZspline_derivative2_cloud(spline_o, i1, i2, &
-     & k, p1, p2, f, ier)
+     k, p1, p2, f, ier)
   use precision_mod, only: fp
   use EZspline_obj
   implicit none
@@ -408,15 +414,15 @@ subroutine EZspline_derivative2_cloud(spline_o, i1, i2, &
 
   if(spline_o%isHybrid == 1) then
 
-     call ezmake_ict2(i1,i2,ict)
+    call ezmake_ict2(i1,i2,ict)
 
-     call vecintrp2d(ict, k, p1, p2, k, f, &
-          & spline_o%n1, spline_o%x1pkg(1,1), &
-          & spline_o%n2, spline_o%x2pkg(1,1), &
-          & spline_o%hspline, spline_o%fspl(1,1,1), &
-          & size(spline_o%fspl,1), size(spline_o%fspl,2), &
-          & size(spline_o%fspl,3),  &
-          & iwarn, ifail)
+    call vecintrp2d(ict, k, p1, p2, k, f, &
+         spline_o%n1, spline_o%x1pkg(1,1), &
+         spline_o%n2, spline_o%x2pkg(1,1), &
+         spline_o%hspline, spline_o%fspl(1,1,1), &
+         size(spline_o%fspl,1), size(spline_o%fspl,2), &
+         size(spline_o%fspl,3),  &
+         iwarn, ifail)
 
   else if(spline_o%isHermite==1 .or. spline_o%isLinear==1)then
      if(i1 == 1 .AND. i2 == 0) then
@@ -430,31 +436,31 @@ subroutine EZspline_derivative2_cloud(spline_o, i1, i2, &
      end if
 
      if(spline_o%isLinear == 0) then
-        call vecherm2(ict_herm, k, p1, p2, &
-             & k, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%fspl(1,1,1), spline_o%n1, &
-             & iwarn, ifail)
+       call vecherm2(ict_herm, k, p1, p2, &
+            k, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%fspl(1,1,1), spline_o%n1, &
+            iwarn, ifail)
      else
-        call vecpc2(ict_herm, k, p1, p2, &
-             & k, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%fspl(1,1,1), spline_o%n1, &
-             & iwarn, ifail)
+       call vecpc2(ict_herm, k, p1, p2, &
+            k, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%fspl(1,1,1), spline_o%n1, &
+            iwarn, ifail)
      end if
 
   else
 
-     call ezmake_ict2(i1,i2,ict)
+    call ezmake_ict2(i1,i2,ict)
 
-     call vecbicub(ict, k, p1, p2, &
-          & k, f, &
-          & spline_o%n1, spline_o%x1pkg(1,1), &
-          & spline_o%n2, spline_o%x2pkg(1,1), &
-          & spline_o%fspl(1,1,1), spline_o%n1, &
-          & iwarn, ifail)
+    call vecbicub(ict, k, p1, p2, &
+         k, f, &
+         spline_o%n1, spline_o%x1pkg(1,1), &
+         spline_o%n2, spline_o%x2pkg(1,1), &
+         spline_o%fspl(1,1,1), spline_o%n1, &
+         iwarn, ifail)
 
   end if
 
@@ -481,6 +487,7 @@ subroutine EZspline_derivative3(spline_o, i1, i2, i3, p1, p2, p3, f, ier)
 
   integer ict(10)
   integer ict_herm(8)
+  real(fp) :: f2(1), f10(10)
 
   ier = 0
   ifail=0
@@ -506,16 +513,17 @@ subroutine EZspline_derivative3(spline_o, i1, i2, i3, p1, p2, p3, f, ier)
 
   if(spline_o%isHybrid == 1) then
 
-     call ezmake_ict3(i1,i2,i3,ict)
+    call ezmake_ict3(i1,i2,i3,ict)
 
-     call evintrp3d(p1, p2, p3, &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%x2(1), spline_o%n2, &
-          &   spline_o%x3(1), spline_o%n3, &
-          &   spline_o%hspline, spline_o%fspl(1,1,1,1), &
-          &   size(spline_o%fspl,1), size(spline_o%fspl,2), &
-          &   size(spline_o%fspl,3), size(spline_o%fspl,4), &
-          &   ict, f, ifail)
+    call evintrp3d(p1, p2, p3, &
+         spline_o%x1(1), spline_o%n1, &
+         spline_o%x2(1), spline_o%n2, &
+         spline_o%x3(1), spline_o%n3, &
+         spline_o%hspline, spline_o%fspl(1,1,1,1), &
+         size(spline_o%fspl,1), size(spline_o%fspl,2), &
+         size(spline_o%fspl,3), size(spline_o%fspl,4), &
+         ict, f10, ifail)
+    f = f10(1)
 
   else if(spline_o%isHermite==1 .or. spline_o%isLinear==1)then
      if(i1 == 1 .AND. i2 == 0 .AND. i3 == 0) then
@@ -537,34 +545,36 @@ subroutine EZspline_derivative3(spline_o, i1, i2, i3, p1, p2, p3, f, ier)
      end if
 
      if(spline_o%isLinear == 0) then
-        call herm3ev(p1, p2, p3, &
-             &   spline_o%x1(1), spline_o%n1, &
-             &   spline_o%x2(1), spline_o%n2, &
-             &   spline_o%x3(1), spline_o%n3, &
-             &   spline_o%ilin1, spline_o%ilin2, spline_o%ilin3, &
-             &   spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-             &   ict_herm, f, ifail)
+       call herm3ev(p1, p2, p3, &
+            spline_o%x1(1), spline_o%n1, &
+            spline_o%x2(1), spline_o%n2, &
+            spline_o%x3(1), spline_o%n3, &
+            spline_o%ilin1, spline_o%ilin2, spline_o%ilin3, &
+            spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+            ict_herm, f2, ifail)
      else
-        call pc3ev(p1, p2, p3, &
-             &   spline_o%x1(1), spline_o%n1, &
-             &   spline_o%x2(1), spline_o%n2, &
-             &   spline_o%x3(1), spline_o%n3, &
-             &   spline_o%ilin1, spline_o%ilin2, spline_o%ilin3, &
-             &   spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-             &   ict_herm, f, ifail)
+       call pc3ev(p1, p2, p3, &
+            spline_o%x1(1), spline_o%n1, &
+            spline_o%x2(1), spline_o%n2, &
+            spline_o%x3(1), spline_o%n3, &
+            spline_o%ilin1, spline_o%ilin2, spline_o%ilin3, &
+            spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+            ict_herm, f2, ifail)
      end if
+     f = f2(1)
 
   else
 
-     call ezmake_ict3(i1,i2,i3,ict)
+    call ezmake_ict3(i1,i2,i3,ict)
 
-     call evtricub(p1, p2, p3, &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%x2(1), spline_o%n2, &
-          &   spline_o%x3(1), spline_o%n3, &
-          &   spline_o%ilin1, spline_o%ilin2, spline_o%ilin3, &
-          &   spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-          &   ict, f, ifail)
+    call evtricub(p1, p2, p3, &
+         spline_o%x1(1), spline_o%n1, &
+         spline_o%x2(1), spline_o%n2, &
+         spline_o%x3(1), spline_o%n3, &
+         spline_o%ilin1, spline_o%ilin2, spline_o%ilin3, &
+         spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+         ict, f2, ifail)
+    f = f2(1)
 
   end if
   if(ifail /= 0) ier = 96
@@ -573,7 +583,7 @@ end subroutine EZspline_derivative3
 
 
 subroutine EZspline_derivative3_array(spline_o, i1, i2, i3, &
-     & k1, k2, k3, p1, p2, p3, f, ier)
+     k1, k2, k3, p1, p2, p3, f, ier)
   use precision_mod, only: fp
   use EZspline_obj
   implicit none
@@ -622,27 +632,27 @@ subroutine EZspline_derivative3_array(spline_o, i1, i2, i3, &
   end if
 
   p1_cloud = reshape(source=spread( &
-       & source=spread(source=p1, dim=2, ncopies=k2), &
-       & dim=3, ncopies=k3), shape=(/k123/))
+       source=spread(source=p1, dim=2, ncopies=k2), &
+       dim=3, ncopies=k3), shape=(/k123/))
   p2_cloud = reshape(source=spread( &
-       & source=spread(source=p2, dim=1, ncopies=k1), &
-       & dim=3, ncopies=k3), shape=(/k123/))
+       source=spread(source=p2, dim=1, ncopies=k1), &
+       dim=3, ncopies=k3), shape=(/k123/))
   p3_cloud = reshape(source=spread( &
-       & source=spread(source=p3, dim=1, ncopies=k1), &
-       & dim=2, ncopies=k2), shape=(/k123/))
+       source=spread(source=p3, dim=1, ncopies=k1), &
+       dim=2, ncopies=k2), shape=(/k123/))
 
   if(spline_o%isHybrid == 1) then
 
-     call ezmake_ict3(i1,i2,i3,ict)
+    call ezmake_ict3(i1,i2,i3,ict)
 
-     call vecintrp3d(ict, k123, p1_cloud, p2_cloud, p3_cloud, k123, f, &
-          & spline_o%n1, spline_o%x1pkg(1,1), &
-          & spline_o%n2, spline_o%x2pkg(1,1), &
-          & spline_o%n3, spline_o%x3pkg(1,1), &
-          & spline_o%hspline, spline_o%fspl(1,1,1,1), &
-          & size(spline_o%fspl,1), size(spline_o%fspl,2), &
-          & size(spline_o%fspl,3), size(spline_o%fspl,4), &
-          & iwarn, ifail)
+    call vecintrp3d(ict, k123, p1_cloud, p2_cloud, p3_cloud, k123, f, &
+         spline_o%n1, spline_o%x1pkg(1,1), &
+         spline_o%n2, spline_o%x2pkg(1,1), &
+         spline_o%n3, spline_o%x3pkg(1,1), &
+         spline_o%hspline, spline_o%fspl(1,1,1,1), &
+         size(spline_o%fspl,1), size(spline_o%fspl,2), &
+         size(spline_o%fspl,3), size(spline_o%fspl,4), &
+         iwarn, ifail)
 
   else if(spline_o%isHermite==1 .or. spline_o%isLinear==1)then
      if(i1 == 1 .AND. i2 == 0 .AND. i3 == 0) then
@@ -664,33 +674,33 @@ subroutine EZspline_derivative3_array(spline_o, i1, i2, i3, &
      end if
 
      if(spline_o%isLinear == 0) then
-        call vecherm3(ict_herm, k123, p1_cloud, p2_cloud, p3_cloud, k123, &
-             & f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%n3, spline_o%x3pkg(1,1), &
-             & spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-             & iwarn, ifail)
+       call vecherm3(ict_herm, k123, p1_cloud, p2_cloud, p3_cloud, k123, &
+            f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%n3, spline_o%x3pkg(1,1), &
+            spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+            iwarn, ifail)
      else
-        call vecpc3(ict_herm, k123, p1_cloud, p2_cloud, p3_cloud, k123, &
-             & f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%n3, spline_o%x3pkg(1,1), &
-             & spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-             & iwarn, ifail)
+       call vecpc3(ict_herm, k123, p1_cloud, p2_cloud, p3_cloud, k123, &
+            f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%n3, spline_o%x3pkg(1,1), &
+            spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+            iwarn, ifail)
      end if
 
   else
 
-     call ezmake_ict3(i1,i2,i3,ict)
+    call ezmake_ict3(i1,i2,i3,ict)
 
-     call vectricub(ict, k123, p1_cloud, p2_cloud, p3_cloud, k123, f, &
-          & spline_o%n1,spline_o%x1pkg(1,1), &
-          & spline_o%n2,spline_o%x2pkg(1,1), &
-          & spline_o%n3,spline_o%x3pkg(1,1), &
-          & spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-          & iwarn, ifail)
+    call vectricub(ict, k123, p1_cloud, p2_cloud, p3_cloud, k123, f, &
+         spline_o%n1,spline_o%x1pkg(1,1), &
+         spline_o%n2,spline_o%x2pkg(1,1), &
+         spline_o%n3,spline_o%x3pkg(1,1), &
+         spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+         iwarn, ifail)
 
   end if
 
@@ -707,7 +717,7 @@ subroutine EZspline_derivative3_array(spline_o, i1, i2, i3, &
 end subroutine EZspline_derivative3_array
 
 subroutine EZspline_derivative3_cloud(spline_o, i1, i2, i3, &
-     & k, p1, p2, p3, f, ier)
+     k, p1, p2, p3, f, ier)
   use precision_mod, only: fp
   use EZspline_obj
   implicit none
@@ -747,16 +757,16 @@ subroutine EZspline_derivative3_cloud(spline_o, i1, i2, i3, &
 
   if(spline_o%isHybrid == 1) then
 
-     call ezmake_ict3(i1,i2,i3,ict)
+    call ezmake_ict3(i1,i2,i3,ict)
 
-     call vecintrp3d(ict, k, p1, p2, p3, k, f, &
-          & spline_o%n1, spline_o%x1pkg(1,1), &
-          & spline_o%n2, spline_o%x2pkg(1,1), &
-          & spline_o%n3, spline_o%x3pkg(1,1), &
-          & spline_o%hspline, spline_o%fspl(1,1,1,1), &
-          & size(spline_o%fspl,1), size(spline_o%fspl,2), &
-          & size(spline_o%fspl,3), size(spline_o%fspl,4), &
-          & iwarn, ifail)
+    call vecintrp3d(ict, k, p1, p2, p3, k, f, &
+         spline_o%n1, spline_o%x1pkg(1,1), &
+         spline_o%n2, spline_o%x2pkg(1,1), &
+         spline_o%n3, spline_o%x3pkg(1,1), &
+         spline_o%hspline, spline_o%fspl(1,1,1,1), &
+         size(spline_o%fspl,1), size(spline_o%fspl,2), &
+         size(spline_o%fspl,3), size(spline_o%fspl,4), &
+         iwarn, ifail)
 
   else if(spline_o%isHermite==1 .or. spline_o%isLinear==1)then
      if(i1 == 1 .AND. i2 == 0 .AND. i3 == 0) then
@@ -778,21 +788,21 @@ subroutine EZspline_derivative3_cloud(spline_o, i1, i2, i3, &
      end if
 
      if(spline_o%isLinear == 0) then
-        call vecherm3(ict_herm, k, p1, p2, p3, &
-             & k, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%n3, spline_o%x3pkg(1,1), &
-             & spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-             & iwarn, ifail)
+       call vecherm3(ict_herm, k, p1, p2, p3, &
+            k, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%n3, spline_o%x3pkg(1,1), &
+            spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+            iwarn, ifail)
      else
-        call vecpc3(ict_herm, k, p1, p2, p3, &
-             & k, f, &
-             & spline_o%n1, spline_o%x1pkg(1,1), &
-             & spline_o%n2, spline_o%x2pkg(1,1), &
-             & spline_o%n3, spline_o%x3pkg(1,1), &
-             & spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-             & iwarn, ifail)
+       call vecpc3(ict_herm, k, p1, p2, p3, &
+            k, f, &
+            spline_o%n1, spline_o%x1pkg(1,1), &
+            spline_o%n2, spline_o%x2pkg(1,1), &
+            spline_o%n3, spline_o%x3pkg(1,1), &
+            spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+            iwarn, ifail)
      end if
 
   else
@@ -800,12 +810,12 @@ subroutine EZspline_derivative3_cloud(spline_o, i1, i2, i3, &
      call ezmake_ict3(i1,i2,i3,ict)
 
      call vectricub(ict, k, p1, p2, p3, &
-          & k, f, &
-          & spline_o%n1, spline_o%x1pkg(1,1), &
-          & spline_o%n2, spline_o%x2pkg(1,1), &
-          & spline_o%n3, spline_o%x3pkg(1,1), &
-          & spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
-          & iwarn, ifail)
+          k, f, &
+          spline_o%n1, spline_o%x1pkg(1,1), &
+          spline_o%n2, spline_o%x2pkg(1,1), &
+          spline_o%n3, spline_o%x3pkg(1,1), &
+          spline_o%fspl(1,1,1,1), spline_o%n1, spline_o%n2, &
+          iwarn, ifail)
 
   end if
 

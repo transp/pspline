@@ -9,7 +9,7 @@ program lookup_test
        idum,iv,icount,iper,ia1,ia2,ia,is,ivs,ivecs,iloop,ir,iwarn, &
        igen,igenc,igen2,igen3
   !============
-  real(fp) :: zfac,zscan,znorm,zval,zval2,zinc,zcur,zprev,zdum,y,x,z, &
+  real(fp) :: zfac,zscan,znorm,zval,zval2,zinc,zcur,zprev,y,x,z, &
        ztime0,ztime1,difmax,ztime
   !============
   integer gsize,g3size,tsize,oddstep,repeat
@@ -31,6 +31,10 @@ program lookup_test
   !
   real(fp) :: wk2(tsize,2)
   real(fp) :: wk3(tsize,3)
+  !
+  real(fp) :: zdum
+  real(fp) :: xdum(gsize), ydum(gsize)
+  real(fp) :: xydum(g3size), xzdum(g3size), yzdum(g3size)
   !
   !  test vectors
   !
@@ -66,6 +70,13 @@ program lookup_test
   !
   ict = 0
   ict(1) = 1
+  !
+  zdum = 0.0_fp
+  xdum = 0.0_fp
+  ydum = 0.0_fp
+  xydum = 0.0_fp
+  xzdum = 0.0_fp
+  yzdum = 0.0_fp
   !
   ztest1 = 1.0_fp
   ztest2 = 1.0000000001_fp
@@ -225,15 +236,15 @@ program lookup_test
   enddo
   !
   call mkbicub(gpkg2x,gsize,gpkg2y,gsize,f2d,gsize, &
-       0,zdum,0,zdum, &
-       0,zdum,0,zdum, &
+       0,xdum,0,xdum, &
+       0,ydum,0,ydum, &
        idum1,idum2,ier)
   !
   call mktricub(gpkg3x,g3size,gpkg3y,g3size,gpkg3z,g3size, &
        f3d,g3size,g3size, &
-       0,zdum,0,zdum,g3size, &
-       0,zdum,0,zdum,g3size, &
-       0,zdum,0,zdum,g3size, &
+       0,yzdum,0,yzdum,g3size, &
+       0,xzdum,0,xzdum,g3size, &
+       0,xydum,0,xydum,g3size, &
        idum,idum,idum,ier)
   !
   write(6,*) ' ... setup completed ... '

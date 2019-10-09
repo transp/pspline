@@ -44,9 +44,9 @@ subroutine EZspline_cinterp(spline_o, k, p1, p2, p3, f, ier)
   REAL(fp) , parameter ::  three=3.0_fp
 
   integer j1, j2 , j3
-  REAL(fp) z36th,z216th,xp,xpi,xp2,xpi2,cx,cxi,hx2,cxd,cxdi,yp,       &
-       & ypi,yp2,ypi2,cy,cyi,hy2,cyd,cydi,zp,zpi,zp2,zpi2,cz,czi,hz2,     &
-       & czd,czdi,somme
+  REAL(fp) z36th,z216th,xp,xpi,xp2,xpi2,cx,cxi,hx2,cxd,cxdi,yp, &
+       ypi,yp2,ypi2,cy,cyi,hy2,cyd,cydi,zp,zpi,zp2,zpi2,cz,czi,hz2, &
+       czd,czdi,somme
 
   ier = 0
   ifail=0
