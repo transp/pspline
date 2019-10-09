@@ -27,4 +27,5 @@ if [ ! -z "$EZCDF_HOME" ]; then
    export EZCDF_FLAGS=" -D_EZCDF"
    export L_EZCDF=" -L$EZCDF_HOME/lib -lezcdf -L$NETCDFLIB/lib -lnetcdff"
    export I_EZCDF=" -I$EZCDF_HOME/include -I$NETCDFINC/include"
+   export LD_LIBRARY_PATH=$EZCDF_HOME/lib:$LD_LIBRARY_PATH
 fi

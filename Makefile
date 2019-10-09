@@ -7,6 +7,7 @@ include Makefile.def
 SRCDIR := $(shell pwd)
 PSPDIR := $(SRCDIR)/pspline
 EZSDIR := $(SRCDIR)/ezspline
+CZSDIR := $(SRCDIR)/czspline
 
 PREFIX := $(or $(PREFIX),$(SRCDIR)/build)
 LIBDIR := $(PREFIX)/lib
@@ -20,6 +21,7 @@ EXELUP := lookup_test
 EXEPSP := pspltest
 EXEQKS := qk_pspline
 EXEEZS := ezspline_test
+EXECZS := czspline_test
 
 # Define the objects
 SRCS :=	$(PSPDIR)/precision_mod.f90 \
@@ -30,12 +32,14 @@ SRCS := $(filter-out $(PSPDIR)/$(EXEQKS).f90, $(SRCS))
 SRCS += $(EZSDIR)/ezspline_mod.f90 \
 	$(filter-out $(EZSDIR)/ezspline_mod.f90, $(wildcard $(EZSDIR)/*.f90))
 SRCS := $(filter-out $(EZSDIR)/ezspline_test.f90, $(SRCS))
+SRCS += $(CZSDIR)/czspline_pointer_types.f90 \
+	$(filter-out $(CZSDIR)/czspline_pointer_types.f90, $(wildcard $(CZSDIR)/*.f90))
 OBJS :=	$(SRCS:.f90=.o)
 
 
 .PHONY: clean clobber debug install shared single uninstall
 
-all:	$(LIBAR) $(EXELUP) $(EXEPSP) $(EXEQKS) $(EXEEZS)
+all:	$(LIBAR) $(EXELUP) $(EXEPSP) $(EXEQKS) $(EXEEZS) $(EXECZS)
 
 $(LIBAR): $(OBJS)
 	@ar r $@ $(OBJS)
@@ -51,6 +55,9 @@ $(EXEQKS):
 
 $(EXEEZS):
 	$(FC) $(LDFLAGS) $(EZSDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
+
+$(EXECZS):
+	$(CXX) $(CXXLDFLAGS) $(CZSDIR)/$@.cc -o $@ -L$(SRCDIR) $(CXXLIBS) -lpspline $(FLIBS)
 
 install:
 	@test -d $(LIBDIR) || mkdir -p $(LIBDIR)
@@ -74,6 +81,7 @@ debug:	$(EXELUP)
 debug:	$(EXEPSP)
 debug:  $(EXEQKS)
 debug:	$(EXEEZS)
+debug:	$(EXECZS)
 
 shared:	FFLAGS += $(SFFLAGS)
 shared:	LDFLAGS += $(SFFLAGS)
@@ -97,10 +105,10 @@ uninstall:
 	@rm -rf $(PREFIX)
 
 clean:
-	@rm -f *~ $(PSPDIR)/*~ $(EZSDIR)/*~
+	@rm -f *~ $(PSPDIR)/*~ $(EZSDIR)/*~ $(CZSDIR)/*~
 	@rm -f $(OBJS)
 	@rm -f *.mod
 
 clobber: clean
 	@rm -f $(LIBAR) $(LIBSO)
-	@rm -f $(EXELUP) $(EXEPSP) $(EXEQKS) $(EXEEZS)
+	@rm -f $(EXELUP) $(EXEPSP) $(EXEQKS) $(EXEEZS) $(EXECZS)

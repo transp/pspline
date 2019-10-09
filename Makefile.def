@@ -5,7 +5,7 @@ ifeq ($(COMPILER),ICC)
      SFFLAGS = -fpic
      SLDFLAGS = -shared
      CXXFLAGS = -O2 -std=c++11
-     CXXLIBS = -lstdc++ -lgfortran
+     CXXLIBS = -lifcore
      CXXLDFLAGS =
 
 else ifeq ($(COMPILER),PGC)
@@ -27,7 +27,7 @@ else
      SLDFLAGS = -shared
      CXXFLAGS = -O2 -std=c++11
      CXXLIBS = -lstdc++ -lgfortran
-     CXXLDFLAGS = 
+     CXXLDFLAGS =
 endif
 
 FLIBS = $(L_EZCDF)
