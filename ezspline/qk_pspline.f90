@@ -53,9 +53,9 @@ program qk_pspline
   character(len=8) :: zhdr
 
   real(fp) :: zsum,zorig,zdiff
-  real(fp),parameter :: zsumtol8 = 1.0d-4
-  real(fp),parameter :: zsumtol4 = 1.0d-3
-  real(fp),parameter :: epslon = 1.0d-34
+  real(fp),parameter :: zsumtol8 = 1.0e-4_fp
+  real(fp),parameter :: zsumtol4 = 1.0e-3_fp
+  real(fp),parameter :: epslon = 1.0e-34_fp
 
   !---------------------------------------------------------------------
   !  continuity test for values and derivatives...

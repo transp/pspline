@@ -2,7 +2,7 @@ subroutine EZspline_setup1(spline_o, f, ier, exact_dim)
   use precision_mod, only: fp
   use EZspline_obj
   implicit none
-  type(EZspline1) spline_o
+  type(EZspline1) :: spline_o
   real(fp), dimension(:), intent(in) :: f
   ! ier:
   ! 0=ok
@@ -13,19 +13,19 @@ subroutine EZspline_setup1(spline_o, f, ier, exact_dim)
   !  dimensioning match between f and spline_o%fspl; default is F
 
   logical :: iexact
-  integer ifail
+  integer :: ifail
 
   integer :: ipx
-  integer iper, imsg, itol, inum, in1
-  real(fp) ztol, df1, df2
+  integer :: iper, imsg, itol, inum, in1
+  real(fp) :: ztol, df1, df2
 
   !-------------------------
   iexact=.FALSE.
   if(present(exact_dim)) iexact = exact_dim
 
   if( .not.EZspline_allocated(spline_o) ) then
-     ier = 98
-     return
+    ier = 98
+    return
   end if
 
   in1 = size(spline_o%fspl,2)
@@ -34,8 +34,8 @@ subroutine EZspline_setup1(spline_o, f, ier, exact_dim)
   if(size(f,1).lt.in1) return
 
   if(iexact) then
-     ier = 58
-     if(size(f,1).gt.in1) return
+    ier = 58
+    if(size(f,1).gt.in1) return
   end if
   ier = 0
 
@@ -51,90 +51,85 @@ subroutine EZspline_setup1(spline_o, f, ier, exact_dim)
   iper=0
   if(spline_o%ibctype1(1)==-1 .OR. spline_o%ibctype1(2)==-1) iper=1
   call genxpkg(spline_o%n1, spline_o%x1(1), spline_o%x1pkg(1,1),&
-       & iper,imsg,itol,ztol, spline_o%klookup1 ,ifail)
+       iper,imsg,itol,ztol, spline_o%klookup1 ,ifail)
   if(ifail/=0) ier=27
 
   spline_o%isReady = 0
 
-  spline_o%fspl(1, 1:in1) = &
-       &  f(1:in1)
+  spline_o%fspl(1,1:in1) = f(1:in1)
 
   if (spline_o%isHermite == 0 .and. spline_o%isLinear == 0) then
 
-     call mkspline(             &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%fspl(1,1), &
-          &   spline_o%ibctype1(1), spline_o%bcval1min, &
-          &   spline_o%ibctype1(2), spline_o%bcval1max, &
-          &   spline_o%ilin1, ifail)
+    call mkspline(spline_o%x1(1), spline_o%n1, spline_o%fspl(1,1), &
+         spline_o%ibctype1(1), spline_o%bcval1min, &
+         spline_o%ibctype1(2), spline_o%bcval1max, &
+         spline_o%ilin1, ifail)
 
-     if(ifail /= 0) then
-        ier = 98
-     else
-        spline_o%isReady = 1
-     end if
+    if(ifail /= 0) then
+      ier = 98
+    else
+      spline_o%isReady = 1
+    end if
 
   else if (spline_o%isLinear == 1) then
 
-     spline_o%ilin1=0
-     if(in1.gt.2) then
-        if(spline_o%x1pkg(3,4).eq.0.0_fp) spline_o%ilin1=1  ! evenly spaced grid
-     else
-        spline_o%ilin1=1
-     end if
+    spline_o%ilin1=0
+    if(in1.gt.2) then
+      if(spline_o%x1pkg(3,4).eq.0.0_fp) spline_o%ilin1=1  ! evenly spaced grid
+    else
+      spline_o%ilin1=1
+    end if
 
-     spline_o%isReady = 1   ! no coefficient setup necessary
+    spline_o%isReady = 1   ! no coefficient setup necessary
 
   else
-     !
-     ! Hermite polynomial coefficient setup based on Akima's method
-     ! (df/dx..etc not required)
-     !
-     ipx = 0
-     if (spline_o%ibctype1(1)==-1 .or. spline_o%ibctype1(2)==-1) then
-        ipx=1
-     else if (spline_o%ibctype1(1)<-1 .or. spline_o%ibctype1(1)>1 .or. &
-          spline_o%ibctype1(2)<-1 .or. spline_o%ibctype1(2)>1 ) then
-        ipx=99  ! an error...
-     else if (spline_o%ibctype1(1)==1 .or. spline_o%ibctype1(2)==1) then
-        ipx=2
-        if(spline_o%ibctype1(1)==1) then
-           spline_o%fspl(2,1)=spline_o%bcval1min
-        else
-           ! hand implemented default BC
-           df1=(spline_o%fspl(1,2)-spline_o%fspl(1,1))/ &
-                (spline_o%x1(2)-spline_o%x1(1))
-           df2=(spline_o%fspl(1,3)-spline_o%fspl(1,2))/ &
-                (spline_o%x1(3)-spline_o%x1(2))
-           spline_o%fspl(2,1)=(3*df1-df2)/2
-        end if
-        inum=spline_o%n1
-        if(spline_o%ibctype1(2)==1) then
-           spline_o%fspl(2,inum)=spline_o%bcval1max
-        else
-           ! hand implemented default BC
-           df1=(spline_o%fspl(1,inum)-spline_o%fspl(1,inum-1))/ &
-                (spline_o%x1(inum)-spline_o%x1(inum-1))
-           df2=(spline_o%fspl(1,inum-1)-spline_o%fspl(1,inum-2))/ &
-                (spline_o%x1(inum-1)-spline_o%x1(inum-2))
-           spline_o%fspl(2,inum)=(3*df1-df2)/2
-        end if
-     end if
-     ifail = 0
-     call akherm1p(spline_o%x1(1), spline_o%n1, &
-          & spline_o%fspl(1,1), &
-          & spline_o%ilin1, &
-          & ipx, ifail)
-
-     if (ifail /=0 ) then
-        ier = 91
-     else
-        spline_o%isReady = 1
-     end if
-
+    !
+    ! Hermite polynomial coefficient setup based on Akima's method
+    ! (df/dx..etc not required)
+    !
+    ipx = 0
+    if (spline_o%ibctype1(1)==-1 .or. spline_o%ibctype1(2)==-1) then
+      ipx=1
+    else if (spline_o%ibctype1(1)<-1 .or. spline_o%ibctype1(1)>1 .or. &
+         spline_o%ibctype1(2)<-1 .or. spline_o%ibctype1(2)>1 ) then
+      ipx=99  ! an error...
+    else if (spline_o%ibctype1(1)==1 .or. spline_o%ibctype1(2)==1) then
+      ipx=2
+      if(spline_o%ibctype1(1)==1) then
+        spline_o%fspl(2,1)=spline_o%bcval1min
+      else
+        ! hand implemented default BC
+        df1=(spline_o%fspl(1,2)-spline_o%fspl(1,1))/ &
+             (spline_o%x1(2)-spline_o%x1(1))
+        df2=(spline_o%fspl(1,3)-spline_o%fspl(1,2))/ &
+             (spline_o%x1(3)-spline_o%x1(2))
+        spline_o%fspl(2,1)=(3*df1-df2)/2
+      end if
+      inum=spline_o%n1
+      if(spline_o%ibctype1(2)==1) then
+        spline_o%fspl(2,inum)=spline_o%bcval1max
+      else
+        ! hand implemented default BC
+        df1=(spline_o%fspl(1,inum)-spline_o%fspl(1,inum-1))/ &
+             (spline_o%x1(inum)-spline_o%x1(inum-1))
+        df2=(spline_o%fspl(1,inum-1)-spline_o%fspl(1,inum-2))/ &
+             (spline_o%x1(inum-1)-spline_o%x1(inum-2))
+        spline_o%fspl(2,inum)=(3*df1-df2)/2
+      end if
+    end if
+    ifail = 0
+    call akherm1p(spline_o%x1(1), spline_o%n1, &
+         spline_o%fspl(1,1), &
+         spline_o%ilin1, &
+         ipx, ifail)
+    if (ifail /=0 ) then
+      ier = 91
+    else
+      spline_o%isReady = 1
+    end if
   end if
 
-
+  return
 end subroutine EZspline_setup1
 
 
@@ -198,18 +193,17 @@ subroutine EZspline_setup2(spline_o, f, ier, exact_dim)
   iper=0
   if(spline_o%ibctype1(1)==-1 .OR. spline_o%ibctype1(2)==-1) iper=1
   call genxpkg(spline_o%n1,spline_o%x1(1),spline_o%x1pkg(1,1),&
-       & iper,imsg,itol,ztol,spline_o%klookup1,ifail)
+       iper,imsg,itol,ztol,spline_o%klookup1,ifail)
   if(ifail/=0) ier=27
   iper=0
   if(spline_o%ibctype2(1)==-1 .OR. spline_o%ibctype2(2)==-1) iper=1
   call genxpkg(spline_o%n2,spline_o%x2(1),spline_o%x2pkg(1,1),&
-       & iper,imsg,itol,ztol,spline_o%klookup2,ifail)
+       iper,imsg,itol,ztol,spline_o%klookup2,ifail)
   if(ifail/=0) ier=27
 
   spline_o%isReady = 0
 
-  spline_o%fspl(1, 1:in1, 1:in2) = &
-       &  f(1:in1, 1:in2)
+  spline_o%fspl(1,1:in1,1:in2) = f(1:in1,1:in2)
 
   ! this fixes a VMS f90 compiler optimizer problem:
   if(ztol.eq.-1.2345d30) &
@@ -218,146 +212,145 @@ subroutine EZspline_setup2(spline_o, f, ier, exact_dim)
   if (spline_o%isHybrid == 1) then
 
      call mkintrp2d( &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%x2(1), spline_o%n2, &
-          &   spline_o%hspline, spline_o%fspl(1,1,1), &
-          &   in0,in1,in2, &
-          &   spline_o%ibctype1(1), spline_o%bcval1min(1), &
-          &   spline_o%ibctype1(2), spline_o%bcval1max(1), &
-          &   spline_o%ibctype2(1), spline_o%bcval2min(1), &
-          &   spline_o%ibctype2(2), spline_o%bcval2max(1), &
-          &   ifail)
+          spline_o%x1(1), spline_o%n1, &
+          spline_o%x2(1), spline_o%n2, &
+          spline_o%hspline, spline_o%fspl(1,1,1), &
+          in0,in1,in2, &
+          spline_o%ibctype1(1), spline_o%bcval1min(1), &
+          spline_o%ibctype1(2), spline_o%bcval1max(1), &
+          spline_o%ibctype2(1), spline_o%bcval2min(1), &
+          spline_o%ibctype2(2), spline_o%bcval2max(1), &
+          ifail)
 
      spline_o%ilin1 = 0  ! Hybrid does not compute this
      spline_o%ilin2 = 0  ! Hybrid does not compute this
 
      if(ifail /= 0) then
-        ier = 98
+       ier = 98
      else
-        spline_o%isReady = 1
+       spline_o%isReady = 1
      end if
 
   else if (spline_o%isHermite == 0 .and. spline_o%isLinear == 0) then
 
      call mkbicub(             &
-          &   spline_o%x1(1), spline_o%n1, &
-          &   spline_o%x2(1), spline_o%n2, &
-          &   spline_o%fspl(1,1,1), spline_o%n1, &
-          &   spline_o%ibctype1(1), spline_o%bcval1min(1), &
-          &   spline_o%ibctype1(2), spline_o%bcval1max(1), &
-          &   spline_o%ibctype2(1), spline_o%bcval2min(1), &
-          &   spline_o%ibctype2(2), spline_o%bcval2max(1), &
-          &   spline_o%ilin1, spline_o%ilin2, ifail)
+          spline_o%x1(1), spline_o%n1, &
+          spline_o%x2(1), spline_o%n2, &
+          spline_o%fspl(1,1,1), spline_o%n1, &
+          spline_o%ibctype1(1), spline_o%bcval1min(1), &
+          spline_o%ibctype1(2), spline_o%bcval1max(1), &
+          spline_o%ibctype2(1), spline_o%bcval2min(1), &
+          spline_o%ibctype2(2), spline_o%bcval2max(1), &
+          spline_o%ilin1, spline_o%ilin2, ifail)
 
      if(ifail /= 0) then
-        ier = 98
+       ier = 98
      else
-        spline_o%isReady = 1
+       spline_o%isReady = 1
      end if
 
   else if (spline_o%isLinear == 1) then
+    spline_o%ilin1=0
+    if(in1.gt.2) then
+      if(spline_o%x1pkg(3,4).eq.0.0_fp) spline_o%ilin1=1  ! evenly spaced grid
+    else
+      spline_o%ilin1=1
+    end if
 
-     spline_o%ilin1=0
-     if(in1.gt.2) then
-        if(spline_o%x1pkg(3,4).eq.0.0_fp) spline_o%ilin1=1  ! evenly spaced grid
-     else
-        spline_o%ilin1=1
-     end if
+    spline_o%ilin2=0
+    if(in2.gt.2) then
+      if(spline_o%x2pkg(3,4).eq.0.0_fp) spline_o%ilin2=1  ! evenly spaced grid
+    else
+      spline_o%ilin2=1
+    end if
 
-     spline_o%ilin2=0
-     if(in2.gt.2) then
-        if(spline_o%x2pkg(3,4).eq.0.0_fp) spline_o%ilin2=1  ! evenly spaced grid
-     else
-        spline_o%ilin2=1
-     end if
-
-     spline_o%isReady = 1   ! no coefficient setup necessary
+    spline_o%isReady = 1   ! no coefficient setup necessary
 
   else
-     !
-     ! Hermite polynomial coefficient setup based on Akima's method
-     ! (df/dx..etc not required)
-     !
-     ipx = 0
-     if (spline_o%ibctype1(1)==-1 .or. spline_o%ibctype1(2)==-1) then
-        ipx=1
-     else if (spline_o%ibctype1(1)<-1 .or. spline_o%ibctype1(1)>1 .or. &
-          spline_o%ibctype1(2)<-1 .or. spline_o%ibctype1(2)>1 ) then
-        ipx=99  ! an error...
-     else if (spline_o%ibctype1(1)==1 .or. spline_o%ibctype1(2)==1) then
-        ipx=2
-        do jj=1,spline_o%n2
-           if(spline_o%ibctype1(1)==1) then
-              spline_o%fspl(2,1,jj)=spline_o%bcval1min(jj)
-           else
-              ! hand implemented default BC
-              df1=(spline_o%fspl(1,2,jj)-spline_o%fspl(1,1,jj))/ &
-                   (spline_o%x1(2)-spline_o%x1(1))
-              df2=(spline_o%fspl(1,3,jj)-spline_o%fspl(1,2,jj))/ &
-                   (spline_o%x1(3)-spline_o%x1(2))
-              spline_o%fspl(2,1,jj)=(3*df1-df2)/2
-           end if
-           inum=spline_o%n1
-           if(spline_o%ibctype1(2)==1) then
-              spline_o%fspl(2,inum,jj)=spline_o%bcval1max(jj)
-           else
-              ! hand implemented default BC
-              df1=(spline_o%fspl(1,inum,jj)-spline_o%fspl(1,inum-1,jj))/ &
-                   (spline_o%x1(inum)-spline_o%x1(inum-1))
-              df2=(spline_o%fspl(1,inum-1,jj)-spline_o%fspl(1,inum-2,jj))/ &
-                   (spline_o%x1(inum-1)-spline_o%x1(inum-2))
-              spline_o%fspl(2,inum,jj)=(3*df1-df2)/2
-           end if
-        end do
-     end if
-     ipy = 0
-     if (spline_o%ibctype2(1)==-1 .or. spline_o%ibctype2(2)==-1) then
-        ipy=1
-     else if (spline_o%ibctype2(1)<-1 .or. spline_o%ibctype2(1)>1 .or. &
-          spline_o%ibctype2(2)<-1 .or. spline_o%ibctype2(2)>1 ) then
-        ipy=99  ! an error...
-     else if (spline_o%ibctype2(1)==1 .or. spline_o%ibctype2(2)==1) then
-        ipy=2
-        do ii=1,spline_o%n1
-           if(spline_o%ibctype2(1)==1) then
-              spline_o%fspl(3,ii,1)=spline_o%bcval2min(ii)
-           else
-              ! hand implemented default BC
-              df1=(spline_o%fspl(1,ii,2)-spline_o%fspl(1,ii,1))/ &
-                   (spline_o%x2(2)-spline_o%x2(1))
-              df2=(spline_o%fspl(1,ii,3)-spline_o%fspl(1,ii,2))/ &
-                   (spline_o%x2(3)-spline_o%x2(2))
-              spline_o%fspl(3,ii,1)=(3*df1-df2)/2
-           end if
-           inum=spline_o%n2
-           if(spline_o%ibctype2(2)==1) then
-              spline_o%fspl(3,ii,inum)=spline_o%bcval2max(ii)
-           else
-              ! hand implemented default BC
-              df1=(spline_o%fspl(1,ii,inum)-spline_o%fspl(1,ii,inum-1))/ &
-                   (spline_o%x2(inum)-spline_o%x2(inum-1))
-              df2=(spline_o%fspl(1,ii,inum-1)-spline_o%fspl(1,ii,inum-2))/ &
-                   (spline_o%x2(inum-1)-spline_o%x2(inum-2))
-              spline_o%fspl(3,ii,inum)=(3*df1-df2)/2
-           end if
-        end do
-     end if
-     ifail = 0
-     call akherm2p(spline_o%x1(1), spline_o%n1, &
-          &         spline_o%x2(1), spline_o%n2, &
-          & spline_o%fspl(1,1,1), spline_o%n1, &
-          & spline_o%ilin1, spline_o%ilin2, &
-          & ipx,ipy, ifail)
+    !
+    ! Hermite polynomial coefficient setup based on Akima's method
+    ! (df/dx..etc not required)
+    !
+    ipx = 0
+    if (spline_o%ibctype1(1)==-1 .or. spline_o%ibctype1(2)==-1) then
+      ipx=1
+    else if (spline_o%ibctype1(1)<-1 .or. spline_o%ibctype1(1)>1 .or. &
+         spline_o%ibctype1(2)<-1 .or. spline_o%ibctype1(2)>1 ) then
+      ipx=99  ! an error...
+    else if (spline_o%ibctype1(1)==1 .or. spline_o%ibctype1(2)==1) then
+      ipx=2
+      do jj=1,spline_o%n2
+        if(spline_o%ibctype1(1)==1) then
+          spline_o%fspl(2,1,jj)=spline_o%bcval1min(jj)
+        else
+          ! hand implemented default BC
+          df1=(spline_o%fspl(1,2,jj)-spline_o%fspl(1,1,jj))/ &
+               (spline_o%x1(2)-spline_o%x1(1))
+          df2=(spline_o%fspl(1,3,jj)-spline_o%fspl(1,2,jj))/ &
+               (spline_o%x1(3)-spline_o%x1(2))
+          spline_o%fspl(2,1,jj)=(3*df1-df2)/2
+        end if
+        inum=spline_o%n1
+        if(spline_o%ibctype1(2)==1) then
+          spline_o%fspl(2,inum,jj)=spline_o%bcval1max(jj)
+        else
+          ! hand implemented default BC
+          df1=(spline_o%fspl(1,inum,jj)-spline_o%fspl(1,inum-1,jj))/ &
+               (spline_o%x1(inum)-spline_o%x1(inum-1))
+          df2=(spline_o%fspl(1,inum-1,jj)-spline_o%fspl(1,inum-2,jj))/ &
+               (spline_o%x1(inum-1)-spline_o%x1(inum-2))
+          spline_o%fspl(2,inum,jj)=(3*df1-df2)/2
+        end if
+      end do
+    end if
+    ipy = 0
+    if (spline_o%ibctype2(1)==-1 .or. spline_o%ibctype2(2)==-1) then
+      ipy=1
+    else if (spline_o%ibctype2(1)<-1 .or. spline_o%ibctype2(1)>1 .or. &
+         spline_o%ibctype2(2)<-1 .or. spline_o%ibctype2(2)>1 ) then
+      ipy=99  ! an error...
+    else if (spline_o%ibctype2(1)==1 .or. spline_o%ibctype2(2)==1) then
+      ipy=2
+      do ii=1,spline_o%n1
+        if(spline_o%ibctype2(1)==1) then
+          spline_o%fspl(3,ii,1)=spline_o%bcval2min(ii)
+        else
+          ! hand implemented default BC
+          df1=(spline_o%fspl(1,ii,2)-spline_o%fspl(1,ii,1))/ &
+               (spline_o%x2(2)-spline_o%x2(1))
+          df2=(spline_o%fspl(1,ii,3)-spline_o%fspl(1,ii,2))/ &
+               (spline_o%x2(3)-spline_o%x2(2))
+          spline_o%fspl(3,ii,1)=(3*df1-df2)/2
+        end if
+        inum=spline_o%n2
+        if(spline_o%ibctype2(2)==1) then
+          spline_o%fspl(3,ii,inum)=spline_o%bcval2max(ii)
+        else
+          ! hand implemented default BC
+          df1=(spline_o%fspl(1,ii,inum)-spline_o%fspl(1,ii,inum-1))/ &
+               (spline_o%x2(inum)-spline_o%x2(inum-1))
+          df2=(spline_o%fspl(1,ii,inum-1)-spline_o%fspl(1,ii,inum-2))/ &
+               (spline_o%x2(inum-1)-spline_o%x2(inum-2))
+          spline_o%fspl(3,ii,inum)=(3*df1-df2)/2
+        end if
+      end do
+    end if
+    ifail = 0
+    call akherm2p(spline_o%x1(1), spline_o%n1, &
+         spline_o%x2(1), spline_o%n2, &
+         spline_o%fspl(1,1,1), spline_o%n1, &
+         spline_o%ilin1, spline_o%ilin2, &
+         ipx,ipy, ifail)
 
-     if (ifail /=0 ) then
-        ier = 91
-     else
-        spline_o%isReady = 1
-     end if
+    if (ifail /=0 ) then
+      ier = 91
+    else
+      spline_o%isReady = 1
+    end if
 
   end if
 
-
+  return
 end subroutine EZspline_setup2
 
 
@@ -640,5 +633,5 @@ subroutine EZspline_setup3(spline_o, f, ier, exact_dim)
 
   end if
 
-
+  return
 end subroutine EZspline_setup3

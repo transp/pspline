@@ -18,10 +18,10 @@ subroutine EZspline_init1(spline_o, n1, BCS1, ier)
   ier = 0
 
   if(EZspline_allocated(spline_o)) then
-     ier = 100  ! allocated already
-     return
+    ier = 100  ! allocated already
+    return
   else
-     call EZspline_preInit(spline_o)
+    call EZspline_preInit(spline_o)
   end if
 
   spline_o%n1 = n1
@@ -40,27 +40,26 @@ subroutine EZspline_init1(spline_o, n1, BCS1, ier)
   if(iok /= 0) ier = 1
 
   do i = 1, 2
-
-     spline_o%bcval1min = 0.0_fp
-     spline_o%bcval1max = 0.0_fp
-     select case(BCS1(i))
-     case (-1)
-        spline_o%ibctype1(i) = -1
-     case (0)
-        spline_o%ibctype1(i) = 0
-     case (1)
-        spline_o%ibctype1(i) = 1
-     case (2)
-        spline_o%ibctype1(i) = 2
-     case default
-        ier = 2
-        spline_o%ibctype1(i) = 0
-     end select
-
+    spline_o%bcval1min = 0.0_fp
+    spline_o%bcval1max = 0.0_fp
+    select case(BCS1(i))
+    case (-1)
+      spline_o%ibctype1(i) = -1
+    case (0)
+      spline_o%ibctype1(i) = 0
+    case (1)
+      spline_o%ibctype1(i) = 1
+    case (2)
+      spline_o%ibctype1(i) = 2
+    case default
+      ier = 2
+      spline_o%ibctype1(i) = 0
+    end select
   end do
+
   if(spline_o%ibctype1(1)==-1 .OR. spline_o%ibctype1(2)==-1) then
-     spline_o%ibctype1(1)=-1
-     spline_o%ibctype1(2)=-1
+    spline_o%ibctype1(1)=-1
+    spline_o%ibctype1(2)=-1
   end if
 
   !
@@ -70,14 +69,12 @@ subroutine EZspline_init1(spline_o, n1, BCS1, ier)
   if(BCS1(2)==-1) spline_o%x1max = ezspline_twopi
 
   spline_o%x1 = spline_o%x1min + (spline_o%x1max - spline_o%x1min)* &
-       & (/ (real(i-1,fp)/real(spline_o%n1-1, fp), i=1,spline_o%n1 ) /)
+       (/ (real(i-1,fp)/real(spline_o%n1-1, fp), i=1,spline_o%n1 ) /)
 
   spline_o%isReady = 0
 
   return
 end subroutine EZspline_init1
-
-
 
 
 subroutine EZspline_init2(spline_o, n1, n2, BCS1, BCS2, ier)
@@ -188,12 +185,12 @@ subroutine EZspline_init2(spline_o, n1, n2, BCS1, BCS2, ier)
   if(BCS1(2)==-1) spline_o%x1max = ezspline_twopi
 
   spline_o%x1 = spline_o%x1min + (spline_o%x1max - spline_o%x1min)* &
-       & (/ (real(i-1,fp)/real(spline_o%n1-1, fp), i=1,spline_o%n1 ) /)
+       (/ (real(i-1,fp)/real(spline_o%n1-1, fp), i=1,spline_o%n1 ) /)
   spline_o%x2min = 0.0_fp
   spline_o%x2max = 1.0_fp
   if(BCS2(2)==-1) spline_o%x2max = ezspline_twopi
   spline_o%x2 = spline_o%x2min + (spline_o%x2max - spline_o%x2min)* &
-       & (/ (real(i-1,fp)/real(spline_o%n2-1, fp), i=1,spline_o%n2 ) /)
+       (/ (real(i-1,fp)/real(spline_o%n2-1, fp), i=1,spline_o%n2 ) /)
 
   spline_o%isReady = 0
 
@@ -342,18 +339,18 @@ subroutine EZspline_init3(spline_o, n1, n2, n3, BCS1, BCS2, BCS3, ier)
   if(BCS1(2)==-1) spline_o%x1max = ezspline_twopi
 
   spline_o%x1 = spline_o%x1min + (spline_o%x1max - spline_o%x1min)* &
-       & (/ (real(i-1,fp)/real(spline_o%n1-1, fp), i=1,spline_o%n1 ) /)
+       (/ (real(i-1,fp)/real(spline_o%n1-1, fp), i=1,spline_o%n1 ) /)
   spline_o%x2min = 0.0_fp
   spline_o%x2max = 1.0_fp
   if(BCS2(2)==-1) spline_o%x2max = ezspline_twopi
   spline_o%x2 = spline_o%x2min + (spline_o%x2max - spline_o%x2min)* &
-       & (/ (real(i-1,fp)/real(spline_o%n2-1, fp), i=1,spline_o%n2 ) /)
+       (/ (real(i-1,fp)/real(spline_o%n2-1, fp), i=1,spline_o%n2 ) /)
 
   spline_o%x3min = 0.0_fp
   spline_o%x3max = 1.0_fp
   if(BCS3(2)==-1) spline_o%x3max = ezspline_twopi
   spline_o%x3 = spline_o%x3min + (spline_o%x3max - spline_o%x3min)* &
-       & (/ (real(i-1,fp)/real(spline_o%n3-1, fp), i=1,spline_o%n3 ) /)
+       (/ (real(i-1,fp)/real(spline_o%n3-1, fp), i=1,spline_o%n3 ) /)
 
   spline_o%isReady = 0
 

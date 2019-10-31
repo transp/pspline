@@ -3,9 +3,9 @@ module EZspline_type
 
   real(fp), parameter :: ezspline_twopi = 6.2831853071795865_fp
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   ! EZspline data types
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   type EZspline3
     !
@@ -828,7 +828,6 @@ module EZspline
   end interface
 
 
-
   interface EZspline_interp
     !
     ! Interpolation at grid point(s) p1, [p2, [p3]]. Result is returned in
@@ -1221,8 +1220,8 @@ module EZspline
     subroutine EZspline_save1(spline_o,filename,ier,spl_name,fullsave)
       use EZspline_obj
       use EZcdf
-      type(EZspline1) :: spline_o
-      character(len=*) :: filename
+      type(EZspline1), intent(in) :: spline_o
+      character(len=*), intent(in) :: filename
       integer, intent(out) :: ier
 
       character(len=*), intent(in),optional :: spl_name
@@ -1253,8 +1252,7 @@ module EZspline
       type(EZspline3) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
-
-      character(len=*), intent(in),optional :: spl_name
+      character(len=*), intent(in), optional :: spl_name
     end subroutine EZspline_load3
 
     subroutine EZspline_load2(spline_o, filename, ier, spl_name)
@@ -1263,8 +1261,7 @@ module EZspline
       type(EZspline2) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
-
-      character(len=*), intent(in),optional :: spl_name
+      character(len=*), intent(in), optional :: spl_name
     end subroutine EZspline_load2
 
     subroutine EZspline_load1(spline_o, filename, ier, spl_name)
@@ -1273,8 +1270,7 @@ module EZspline
       type(EZspline1) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
-
-      character(len=*), intent(in),optional :: spl_name
+      character(len=*), intent(in), optional :: spl_name
     end subroutine EZspline_load1
 
   end interface

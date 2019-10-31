@@ -31,8 +31,6 @@ subroutine EZspline_load1(spline_o, filename, ier, spl_name)
 
   integer ncid, ifail
   integer dimlens(3)
-  character(len=2), parameter :: real8='R8'
-  character(len=3), parameter :: int='INT'
   integer n1, BCS1(2)
   real(fp), dimension(:), allocatable :: f
 
@@ -42,16 +40,16 @@ subroutine EZspline_load1(spline_o, filename, ier, spl_name)
   logical :: fullsv
 
   if(present(spl_name)) then
-     zpre = spl_name
+    zpre = spl_name
   else
-     zpre = ' '
+    zpre = ' '
   end if
 
   ier = 0
   call cdfOpn(ncid, filename, 'r') ! no error flag??
   if(ncid==0) then
-     ier=43
-     return
+    ier=43
+    return
   end if
 
   ! check if n1 is present; check if spline object has correct rank
@@ -164,8 +162,6 @@ subroutine EZspline_load2(spline_o, filename, ier, spl_name)
 
   integer ncid, ifail, in0, in1, in2
   integer dimlens(3)
-  character(len=2), parameter :: real8='R8'
-  character(len=3), parameter :: int='INT'
   integer n1, n2, BCS1(2), BCS2(2), hspline(2)
   real(fp), dimension(:,:), allocatable :: f
 
@@ -319,8 +315,6 @@ subroutine EZspline_load3(spline_o, filename, ier, spl_name)
 
   integer ncid, ifail, in0, in1, in2, in3
   integer dimlens(3)
-  character(len=2), parameter :: real8='R8'
-  character(len=3), parameter :: int='INT'
   integer n1, n2, n3, BCS1(2), BCS2(2), BCS3(2), hspline(3)
   real(fp), dimension(:,:,:), allocatable :: f
 

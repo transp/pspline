@@ -11,13 +11,12 @@
 ! 1-D
 !
 
-subroutine EZspline_save1(spline_o, filename, ier, &
-     spl_name, fullsave)
+subroutine EZspline_save1(spline_o, filename, ier, spl_name, fullsave)
   use EZspline_obj
   use EZcdf
   implicit none
-  type(EZspline1) :: spline_o
-  character(len=*) :: filename
+  type(EZspline1),  intent(in) :: spline_o
+  character(len=*), intent(in) :: filename
   ! ier:
   ! 17=could not save spline object in file filename
   integer, intent(out) :: ier
@@ -25,11 +24,11 @@ subroutine EZspline_save1(spline_o, filename, ier, &
   !  if SPL_NAME is set, APPEND to file instead of creating new; prepend
   !  name to all NetCDF data items.  This allows one file to contain
   !  multiple items. (new dmc Mar 2006)
-  character(len=*), intent(in), OPTIONAL :: SPL_NAME  ! optional spline "name"
+  character(len=*), intent(in), optional :: spl_name  ! optional spline "name"
 
   !  if FULLSAVE is set .TRUE., save derived coefficients along with data
   !  this saves recalculating the coefficients when file is read (Mar 2006)
-  logical, intent(in), OPTIONAL :: FULLSAVE
+  logical, intent(in), optional :: fullsave
 
   integer ncid, ifail, in0, in1
   integer dimlens(3)
@@ -41,37 +40,36 @@ subroutine EZspline_save1(spline_o, filename, ier, &
 
   ier = 0
   if(spline_o%isReady /= 1) then
-     ier = 94
-     return
+    ier = 94
+    return
   end if
 
   in0 = size(spline_o%fspl,1)
   in1 = size(spline_o%fspl,2)
-
   if(present(spl_name)) then
-     call ezspline_spl_name_chk(spl_name,ier)
-     if(ier.ne.0) return
-     zpre=spl_name
+    call ezspline_spl_name_chk(spl_name,ier)
+    if(ier.ne.0) return
+    zpre=spl_name
   else
-     zpre=' '
+    zpre=' '
   end if
 
   if(present(fullsave)) then
-     fullsv=fullsave
+    fullsv=fullsave
   else
-     fullsv=.FALSE.
+    fullsv=.FALSE.
   end if
 
   if(zpre.eq.' ') then
-     call cdfOpn(ncid, filename, 'w') ! no error flag??
-     imodify=.FALSE.
+    call cdfOpn(ncid, filename, 'w') ! no error flag??
+    imodify=.FALSE.
   else
-     call cdfOpn(ncid, filename, 'v') ! Append if exists, else create new
-     imodify=.TRUE.
+    call cdfOpn(ncid, filename, 'v') ! Append if exists, else create new
+    imodify=.TRUE.
   end if
   if(ncid==0) then
-     ier = 39
-     return
+    ier = 39
+    return
   end if
 
   dimlens = (/1, 1, 1/) ! scalar
@@ -92,16 +90,16 @@ subroutine EZspline_save1(spline_o, filename, ier, &
   !
   dimlens = (/spline_o%n1, 1, 1/)
   if(.not.fullsv) then
-     call ezspline_defVar(ncid, trim(zpre)//'f', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'f', dimlens, real8, imodify, ier)
   else
-     dimlens = (/1, 1, 1/) ! scalar
-     call ezspline_defVar(ncid, trim(zpre)//'x1min', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x1max', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'ilin1', dimlens, int, imodify, ier)
-     dimlens = (/spline_o%n1, 4, 1/)
-     call ezspline_defVar(ncid, trim(zpre)//'x1pkg', dimlens, real8, imodify, ier)
-     dimlens = (/2, spline_o%n1, 1/)
-     call ezspline_defVar(ncid, trim(zpre)//'fspl', dimlens, real8, imodify, ier)
+    dimlens = (/1, 1, 1/) ! scalar
+    call ezspline_defVar(ncid, trim(zpre)//'x1min', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x1max', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'ilin1', dimlens, int, imodify, ier)
+    dimlens = (/spline_o%n1, 4, 1/)
+    call ezspline_defVar(ncid, trim(zpre)//'x1pkg', dimlens, real8, imodify, ier)
+    dimlens = (/2, spline_o%n1, 1/)
+    call ezspline_defVar(ncid, trim(zpre)//'fspl', dimlens, real8, imodify, ier)
   end if
   if(ier.ne.0) return
 
@@ -115,22 +113,22 @@ subroutine EZspline_save1(spline_o, filename, ier, &
   call cdfPutVar(ncid, trim(zpre)//'bcval1min', spline_o%bcval1min, ifail)
   call cdfPutVar(ncid, trim(zpre)//'bcval1max', spline_o%bcval1max, ifail)
   if(ifail/=0) then
-     ier=40
-     return
+    ier=40
+    return
   end if
 
   if(spline_o%isReady == 1) then
-     if(.not.fullsv) then
-        call cdfPutVar(ncid, trim(zpre)//'f', spline_o%fspl(1,:), ifail)
-     else
-        call cdfPutVar(ncid, trim(zpre)//'x1min', spline_o%x1min, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x1max', spline_o%x1max, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'ilin1', spline_o%ilin1, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x1pkg', spline_o%x1pkg, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'fspl', spline_o%fspl, ifail)
-     end if
+    if(.not.fullsv) then
+      call cdfPutVar(ncid, trim(zpre)//'f', spline_o%fspl(1,:), ifail)
+    else
+      call cdfPutVar(ncid, trim(zpre)//'x1min', spline_o%x1min, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x1max', spline_o%x1max, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'ilin1', spline_o%ilin1, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x1pkg', spline_o%x1pkg, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'fspl', spline_o%fspl, ifail)
+    end if
   else
-     ier = 93
+    ier = 93
   end if
 
   call cdfCls(ncid)
@@ -145,8 +143,7 @@ end subroutine EZspline_save1
 !! 2-D
 !!
 
-subroutine EZspline_save2(spline_o, filename, ier, &
-     spl_name, fullsave)
+subroutine EZspline_save2(spline_o, filename, ier, spl_name, fullsave)
   use EZspline_obj
   use EZcdf
   implicit none
@@ -159,11 +156,11 @@ subroutine EZspline_save2(spline_o, filename, ier, &
   !  if SPL_NAME is set, APPEND to file instead of creating new; prepend
   !  name to all NetCDF data items.  This allows one file to contain
   !  multiple items. (new dmc Mar 2006)
-  character(len=*), intent(in), OPTIONAL :: SPL_NAME  ! optional spline "name"
+  character(len=*), intent(in), optional :: spl_name  ! optional spline "name"
 
   !  if FULLSAVE is set .TRUE., save derived coefficients along with data
   !  this saves recalculating the coefficients when file is read (Mar 2006)
-  logical, intent(in), OPTIONAL :: FULLSAVE
+  logical, intent(in), optional :: fullsave
 
   integer ncid, ifail, in0, in1, in2
   integer dimlens(3)
@@ -175,8 +172,8 @@ subroutine EZspline_save2(spline_o, filename, ier, &
 
   ier = 0
   if(spline_o%isReady /= 1) then
-     ier = 94
-     return
+    ier = 94
+    return
   end if
 
   in0 = size(spline_o%fspl,1)
@@ -184,29 +181,29 @@ subroutine EZspline_save2(spline_o, filename, ier, &
   in2 = size(spline_o%fspl,3)
 
   if(present(spl_name)) then
-     call ezspline_spl_name_chk(spl_name,ier)
-     if(ier.ne.0) return
-     zpre=spl_name
+    call ezspline_spl_name_chk(spl_name,ier)
+    if(ier.ne.0) return
+    zpre=spl_name
   else
-     zpre=' '
+    zpre=' '
   end if
 
   if(present(fullsave)) then
-     fullsv=fullsave
+    fullsv=fullsave
   else
-     fullsv=.FALSE.
+    fullsv=.FALSE.
   end if
 
   if(zpre.eq.' ') then
-     call cdfOpn(ncid, filename, 'w') ! no error flag??
-     imodify=.FALSE.
+    call cdfOpn(ncid, filename, 'w') ! no error flag??
+    imodify=.FALSE.
   else
-     call cdfOpn(ncid, filename, 'v') ! Append if exists, else create new
-     imodify=.TRUE.
+    call cdfOpn(ncid, filename, 'v') ! Append if exists, else create new
+    imodify=.TRUE.
   end if
   if(ncid==0) then
-     ier = 39
-     return
+    ier = 39
+    return
   end if
 
   dimlens = (/1, 1, 1/) ! scalar
@@ -238,21 +235,21 @@ subroutine EZspline_save2(spline_o, filename, ier, &
   !
   dimlens = (/in1, in2, 1/)
   if(.not.fullsv) then
-     call ezspline_defVar(ncid, trim(zpre)//'f', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'f', dimlens, real8, imodify, ier)
   else
-     dimlens = (/1, 1, 1/) ! scalar
-     call ezspline_defVar(ncid, trim(zpre)//'x1min', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x1max', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'ilin1', dimlens, int, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x2min', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x2max', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'ilin2', dimlens, int, imodify, ier)
-     dimlens = (/spline_o%n1, 4, 1/)
-     call ezspline_defVar(ncid, trim(zpre)//'x1pkg', dimlens, real8, imodify, ier)
-     dimlens = (/spline_o%n2, 4, 1/)
-     call ezspline_defVar(ncid, trim(zpre)//'x2pkg', dimlens, real8, imodify, ier)
-     dimlens = (/in0, in1, in2/)
-     call ezspline_defVar(ncid, trim(zpre)//'fspl', dimlens, real8, imodify, ier)
+    dimlens = (/1, 1, 1/) ! scalar
+    call ezspline_defVar(ncid, trim(zpre)//'x1min', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x1max', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'ilin1', dimlens, int, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x2min', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x2max', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'ilin2', dimlens, int, imodify, ier)
+    dimlens = (/spline_o%n1, 4, 1/)
+    call ezspline_defVar(ncid, trim(zpre)//'x1pkg', dimlens, real8, imodify, ier)
+    dimlens = (/spline_o%n2, 4, 1/)
+    call ezspline_defVar(ncid, trim(zpre)//'x2pkg', dimlens, real8, imodify, ier)
+    dimlens = (/in0, in1, in2/)
+    call ezspline_defVar(ncid, trim(zpre)//'fspl', dimlens, real8, imodify, ier)
   end if
   if(ier.ne.0) return
 
@@ -274,26 +271,26 @@ subroutine EZspline_save2(spline_o, filename, ier, &
   call cdfPutVar(ncid, trim(zpre)//'bcval2min', spline_o%bcval2min, ifail)
   call cdfPutVar(ncid, trim(zpre)//'bcval2max', spline_o%bcval2max, ifail)
   if(ifail/=0) then
-     ier=40
-     return
+    ier=40
+    return
   end if
 
   if(spline_o%isReady == 1) then
-     if(.not.fullsv) then
-        call cdfPutVar(ncid, trim(zpre)//'f', spline_o%fspl(1,:,:), ifail)
-     else
-        call cdfPutVar(ncid, trim(zpre)//'x1min', spline_o%x1min, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x1max', spline_o%x1max, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'ilin1', spline_o%ilin1, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x2min', spline_o%x2min, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x2max', spline_o%x2max, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'ilin2', spline_o%ilin2, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x1pkg', spline_o%x1pkg, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x2pkg', spline_o%x2pkg, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'fspl', spline_o%fspl, ifail)
-     end if
+    if(.not.fullsv) then
+      call cdfPutVar(ncid, trim(zpre)//'f', spline_o%fspl(1,:,:), ifail)
+    else
+      call cdfPutVar(ncid, trim(zpre)//'x1min', spline_o%x1min, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x1max', spline_o%x1max, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'ilin1', spline_o%ilin1, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x2min', spline_o%x2min, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x2max', spline_o%x2max, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'ilin2', spline_o%ilin2, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x1pkg', spline_o%x1pkg, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x2pkg', spline_o%x2pkg, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'fspl', spline_o%fspl, ifail)
+    end if
   else
-     ier = 93
+    ier = 93
   end if
 
   call cdfCls(ncid)
@@ -308,8 +305,7 @@ end subroutine EZspline_save2
 !!! 3-D
 !!!
 
-subroutine EZspline_save3(spline_o, filename, ier, &
-     spl_name, fullsave)
+subroutine EZspline_save3(spline_o, filename, ier, spl_name, fullsave)
   use EZspline_obj
   use EZcdf
   implicit none
@@ -322,11 +318,11 @@ subroutine EZspline_save3(spline_o, filename, ier, &
   !  if SPL_NAME is set, APPEND to file instead of creating new; prepend
   !  name to all NetCDF data items.  This allows one file to contain
   !  multiple items. (new dmc Mar 2006)
-  character(len=*), intent(in), OPTIONAL :: SPL_NAME  ! optional spline "name"
+  character(len=*), intent(in), optional :: spl_name  ! optional spline "name"
 
   !  if FULLSAVE is set .TRUE., save derived coefficients along with data
   !  this saves recalculating the coefficients when file is read (Mar 2006)
-  logical, intent(in), OPTIONAL :: FULLSAVE
+  logical, intent(in), optional :: fullsave
 
   integer ncid, ifail, in0, in1, in2, in3
   integer dimlens(3)
@@ -338,8 +334,8 @@ subroutine EZspline_save3(spline_o, filename, ier, &
 
   ier = 0
   if(spline_o%isReady /= 1) then
-     ier = 94
-     return
+    ier = 94
+    return
   end if
 
   in0 = size(spline_o%fspl,1)
@@ -348,29 +344,29 @@ subroutine EZspline_save3(spline_o, filename, ier, &
   in3 = size(spline_o%fspl,4)
 
   if(present(spl_name)) then
-     call ezspline_spl_name_chk(spl_name,ier)
-     if(ier.ne.0) return
-     zpre=spl_name
+    call ezspline_spl_name_chk(spl_name,ier)
+    if(ier.ne.0) return
+    zpre=spl_name
   else
-     zpre=' '
+    zpre=' '
   end if
 
   if(present(fullsave)) then
-     fullsv=fullsave
+    fullsv=fullsave
   else
-     fullsv=.FALSE.
+    fullsv=.FALSE.
   end if
 
   if(zpre.eq.' ') then
-     call cdfOpn(ncid, filename, 'w') ! no error flag??
-     imodify=.FALSE.
+    call cdfOpn(ncid, filename, 'w') ! no error flag??
+    imodify=.FALSE.
   else
-     call cdfOpn(ncid, filename, 'v') ! Append if exists, else create new
-     imodify=.TRUE.
+    call cdfOpn(ncid, filename, 'v') ! Append if exists, else create new
+    imodify=.TRUE.
   end if
   if(ncid==0) then
-     ier = 39
-     return
+    ier = 39
+    return
   end if
 
   dimlens = (/1, 1, 1/) ! scalar
@@ -410,26 +406,26 @@ subroutine EZspline_save3(spline_o, filename, ier, &
   !
   dimlens = (/in1, in2, in3/)
   if(.not.fullsv) then
-     call ezspline_defVar(ncid, trim(zpre)//'f', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'f', dimlens, real8, imodify, ier)
   else
-     dimlens = (/1, 1, 1/) ! scalar
-     call ezspline_defVar(ncid, trim(zpre)//'x1min', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x1max', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'ilin1', dimlens, int, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x2min', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x2max', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'ilin2', dimlens, int, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x3min', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'x3max', dimlens, real8, imodify, ier)
-     call ezspline_defVar(ncid, trim(zpre)//'ilin3', dimlens, int, imodify, ier)
-     dimlens = (/spline_o%n1, 4, 1/)
-     call ezspline_defVar(ncid, trim(zpre)//'x1pkg', dimlens, real8, imodify, ier)
-     dimlens = (/spline_o%n2, 4, 1/)
-     call ezspline_defVar(ncid, trim(zpre)//'x2pkg', dimlens, real8, imodify, ier)
-     dimlens = (/spline_o%n3, 4, 1/)
-     call ezspline_defVar(ncid, trim(zpre)//'x3pkg', dimlens, real8, imodify, ier)
-     dimlens = (/in0*in1, in2, in3/)
-     call ezspline_defVar(ncid, trim(zpre)//'fspl', dimlens, real8, imodify, ier)
+    dimlens = (/1, 1, 1/) ! scalar
+    call ezspline_defVar(ncid, trim(zpre)//'x1min', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x1max', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'ilin1', dimlens, int, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x2min', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x2max', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'ilin2', dimlens, int, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x3min', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'x3max', dimlens, real8, imodify, ier)
+    call ezspline_defVar(ncid, trim(zpre)//'ilin3', dimlens, int, imodify, ier)
+    dimlens = (/spline_o%n1, 4, 1/)
+    call ezspline_defVar(ncid, trim(zpre)//'x1pkg', dimlens, real8, imodify, ier)
+    dimlens = (/spline_o%n2, 4, 1/)
+    call ezspline_defVar(ncid, trim(zpre)//'x2pkg', dimlens, real8, imodify, ier)
+    dimlens = (/spline_o%n3, 4, 1/)
+    call ezspline_defVar(ncid, trim(zpre)//'x3pkg', dimlens, real8, imodify, ier)
+    dimlens = (/in0*in1, in2, in3/)
+    call ezspline_defVar(ncid, trim(zpre)//'fspl', dimlens, real8, imodify, ier)
   end if
   if(ier.ne.0) return
 
@@ -457,31 +453,31 @@ subroutine EZspline_save3(spline_o, filename, ier, &
   call cdfPutVar(ncid, trim(zpre)//'bcval3min', spline_o%bcval3min, ifail)
   call cdfPutVar(ncid, trim(zpre)//'bcval3max', spline_o%bcval3max, ifail)
   if(ifail/=0) then
-     ier=40
-     return
+    ier=40
+    return
   end if
 
   if(spline_o%isReady == 1) then
-     if(.not.fullsv) then
-        call cdfPutVar(ncid, trim(zpre)//'f', spline_o%fspl(1,:,:,:), ifail)
-     else
-        call cdfPutVar(ncid, trim(zpre)//'x1min', spline_o%x1min, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x1max', spline_o%x1max, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'ilin1', spline_o%ilin1, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x2min', spline_o%x2min, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x2max', spline_o%x2max, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'ilin2', spline_o%ilin2, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x3min', spline_o%x3min, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x3max', spline_o%x3max, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'ilin3', spline_o%ilin3, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x1pkg', spline_o%x1pkg, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x2pkg', spline_o%x2pkg, ifail)
-        call cdfPutVar(ncid, trim(zpre)//'x3pkg', spline_o%x3pkg, ifail)
-        call ezspline_cdfput3(ncid, trim(zpre)//'fspl', spline_o%fspl, &
-             in0*in1, in2, in3, ifail)
-     end if
+    if(.not.fullsv) then
+      call cdfPutVar(ncid, trim(zpre)//'f', spline_o%fspl(1,:,:,:), ifail)
+    else
+      call cdfPutVar(ncid, trim(zpre)//'x1min', spline_o%x1min, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x1max', spline_o%x1max, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'ilin1', spline_o%ilin1, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x2min', spline_o%x2min, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x2max', spline_o%x2max, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'ilin2', spline_o%ilin2, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x3min', spline_o%x3min, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x3max', spline_o%x3max, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'ilin3', spline_o%ilin3, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x1pkg', spline_o%x1pkg, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x2pkg', spline_o%x2pkg, ifail)
+      call cdfPutVar(ncid, trim(zpre)//'x3pkg', spline_o%x3pkg, ifail)
+      call ezspline_cdfput3(ncid, trim(zpre)//'fspl', spline_o%fspl, &
+           in0*in1, in2, in3, ifail)
+    end if
   else
-     ier = 93
+    ier = 93
   end if
 
   call cdfCls(ncid)
@@ -506,19 +502,19 @@ subroutine ezspline_spl_name_chk(spl_name,ier)
   ilen = len(trim(spl_name))
 
   if(ilen.le.0) then
-     ier=50
+    ier=50
   else if(ilen.gt.20) then
-     ier=51
+    ier=51
   else
-     indx=index(zlegal,spl_name(1:1))
-     if(indx.le.10) then
-        ier=52
-     else
-        do ic=2,ilen
-           indx=index(zlegal,spl_name(ic:ic))
-           if(indx.le.0) ier=52
-        end do
-     end if
+    indx=index(zlegal,spl_name(1:1))
+    if(indx.le.10) then
+      ier=52
+    else
+      do ic=2,ilen
+        indx=index(zlegal,spl_name(ic:ic))
+        if(indx.le.0) ier=52
+      end do
+    end if
   end if
 
 end subroutine ezspline_spl_name_chk
@@ -546,42 +542,31 @@ subroutine ezspline_defVar(ncid, name, dimlens, ztype, imodify, ier)
   !-----------------------------
 
   if(.not.imodify) then
-
-     ! simply define the quantity...
-
-     call cdfDefVar(ncid, name, dimlens, ztype, ifail)
-     if(ifail.ne.0) ier=42
+    ! simply define the quantity...
+    call cdfDefVar(ncid, name, dimlens, ztype, ifail)
+    if(ifail.ne.0) ier=42
 
   else
-
-     ifail = nf_inq_varid(ncid, name, ivarid)
-     if(ifail.ne.0) then
-
-        ! assume item does not exist, so, just define it...
-
-        call cdfDefVar(ncid, name, dimlens, ztype, ifail)
-        if(ifail.ne.0) ier=42
-
-     else
-
-        ! item DOES exist; require dimension & type match...
-
-        call cdfInqVar(ncid, name, dimlens_loc, ztype_loc, ifail)
-        if(ztype.ne.ztype_loc) then
-           ier=53
-
-        else
-           do ii=1,3
-              id1=max(1,dimlens(ii))
-              id2=max(1,dimlens_loc(ii))
-              if(id1.ne.id2) ier=53
-           end do
-        end if
-
-        !  if ier= 0, no cdfDefVar is needed: object already defined
-        !  and attributes are correct.
-
-     end if
+    ifail = nf_inq_varid(ncid, name, ivarid)
+    if(ifail.ne.0) then
+      ! assume item does not exist, so, just define it...
+      call cdfDefVar(ncid, name, dimlens, ztype, ifail)
+      if(ifail.ne.0) ier=42
+    else
+      ! item DOES exist; require dimension & type match...
+      call cdfInqVar(ncid, name, dimlens_loc, ztype_loc, ifail)
+      if(ztype.ne.ztype_loc) then
+        ier=53
+      else
+        do ii=1,3
+          id1=max(1,dimlens(ii))
+          id2=max(1,dimlens_loc(ii))
+          if(id1.ne.id2) ier=53
+        end do
+      end if
+      !  if ier= 0, no cdfDefVar is needed: object already defined
+      !  and attributes are correct.
+    end if
   end if
 
 end subroutine ezspline_defVar
