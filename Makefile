@@ -32,8 +32,7 @@ SRCS := $(filter-out $(PSPDIR)/$(EXEQKS).f90, $(SRCS))
 SRCS += $(EZSDIR)/ezspline_mod.f90 \
 	$(filter-out $(EZSDIR)/ezspline_mod.f90, $(wildcard $(EZSDIR)/*.f90))
 SRCS := $(filter-out $(EZSDIR)/ezspline_test.f90, $(SRCS))
-SRCS += $(CZSDIR)/czspline_pointer_types.f90 \
-	$(filter-out $(CZSDIR)/czspline_pointer_types.f90, $(wildcard $(CZSDIR)/*.f90))
+SRCS += $(wildcard $(CZSDIR)/*.f90)
 OBJS :=	$(SRCS:.f90=.o)
 
 
@@ -45,19 +44,19 @@ $(LIBAR): $(OBJS)
 	@ar r $@ $(OBJS)
 
 $(EXELUP):
-	$(FC) $(LDFLAGS) $(PSPDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
+	$(FC) $(FFLAGS) $(PSPDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
 
 $(EXEPSP):
-	$(FC) $(LDFLAGS) $(PSPDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
+	$(FC) $(FFLAGS) $(PSPDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
 
 $(EXEQKS):
-	$(FC) $(LDFLAGS) $(EZSDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
+	$(FC) $(FFLAGS) $(EZSDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
 
 $(EXEEZS):
-	$(FC) $(LDFLAGS) $(EZSDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
+	$(FC) $(FFLAGS) $(EZSDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
 
 $(EXECZS):
-	$(CXX) $(CXXLDFLAGS) $(CZSDIR)/$@.cc -o $@ -L$(SRCDIR) $(CXXLIBS) -lpspline $(FLIBS)
+	$(CXX) $(CXXFLAGS) $(CZSDIR)/$@.cc -o $@ -L$(SRCDIR) $(CXXLIBS) -lpspline $(FLIBS)
 
 install:
 	@test -d $(LIBDIR) || mkdir -p $(LIBDIR)

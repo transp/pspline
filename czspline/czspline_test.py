@@ -14,7 +14,7 @@ $Id: czspline_test.py,v 1.1 2008-05-22 16:30:24 Alex_Pletzer Exp $
 import numpy
 from ctypes import POINTER, c_int, c_double, c_float, byref
 
-def test1d_r8():
+def test1d():
 
     """
     Test 1d interpolation
@@ -31,11 +31,11 @@ def test1d_r8():
     
     # construct and set axes
     x1 = numpy.arange(0.0, 1.00001, 0.1)
-    tr.czspline_init1_r8_(handle,
+    tr.czspline_init1_(handle,
                           byref(c_int(len(x1))),
                           bcs1.ctypes.data_as(POINTER(c_int)),
                           byref(ier))
-    tr.czspline_set_axes1_r8(handle,
+    tr.czspline_set_axes1(handle,
                              byref(c_int(len(x1))),
                              x1.ctypes.data_as(POINTER(c_double)),
                              byref(ier))
@@ -44,7 +44,7 @@ def test1d_r8():
     f  = x1**3
 
     # compute spline coefficients
-    tr.czspline_setup1_r8_(handle,
+    tr.czspline_setup1_(handle,
                       byref(c_int(f.shape[0])),
                       f.ctypes.data_as(POINTER(c_double)),
                       byref(ier))
@@ -54,14 +54,14 @@ def test1d_r8():
     g  = 0 * y1
     
     # array interpolation
-    tr.czspline_interp1_array_r8_(handle,
+    tr.czspline_interp1_array_(handle,
                        byref(c_int(y1.shape[0])),
                                   g.ctypes.data_as(POINTER(c_double)),
                                   byref(ier))
     error_array = numpy.sum( numpy.abs( g - y1**3 ) )/len(g)
 
     # cloud interpolation
-    tr.czspline_interp1_cloud_r8_(handle,
+    tr.czspline_interp1_cloud_(handle,
                        byref(c_int(y1.shape[0])),
                                   g.ctypes.data_as(POINTER(c_double)),
                                   byref(ier))
@@ -70,19 +70,19 @@ def test1d_r8():
     # point interpolation
     g = c_double()
     i  = len(y1)/2
-    tr.czspline_interp1_r8_(handle,
+    tr.czspline_interp1_(handle,
                             byref(c_double(y1[i])),
                             byref(g),
                             byref(ier))
     error_point = g - y1[i]**3
 
     # clean up
-    tr.czspline_free1_r8(handle,
+    tr.czspline_free1(handle,
                          byref(ier))
                             
                                   
     print """
-test1d_r8 interpolation errors
+test1d interpolation errors
 point: %g
 cloud: %g
 array: %g
@@ -90,10 +90,10 @@ array: %g
     
     
 
-def test2d_r8():
+def test2d():
     pass
 
-def test3d_r8():
+def test3d():
     pass
 
 ##############################################################################
@@ -107,7 +107,7 @@ def main():
     options, args = parser.parse_args()
     libdir = options.libdir
     
-    test1d_r8(libdir)
-    test2d_r8(libdir)
-    test3d_r8(libdir)
+    test1d(libdir)
+    test2d(libdir)
+    test3d(libdir)
 if __name__ == '__main__': main()

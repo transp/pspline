@@ -100,9 +100,9 @@ program lookup_test
   istart=1
   !
   do i=1,tsize
-     zfac=(i-1.0D0)/(tsize-1.0D0)
-     zscan=zfac*zfac*(3.0D0-2.0D0*zfac)
-     tvecs(i,1)=max(0.0D0,min(100.0D0,(100.0D0*zscan)))
+     zfac=(i-1.0_fp)/(tsize-1.0_fp)
+     zscan=zfac*zfac*(3.0_fp-2.0_fp*zfac)
+     tvecs(i,1)=max(0.0_fp,min(100.0_fp,(100.0_fp*zscan)))
      !
      imul=imul+1
      if(imul.gt.4) imul=1
@@ -110,22 +110,22 @@ program lookup_test
      if(istart.gt.100) istart=istart-100
      if(istart.gt.100) istart=istart-100
      if(istart.gt.100) istart=istart-100
-     tvecs(i,2)=max(0.0D0,min(100.0D0,(istart-0.5D0)))
+     tvecs(i,2)=max(0.0_fp,min(100.0_fp,(istart-0.5_fp)))
   enddo
   !
   !  form test grids & packages
   !
-  znorm=100.0D0/sqrt(100.0D0)
+  znorm=100.0_fp/sqrt(100.0_fp)
   do i=1,gsize
-     zval=(i-1)*100.0D0/(gsize-1)
+     zval=(i-1)*100.0_fp/(gsize-1)
      zval2=sqrt(zval)*znorm
      grids(i,1)=zval
      grids(i,2)=zval2
-     fspline(1,i,1)=10.0D0+cos(0.1D0*zval)
-     fspline(1,i,2)=10.0D0+cos(0.1D0*zval2)
+     fspline(1,i,1)=10.0_fp+cos(0.1_fp*zval)
+     fspline(1,i,2)=10.0_fp+cos(0.1_fp*zval2)
   enddo
   !
-  zinc=100.0D0/(gsize-20-1)
+  zinc=100.0_fp/(gsize-20-1)
   do i=1,6
      istop(i)=((gsize-20)*i)/7
   enddo
@@ -145,37 +145,37 @@ program lookup_test
      else if(k.eq.1) then
         do i2=1,2
            icur=icur+1
-           grids(icur,3)=zprev+0.5D0*i2*zinc
+           grids(icur,3)=zprev+0.5_fp*i2*zinc
         enddo
      else if(k.eq.2) then
         do i2=1,4
            icur=icur+1
-           grids(icur,3)=zprev+0.25D0*i2*zinc
+           grids(icur,3)=zprev+0.25_fp*i2*zinc
         enddo
      else if(k.eq.3) then
         do i2=1,8
            icur=icur+1
-           grids(icur,3)=zprev+0.125D0*i2*zinc
+           grids(icur,3)=zprev+0.125_fp*i2*zinc
         enddo
      else if((k.eq.4).or.(k.eq.6)) then
         do i2=1,2
            icur=icur+1
-           grids(icur,3)=zprev+0.25D0*i2*zinc
+           grids(icur,3)=zprev+0.25_fp*i2*zinc
         enddo
         icur=icur+1
         grids(icur,3)=zcur
      else if(k.eq.5) then
         do i2=1,4
            icur=icur+1
-           grids(icur,3)=zprev+0.125D0*i2*zinc
+           grids(icur,3)=zprev+0.125_fp*i2*zinc
         enddo
         icur=icur+1
         grids(icur,3)=zcur
      end if
   enddo
-  grids(icur+1,3)=grids(icur,3)+5.0D0
+  grids(icur+1,3)=grids(icur,3)+5.0_fp
   do i=1,gsize
-     fspline(1,i,3)=10.0D0+cos(0.1D0*grids(i,3))
+     fspline(1,i,3)=10.0_fp+cos(0.1_fp*grids(i,3))
   enddo
   !
   !  compute spline coeffs...
@@ -219,7 +219,7 @@ program lookup_test
      y=gpkg2y(j,1)
      do i=1,gsize
         x=gpkg2x(i,1)
-        f2d(1,i,j)=(10.0D0+cos(x))*(10.0D0+sin(2.0D0*y))
+        f2d(1,i,j)=(10.0_fp+cos(x))*(10.0_fp+sin(2.0_fp*y))
      enddo
   enddo
   !
@@ -229,8 +229,8 @@ program lookup_test
         y=gpkg3y(j,1)
         do i=1,g3size
            x=gpkg3x(i,1)
-           f3d(1,i,j,k)=(10.0D0+cos(x))*(10.0D0+sin(2.0D0*y))* &
-                exp(-0.1D0*z)
+           f3d(1,i,j,k)=(10.0_fp+cos(x))*(10.0_fp+sin(2.0_fp*y))* &
+                exp(-0.1_fp*z)
         enddo
      enddo
   enddo
@@ -320,18 +320,18 @@ program lookup_test
                     !
                     icount=icount+1
                     if(icount.eq.1) then
-                       difmax=0.0D0
+                       difmax=0.0_fp
                        do ir=1,tsize
                           !xx                              write(6,*) ir,wk(ir)
                           ref(ir)=wk(ir)
                        enddo
                     else
                        !  check variance
-                       difmax=0.0D0
+                       difmax=0.0_fp
                        do ir=1,tsize
                           difmax=max(difmax,abs(ref(ir)-wk(ir)))
                        enddo
-                       difmax=0.1D0*difmax
+                       difmax=0.1_fp*difmax
                        !
                     end if
                     !

@@ -1,20 +1,20 @@
 ifeq ($(COMPILER),ICC)
      FFLAGS = -cpp -O2 -stand f08 -real-size 64 -auto-scalar $(EZCDF_FLAGS)
      LDFLAGS = -cpp
-     DFFLAGS = -g -Wall -traceback
+     DFFLAGS = -g -traceback -check all -warn all
      SFFLAGS = -fpic
      SLDFLAGS = -shared
-     CXXFLAGS = -O2 -std=c++11
+     CXXFLAGS = -O2 -std=c++11 $(EZCDF_FLAGS)
      CXXLIBS = -lifcore
      CXXLDFLAGS =
 
 else ifeq ($(COMPILER),PGC)
-     FFLAGS = -cpp -fast -r8 $(EZCDF_FLAGS)
-     LDFLAGS = -cpp -D_PGC
+     FFLAGS = -cpp -fast -r8 $(EZCDF_FLAGS) -D_PGC
+     LDFLAGS = -cpp
      DFFLAGS = -g -traceback -Mbounds
      SFFLAGS = -fpic
      SLDFLAGS = -shared
-     CXXFLAGS = -O2 -mp -std=c++11
+     CXXFLAGS = -O2 -mp -std=c++11 $(EZCDF_FLAGS)
      CXXLIBS = -lstdc++ -lgfortran
      CXXLDFLAGS =
 
@@ -25,7 +25,7 @@ else
      DFFLAGS = -Og -Wall
      SFFLAGS = -fpic
      SLDFLAGS = -shared
-     CXXFLAGS = -O2 -std=c++11
+     CXXFLAGS = -O2 -std=c++11 $(EZCDF_FLAGS)
      CXXLIBS = -lstdc++ -lgfortran
      CXXLDFLAGS =
 endif
