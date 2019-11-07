@@ -1,7 +1,7 @@
 !  pspline library test routine
 !
 subroutine pspltsub(filename,zctrl)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  write output to file
   !
@@ -75,7 +75,7 @@ end subroutine pspltsub
 !------------------------------------------------
 !
 subroutine pspltest1(zctrl)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -132,7 +132,7 @@ end subroutine pspltest1
 !
 subroutine dotest1(ns,x,f,fd,fspl,fspp,fherm,fs2,nt,xt,ft,xpkg, &
      testa1,testa2,testa3,testa4,testa5,wk)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   !============
@@ -291,7 +291,7 @@ end subroutine dotest1
 !------------------------------------------------
 !
 subroutine pspltest2(zctrl)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -359,7 +359,7 @@ subroutine pspltest2(zctrl)
 end subroutine pspltest2
 !-----------------------------------------------------------
 subroutine xset(nx,x,ex,xmin,xmax)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -379,7 +379,7 @@ subroutine xset(nx,x,ex,xmin,xmax)
 end subroutine xset
 !-----------------------------------------------------------
 subroutine tset(nth,th,sth,cth,thmin,thmax)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -401,7 +401,7 @@ subroutine tset(nth,th,sth,cth,thmin,thmax)
 end subroutine tset
 !-----------------------------------------------------------
 subroutine tset3(nph,ph,sph,cph,phmin,phmax)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -423,7 +423,7 @@ subroutine tset3(nph,ph,sph,cph,phmin,phmax)
 end subroutine tset3
 !-----------------------------------------------------------
 subroutine ffset(num,xf,tf,f)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -441,7 +441,7 @@ subroutine ffset(num,xf,tf,f)
 end subroutine ffset
 !-----------------------------------------------------------
 subroutine fset3(num,xf,tf,pf,f)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -461,7 +461,7 @@ subroutine fset3(num,xf,tf,pf,f)
 end subroutine fset3
 !----------------------------------------------------------
 subroutine bset(fx,nx,fth,nth,bcx1,bcx2,bcth1,bcth2)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -493,7 +493,7 @@ end subroutine bset
 subroutine dotest2(x,fx,nx,th,fth,dfth,nth,f,fh,flin, &
      bcx1,bcx2,bcth1,bcth2, &
      xtest,fxtest,thtest,fthtest,ntest)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -611,7 +611,7 @@ end subroutine dotest2
 !
 subroutine compare(slbl,x,nx,th,nth,f,fh,fl,ilinx,ilinth, &
      xtest,fxtest,thtest,fthtest,ntest,wk)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -751,7 +751,7 @@ subroutine compare(slbl,x,nx,th,nth,f,fh,fl,ilinx,ilinth, &
 end subroutine compare
 !------------------------
 subroutine pspltest3(zctrl)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -832,7 +832,7 @@ subroutine dotest3(x,fx,nx,th,fth,dfth,nth,ph,fph,dfph,nph, &
      f,fh,flin, &
      bcx1,bcx2,bcth1,bcth2,bcph1,bcph2, &
      xtest,fxtest,thtest,fthtest,phtest,fphtest,ntest)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   !============
@@ -1095,7 +1095,7 @@ end subroutine dotest3
 !----------------------------------------------------------
 subroutine bset3(fx,nx,fth,nth,fph,nph, &
      bcx1,bcx2,bcth1,bcth2,bcph1,bcph2)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -1144,7 +1144,7 @@ end subroutine bset3
 subroutine compare3(slbl,x,nx,th,nth,ph,nph,f,fh,flin, &
      ilinx,ilinth,ilinph, &
      xtest,fxtest,thtest,fthtest,phtest,fphtest,ntest)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   !============
@@ -1284,7 +1284,7 @@ end subroutine compare3
 !  test splines with very small grids: nx=2, nx=3
 
 subroutine smalltest(zctrl)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   implicit none
   common/pspltest_io/ m
   integer :: m

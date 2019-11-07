@@ -1,7 +1,7 @@
 !******************** START FILE SEVAL.F90 ; GROUP TRKRLIB *************
 !
 real(fp) FUNCTION seval(N, U, X, Y, B, C, D)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   implicit none
   integer N
   real(fp) ::  U, X(N), Y(N), B(N), C(N), D(N)

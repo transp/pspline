@@ -1,5 +1,5 @@
 subroutine herm1ev(xget,x,nx,ilinx,f,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  evaluate a 1d cubic Hermite interpolant -- this is C1.
   !
@@ -83,7 +83,7 @@ end subroutine herm1ev
 !  this is the "first part" of herm1ev, see comments, above.
 !
 subroutine herm1x(xget,x,nx,ilinx,i,xparam,hx,hxi,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input of herm1x
   !  ===============
@@ -188,7 +188,7 @@ end subroutine herm1x
 !
 subroutine herm1fcn(ict,ivec,ivecd, &
      fval,ii,xparam,hx,hxi,fin,nx)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input:
   !

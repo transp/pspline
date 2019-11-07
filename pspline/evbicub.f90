@@ -1,6 +1,6 @@
 subroutine evbicub(xget,yget,x,nx,y,ny,ilinx,iliny, &
      f,inf2,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  evaluate a 2d cubic Spline interpolant on a rectilinear
   !  grid -- this is C2 in both directions.
@@ -135,7 +135,7 @@ end subroutine evbicub
 subroutine fvbicub(ict,ivec,ivecd, &
      fval,ii,jj,xparam,yparam,hx,hxi,hy,hyi, &
      fin,inf2,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -717,7 +717,7 @@ end subroutine fvbicub
 subroutine fvbicubx(ict,ivec,ivecd, &
      fval,ii,jj,xparam,yparam,hx,hxi,hy,hyi, &
      fin,inf2,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

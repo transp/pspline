@@ -1,6 +1,6 @@
 ! error check routine for 2d hybrid interpolation
 subroutine vecin2d_argchk(subname,jspline,icoeff,nx,ny,ixdim,iydim,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   implicit none
 
   character(len=*), intent(in) :: subname ! name of caller, for messages

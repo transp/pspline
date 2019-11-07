@@ -147,7 +147,7 @@ end subroutine err_count
 
 !..........not a knot.....................................................
 subroutine spline1_not(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -229,7 +229,7 @@ end subroutine spline1_not
 
 !..........periodic........................................................
 subroutine spline1_per(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -298,7 +298,7 @@ end subroutine spline1_per
 
 !..........1st derivative.....................................................
 subroutine spline1_1st(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -368,7 +368,7 @@ end subroutine spline1_1st
 
 !..........2nd derivative.....................................................
 subroutine spline1_2nd(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -488,7 +488,7 @@ end subroutine spline1_2nd
 
 !..........not a knot.....................................................
 subroutine spline2_not(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -660,7 +660,7 @@ end subroutine spline2_not
 
 !..........periodic.........................................................
 subroutine spline2_per(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -763,7 +763,7 @@ end subroutine spline2_per
 
 !..........mixed BCs............................................................
 subroutine spline2_mix(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -899,7 +899,7 @@ end subroutine spline2_mix
 
 !..........mixed BCs 1..........................................................
 subroutine spline3_mix(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1062,7 +1062,7 @@ end subroutine spline3_mix
 
 !..........mixed BCs 2..........................................................
 subroutine spline3_mox(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1231,7 +1231,7 @@ end subroutine spline3_mox
 
 !..........standard BC.....................................................
 subroutine akima1_not(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1324,7 +1324,7 @@ end subroutine akima1_not
 
 !..........periodic........................................................
 subroutine akima1_per(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1409,7 +1409,7 @@ end subroutine akima1_per
 
 !..........not a knot.....................................................
 subroutine akima2_not(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1559,7 +1559,7 @@ end subroutine akima2_not
 
 !..........periodic.........................................................
 subroutine akima2_per(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1685,7 +1685,7 @@ end subroutine akima2_per
 
 !..........mixed BCs..........................................................
 subroutine akima3_mix(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1843,7 +1843,7 @@ end subroutine akima3_mix
 !
 
 subroutine pclin1(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -1928,7 +1928,7 @@ end subroutine pclin1
 !!
 
 subroutine pclin2(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none
@@ -2082,7 +2082,7 @@ end subroutine pclin2
 !!! 3-D piecewise linear
 !!!
 subroutine pclin3(ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZspline
   implicit none

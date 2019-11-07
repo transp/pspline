@@ -1,5 +1,5 @@
 subroutine mkherm1(fun,x,nx,fherm)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a data set for Hermite interpolation, from evaluation of
   !  function and derivatives.  function of 1 indep. coordinate.

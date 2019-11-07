@@ -3,7 +3,7 @@ program qk_pspline
   !  ad hoc test program for pspline -- evaluate all fcn values and
   !  derivatives via ezspline and f77 traditional interfaces
 
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use ezspline_obj
   use ezspline
   implicit NONE

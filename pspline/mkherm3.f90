@@ -1,5 +1,5 @@
 subroutine mkherm3(fun,x,nx,y,ny,z,nz,fherm)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a data set for Hermite interpolation, from evaluation of
   !  function and derivatives.  Function of 3 indep. coordinates.

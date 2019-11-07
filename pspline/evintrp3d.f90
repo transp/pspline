@@ -1,6 +1,6 @@
 subroutine evintrp3d(xget,yget,zget,x,nx,y,ny,z,nz,jspline, &
      f,icoeff,ixdim,iydim,izdim,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   !  use mkintrp3d to set up spline coefficients...
@@ -161,7 +161,7 @@ subroutine fvintrp3d(ict,ivec,ivecd, &
      fval,ii,jj,kk,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi, &
      jspline,fin,icoeff,ixdim,iydim,izdim)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   !  use mkintrp3d to set up spline coefficients...

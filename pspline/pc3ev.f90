@@ -1,7 +1,7 @@
 subroutine pc3ev(xget,yget,zget,x,nx,y,ny,z,nz, &
      ilinx,iliny,ilinz, &
      f,inf2,inf3,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  evaluate a trilinear interpolant on a rectilinear grid
   !  derivatives are available, but, not continuous across grid planes.
@@ -113,7 +113,7 @@ subroutine pc3fcn(ict,ivec,ivecd, &
      fval,ii,jj,kk,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi, &
      fin,inf2,inf3,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -310,7 +310,7 @@ subroutine pc3fcnx(ict,ivec,ivecd, &
      fval,ii,jj,kk,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi, &
      fin,inf2,inf3,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

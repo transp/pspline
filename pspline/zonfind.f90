@@ -1,5 +1,5 @@
 subroutine zonfind(x,nx,zxget,i)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   implicit none
   integer nx,nxm,i1,i2,ij,ii
   real(fp) :: dx

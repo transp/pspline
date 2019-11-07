@@ -10,7 +10,7 @@ subroutine EZspline_cinterp(spline_o, k, p1, p2, p3, f, ier)
   ! if a different method interpolation is used, the standard f77-style
   ! pspline subroutine is called.
 
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o

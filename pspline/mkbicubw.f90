@@ -3,7 +3,7 @@ subroutine mkbicubw(x,nx,y,ny,f,nf2, &
      ibcymin,bcymin,ibcymax,bcymax, &
      wk,nwk, &
      ilinx,iliny,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  setup a bicubic spline; store coefficients in compact form
   !  (as per suggestion of L. Zakharov, PPPL, Feb. 1999)
@@ -179,7 +179,7 @@ end subroutine mkbicubw
 !  mkbicop -- copy spline function input data
 !
 subroutine mkbicop(fin,nf2,fwk,nx,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -201,7 +201,7 @@ end subroutine mkbicop
 !             (bcspline) representation
 !
 subroutine mkbicon(fin,nf2,fwk,nx,ny,hxlast,hylast)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

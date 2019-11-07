@@ -2,7 +2,7 @@ subroutine util_bcherm1(fherm,idimx1, &
      jbcxa,jbcxb, &
      zbcxa,zbcxb, &
      x1)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
 
   !...  insert BCs as needed for Hermite interpolation setup
 

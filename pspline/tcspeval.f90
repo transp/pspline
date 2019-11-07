@@ -3,7 +3,7 @@
 subroutine tcspeval(xget,yget,zget,iselect,fval, &
      x,nx,y,ny,z,nz,ilinx,iliny,ilinz,f,inf4,inf5, &
      ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   implicit none
   integer iselect(10)
@@ -160,7 +160,7 @@ end subroutine tcspeval
 subroutine tcspevxyz(xget,yget,zget,x,nx,y,ny,z,nz, &
      ilinx,iliny,ilinz, &
      i,j,k,dx,dy,dz,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -339,7 +339,7 @@ end subroutine tcspevxyz
 !
 subroutine tcspevfn(ict,ivec,ivd,fval,iv,jv,kv,dxv,dyv,dzv, &
      f,inf4,inf5,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input:
   !============

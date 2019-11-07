@@ -1,7 +1,7 @@
 !******************** START FILE SEVAL3.F90 ; GROUP TRKRLIB ************
 !
 real(fp) FUNCTION seval3(N, U, X, Y, B, C, D, deriv, deriv2)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !============
   implicit none
   real(fp) :: deriv2,zslop

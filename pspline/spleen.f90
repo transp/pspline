@@ -4,7 +4,7 @@
 !
 !CCCCCCCCCCCCCC
 subroutine spleen (N, X, Y, B, C, D)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   implicit none
   integer N
   real(fp) :: X(N), Y(N), B(N), C(N), D(N)

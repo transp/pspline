@@ -27,7 +27,7 @@ subroutine tcspline(x,inx,th,inth,ph,inph,fspl,inf4,inf5, &
      ibcthmin,bcthmin,ibcthmax,bcthmax,inb1th, &
      ibcphmin,bcphmin,ibcphmax,bcphmax,inb1ph, &
      wk,nwk,ilinx,ilinth,ilinph,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -469,7 +469,7 @@ end subroutine tcspline
 subroutine tcspcorr(x,inx,th,inth,ph,inph,fspl,inf4,inf5, &
      ibcxmin,ibcxmax,ibcthmin,ibcthmax, &
      ibcphmin,bcph1,ibcphmax,bcph2,ccorr,wk,nwk)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  intermediary routine for tcspline:
   !  do correction needed to get C2 3d spline with phi bdy conditions
@@ -640,7 +640,7 @@ subroutine tcsp23(x,inx,th,inth,fspl,inf4, &
      ibcxmin,bcxmin,ibcxmax,bcxmax, &
      ibcthmin,bcthmin,ibcthmax,bcthmax, &
      fspl2,wk,nwk,ilinx,ilinth,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  intermediary routines
   !  call bcspline from tcspline loop

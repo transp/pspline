@@ -1,6 +1,6 @@
 subroutine evintrp2d(xget,yget,x,nx,y,ny,jspline, &
      f,icoeff,ixdim,iydim,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   !  evaluate a 2d Hybrid interpolant on a rectilinear grid
@@ -142,7 +142,7 @@ end subroutine evintrp2d
 subroutine fvintrp2d(ict,ivec,ivecd, &
      fval,ii,jj,xparam,yparam,hx,hxi,hy,hyi, &
      jspline,fin,icoeff,ixdim,iydim)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   implicit none

@@ -1,7 +1,7 @@
 subroutine mkspl3zb(fun,x,nx,th,nth,ph,nph,fspl,nf2,nf3, &
      ibcxmin,bcxmin,ibcxmax,bcxmax,nb1, &
      wk,inwk,ilinx,ilinth,ilinph,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a tricubic biperiodic spline with knots at grid points and
   !  function values from the callable function `fun' passed.

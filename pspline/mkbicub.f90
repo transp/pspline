@@ -2,7 +2,7 @@ subroutine mkbicub(x,nx,y,ny,f,nf2, &
      ibcxmin,bcxmin,ibcxmax,bcxmax, &
      ibcymin,bcymin,ibcymax,bcymax, &
      ilinx,iliny,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  setup bicubic spline, dynamic allocation of workspace
   !  fortran-90 fixed form source

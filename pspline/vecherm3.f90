@@ -1,7 +1,7 @@
 subroutine vecherm3(ict,ivec,xvec,yvec,zvec,ivd,fval, &
      nx,xpkg,ny,ypkg,nz,zpkg,fspl,inf2,inf3, &
      iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  vectorized hermite evaluation routine --
   !  1.  call vectorized zone lookup routine

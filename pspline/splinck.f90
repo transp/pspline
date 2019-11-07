@@ -1,5 +1,5 @@
 subroutine splinck(x,inx,ilinx,ztol,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  check if a grid is strictly ascending and if it is evenly spaced
   !  to w/in ztol

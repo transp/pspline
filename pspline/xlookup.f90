@@ -17,7 +17,7 @@ subroutine xlookup(ivec,xvec,nx,xpkg,imode,iv,dxn,hv,hiv,iwarn)
   !    if nx.eq.3:  xpkg(4,4) never referenced.
   !
   !  input:
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   implicit none
   integer inum,istat,ilin,ialg,iper,imsg,init_guess,iprev,i
   integer init,iprob,isrch,i_sign,inc

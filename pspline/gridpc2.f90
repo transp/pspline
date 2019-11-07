@@ -1,7 +1,7 @@
 subroutine gridpc2( &
      x_newgrid,nx_new,y_newgrid,ny_new,f_new,if1, &
      nx,xpkg,ny,ypkg,fspl,inf1,iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  regrid a piecewise linear function f defined vs. x,y as in xpkg,ypkg
   !  to a new grid, given by x_newgrid, y_newgrid

@@ -17,7 +17,7 @@
 !  solved by Gaussian elimination w/o pivoting.  NM1=N-1.
 !
 subroutine pspline (N, X, Y, B, C, D, WK)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !============
   implicit none
   real(fp) :: q

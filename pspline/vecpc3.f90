@@ -1,7 +1,7 @@
 subroutine vecpc3(ict,ivec,xvec,yvec,zvec,ivd,fval, &
      nx,xpkg,ny,ypkg,nz,zpkg,flin,inf1,inf2, &
      iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  vectorized piecewise linear evaluation routine --
   !  1.  call vectorized zone lookup routine

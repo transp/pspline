@@ -1,5 +1,5 @@
 subroutine pc1ev(xget,x,nx,ilinx,f,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  evaluate a 1d piecewise linear interpolant -- this is C0.
   !    ...a derivative can be evaluated but it is not continuous.
@@ -83,7 +83,7 @@ end subroutine pc1ev
 !
 subroutine pc1fcn(ict,ivec,ivecd, &
      fval,ii,xparam,hx,hxi,fin,nx)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input:
   !

@@ -1,6 +1,6 @@
 subroutine mkspline(x,nx,fspl,ibcxmin,bcxmin,ibcxmax,bcxmax, &
      ilinx,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  make a 2-coefficient 1d spline
   !

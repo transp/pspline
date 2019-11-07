@@ -4,7 +4,7 @@
 !!!
 
 subroutine EZspline_interp1(spline_o, p1, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -57,7 +57,7 @@ end subroutine EZspline_interp1
 
 
 subroutine EZspline_interp1_array(spline_o, k, p1, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -109,7 +109,7 @@ end subroutine EZspline_interp1_array
 !!!
 
 subroutine EZspline_interp2(spline_o, p1, p2, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) :: spline_o
@@ -174,7 +174,7 @@ subroutine EZspline_interp2(spline_o, p1, p2, f, ier)
 end subroutine EZspline_interp2
 
 subroutine EZspline_interp2_array(spline_o, k1, k2, p1, p2, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -246,7 +246,7 @@ subroutine EZspline_interp2_array(spline_o, k1, k2, p1, p2, f, ier)
 end subroutine EZspline_interp2_array
 
 subroutine EZspline_interp2_cloud(spline_o, k, p1, p2, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   ! list of coordinate doublets
   use EZspline_obj
   implicit none
@@ -314,7 +314,7 @@ end subroutine EZspline_interp2_cloud
 !!!
 
 subroutine EZspline_interp3(spline_o, p1, p2, p3, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -384,7 +384,7 @@ subroutine EZspline_interp3(spline_o, p1, p2, p3, f, ier)
 end subroutine EZspline_interp3
 
 subroutine EZspline_interp3_array(spline_o, k1, k2, k3, p1, p2, p3, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -464,7 +464,7 @@ subroutine EZspline_interp3_array(spline_o, k1, k2, k3, p1, p2, p3, f, ier)
 end subroutine EZspline_interp3_array
 
 subroutine EZspline_interp3_cloud(spline_o, k, p1, p2, p3, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   ! list of coordinate triplets
   use EZspline_obj
   implicit none

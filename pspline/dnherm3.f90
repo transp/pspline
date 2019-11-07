@@ -1,6 +1,6 @@
 subroutine dnherm3(x,nx,y,ny,z,nz,fherm,nf2,nf3, &
      ilinx,iliny,ilinz,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a data set for Hermite interpolation, based on simple
   !  numerical differentiation using the given grid.  The grid should

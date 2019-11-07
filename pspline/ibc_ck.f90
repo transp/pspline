@@ -1,5 +1,5 @@
 subroutine ibc_ck(ibc,slbl,xlbl,imin,imax,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   implicit none
   ! Check that spline routine ibc flag is in range
   integer, intent(in)  :: ibc          ! flag value

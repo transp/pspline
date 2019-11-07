@@ -1,5 +1,5 @@
 subroutine ezspline_setup1_x(spline_o, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
 
   !  setup call (set array size from object)
 
@@ -16,7 +16,7 @@ subroutine ezspline_setup1_x(spline_o, f, ier)
 end subroutine ezspline_setup1_x
 
 subroutine ezspline_setup2_x(spline_o, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
 
   !  setup call (set array size from object)
 
@@ -33,7 +33,7 @@ subroutine ezspline_setup2_x(spline_o, f, ier)
 end subroutine ezspline_setup2_x
 
 subroutine ezspline_setup3_x(spline_o, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
 
   !  setup call (set array size from object)
 

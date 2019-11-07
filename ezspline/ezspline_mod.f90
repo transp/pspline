@@ -1,5 +1,5 @@
 module EZspline_type
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
 
   real(fp), parameter :: ezspline_twopi = 6.2831853071795865_fp
 
@@ -222,7 +222,7 @@ end module EZspline_type
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 module EZspline_obj
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use Ezspline_type
   interface EZspline_preInit
     !
@@ -656,7 +656,7 @@ end module EZspline_obj
 !=======================================================================
 
 module EZspline
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
 
   interface EZspline_init
     !

@@ -1,6 +1,6 @@
 subroutine mkspl2p(fun,x,nx,th,nth,fspl,nf3,wk,inwk, &
      ilinx,ilinth,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a bicubic periodic spline with knots at grid points and
   !  function values from the callable function `fun' passed.

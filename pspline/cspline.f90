@@ -6,7 +6,7 @@
 !
 subroutine cspline(x,nx,fspl,ibcxmin,bcxmin,ibcxmax,bcxmax, &
      wk,iwk,ilinx,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

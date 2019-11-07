@@ -2,7 +2,7 @@
 !  SPLBRK -- make a spline with a break (C0 only) at specified locn
 !
 subroutine splbrk (IOPT, N, NBRK, X, Y, B, C, D)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  Spline the whole interval, and then respline a subinterval, saving
   !  the endpt coeffs from the original spline.

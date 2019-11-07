@@ -1,5 +1,5 @@
 subroutine vecspline(ict,ivec,xvec,ivd,fval,nx,xpkg,fspl,iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  vectorized spline evaluation routine -- 1d *compact* spline
   !  1.  call vectorized zone lookup routine

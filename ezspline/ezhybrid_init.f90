@@ -1,6 +1,6 @@
 subroutine EZhybrid_init2(spline_o, n1, n2, hspline, ier, &
      BCS1, BCS2)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -175,7 +175,7 @@ end subroutine EZhybrid_init2
 
 subroutine EZhybrid_init3(spline_o, n1, n2, n3, hspline, ier, &
      BCS1, BCS2, BCS3)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o

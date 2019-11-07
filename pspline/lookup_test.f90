@@ -1,5 +1,5 @@
 program lookup_test
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  timing test:  various lookup algorithms
   !

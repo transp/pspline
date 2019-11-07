@@ -1,5 +1,5 @@
 subroutine genxpkg(nx,x,xpkg,iper,imsg,itol,ztol,ialg,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  from an x axis assemble a "package":
   !

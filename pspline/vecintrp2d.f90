@@ -1,7 +1,7 @@
 subroutine vecintrp2d(ict,ivec,xvec,yvec,ivd,fval, &
      nx,xpkg,ny,ypkg,jspline,fspl,icoeff,ixdim,iydim, &
      iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !
   !  vectorized hybrid spline evaluation routine -- 2d

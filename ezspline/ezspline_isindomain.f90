@@ -4,7 +4,7 @@
 
 
 subroutine EZspline_isInDomain1(spline_o, p1, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) :: spline_o
@@ -35,7 +35,7 @@ subroutine EZspline_isInDomain1(spline_o, p1, ier)
 end subroutine EZspline_isInDomain1
 
 subroutine EZspline_isInDomain1_array(spline_o, k1, p1, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   type(EZspline1) :: spline_o
   integer, intent(in) :: k1
@@ -68,7 +68,7 @@ end subroutine EZspline_isInDomain1_array
 
 
 subroutine EZspline_isInDomain2(spline_o, p1, p2, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) :: spline_o
@@ -110,7 +110,7 @@ subroutine EZspline_isInDomain2(spline_o, p1, p2, ier)
 end subroutine EZspline_isInDomain2
 
 subroutine EZspline_isInDomain2_array(spline_o, k1, k2, p1, p2, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   type(EZspline2) :: spline_o
   integer, intent(in) :: k1, k2
@@ -145,7 +145,7 @@ subroutine EZspline_isInDomain2_array(spline_o, k1, k2, p1, p2, ier)
 end subroutine EZspline_isInDomain2_array
 
 subroutine EZspline_isInDomain2_cloud(spline_o, k, p1, p2, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   type(EZspline2) :: spline_o
   integer, intent(in) :: k
@@ -187,7 +187,7 @@ end subroutine EZspline_isInDomain2_cloud
 
 
 subroutine EZspline_isInDomain3(spline_o, p1, p2, p3, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) :: spline_o
@@ -240,7 +240,7 @@ subroutine EZspline_isInDomain3(spline_o, p1, p2, p3, ier)
 end subroutine EZspline_isInDomain3
 
 subroutine EZspline_isInDomain3_array(spline_o, k1, k2, k3, p1, p2, p3, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   type(EZspline3) :: spline_o
   integer, intent(in) :: k1, k2, k3
@@ -284,7 +284,7 @@ subroutine EZspline_isInDomain3_array(spline_o, k1, k2, k3, p1, p2, p3, ier)
 end subroutine EZspline_isInDomain3_array
 
 subroutine EZspline_isInDomain3_cloud(spline_o, k, p1, p2, p3, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   type(EZspline3) :: spline_o
   integer, intent(in) :: k

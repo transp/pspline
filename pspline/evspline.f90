@@ -1,5 +1,5 @@
 subroutine evspline(xget,x,nx,ilinx,f,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  use mkspline to set up spline coefficients...
   !
@@ -90,7 +90,7 @@ end subroutine evspline
 !
 subroutine fvspline(ict,ivec,ivecd, &
      fval,ii,xparam,hx,hxi,fin,nx)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  use mkspline to set up spline coefficients...
   !

@@ -1,5 +1,5 @@
 subroutine akherm2(x,nx,y,ny,fherm,nf2,ilinx,iliny,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a data set for Hermite interpolation, based on Akima's method
   !  [Hiroshi Akima, Communications of the ACM, Jan 1974, Vol. 17 No. 1]
@@ -37,7 +37,7 @@ subroutine akherm2(x,nx,y,ny,fherm,nf2,ilinx,iliny,ier)
 end subroutine akherm2
 !----------------------------
 subroutine akherm2p(x,nx,y,ny,fherm,nf2,ilinx,iliny,ipx,ipy,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a data set for Hermite interpolation, based on Akima's method
   !  [Hiroshi Akima, Communications of the ACM, Jan 1974, Vol. 17 No. 1]

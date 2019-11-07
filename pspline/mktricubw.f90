@@ -3,7 +3,7 @@ subroutine mktricubw(x,nx,y,ny,z,nz,f,nf2,nf3, &
      ibcymin,bcymin,ibcymax,bcymax,inb1y, &
      ibczmin,bczmin,ibczmax,bczmax,inb1z, &
      wk,nwk,ilinx,iliny,ilinz,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  setup a tricubic spline; store coefficients in compatct form
   !  (as per suggestion of L. Zakharov, PPPL, Feb. 1999)
@@ -158,7 +158,7 @@ end subroutine mktricubw
 !  mktricop -- copy spline function input data
 !
 subroutine mktricop(fin,nf2,nf3,fwk,nx,ny,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -183,7 +183,7 @@ end subroutine mktricop
 !
 subroutine mktricon(fin,nf2,nf3,fwk,nx,ny,nz, &
      hxlast,hylast,hzlast)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

@@ -1,5 +1,5 @@
 subroutine EZlinear_init1(spline_o, n1, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -50,7 +50,7 @@ end subroutine EZlinear_init1
 
 
 subroutine EZlinear_init2(spline_o, n1, n2, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -122,7 +122,7 @@ end subroutine EZlinear_init2
 
 
 subroutine EZlinear_init3(spline_o, n1, n2, n3, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o

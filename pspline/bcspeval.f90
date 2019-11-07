@@ -3,7 +3,7 @@
 !
 subroutine bcspeval(xget,yget,iselect,fval, &
      x,nx,y,ny,ilinx,iliny,f,inf3,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   implicit none
   integer iselect(6)
@@ -127,7 +127,7 @@ end subroutine bcspeval
 !
 subroutine bcspevxy(xget,yget,x,nx,y,ny,ilinx,iliny, &
      i,j,dx,dy,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -257,7 +257,7 @@ end subroutine bcspevxy
 !  bcspevfn -- OK now evaluate the bicubic spline
 !
 subroutine bcspevfn(ict,ivec,ivd,fval,iv,jv,dxv,dyv,f,inf3,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input:
   !============

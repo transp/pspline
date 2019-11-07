@@ -1,6 +1,6 @@
 subroutine pc2ev(xget,yget,x,nx,y,ny,ilinx,iliny, &
      f,inf2,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  evaluate a piecewise bilinear interpolant on a rectilinear
   !  grid -- this is C1 in both directions.
@@ -100,7 +100,7 @@ end subroutine pc2ev
 subroutine pc2fcn(ict,ivec,ivecd, &
      fval,ii,jj,xparam,yparam,hx,hxi,hy,hyi, &
      fin,inf2,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -214,7 +214,7 @@ end subroutine pc2fcn
 subroutine pc2fcnx(ict,ivec,ivecd, &
      fval,ii,jj,xparam,yparam,hx,hxi,hy,hyi, &
      fin,inf2,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

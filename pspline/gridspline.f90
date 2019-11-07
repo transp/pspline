@@ -1,6 +1,6 @@
 subroutine gridspline(x_newgrid,nx_new,f_new,nx,xpkg,fspl, &
      iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  regrid a spline function f defined vs. x as in xpkg
   !  to a new grid, given by x_newgrid.

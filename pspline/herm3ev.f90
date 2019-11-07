@@ -1,7 +1,7 @@
 subroutine herm3ev(xget,yget,zget,x,nx,y,ny,z,nz, &
      ilinx,iliny,ilinz, &
      f,inf2,inf3,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  evaluate a 3d cubic Hermite interpolant on a rectilinear
   !  grid -- this is C1 in all directions.
@@ -121,7 +121,7 @@ subroutine herm3xyz(xget,yget,zget,x,nx,y,ny,z,nz, &
      ilinx,iliny,ilinz, &
      i,j,k,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input of herm3xyz
   !  ================
@@ -328,7 +328,7 @@ subroutine herm3fcn(ict,ivec,ivecd, &
      fval,ii,jj,kk,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi, &
      fin,inf2,inf3,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -1103,7 +1103,7 @@ subroutine herm3fcnx(ict,ivec,ivecd, &
      fval,ii,jj,kk,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi, &
      fin,inf2,inf3,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

@@ -2,7 +2,7 @@ subroutine gridherm3( &
      x_newgrid,nx_new,y_newgrid,ny_new,z_newgrid,nz_new, &
      f_new,if1,if2, &
      nx,xpkg,ny,ypkg,nz,zpkg,fspl,inf2,inf3,iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  regrid a hermite function f defined vs. x,y,z as in xpkg, etc.
   !  to a new grid, given by x_newgrid, y_newgrid, z_newgrid

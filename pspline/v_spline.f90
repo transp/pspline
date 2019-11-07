@@ -1,5 +1,5 @@
 subroutine v_spline(k_bc1,k_bcn,n,x,f,wk)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !***********************************************************************
   !V_SPLINE evaluates the coefficients for a 1d cubic interpolating spline
   !References:

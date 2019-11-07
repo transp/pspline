@@ -1,7 +1,7 @@
 !  utility routines for pspltsub
 
 subroutine psp_tolsum(refval,tolval,sum)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
 
   !  difference will be detectable
   !  refval =~ 1.0; tolval =~1.0e-6

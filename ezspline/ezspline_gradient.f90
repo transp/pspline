@@ -4,7 +4,7 @@
 
 subroutine EZspline_gradient1(spline_o, &
      p1, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -56,7 +56,7 @@ end subroutine EZspline_gradient1
 
 subroutine EZspline_gradient1_array(spline_o, k1, &
      p1, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -112,7 +112,7 @@ end subroutine EZspline_gradient1_array
 
 subroutine EZspline_gradient2(spline_o, &
      p1, p2, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -176,7 +176,7 @@ end subroutine EZspline_gradient2
 
 subroutine EZspline_gradient2_cloud(spline_o, k, &
      p1, p2, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -238,7 +238,7 @@ end subroutine EZspline_gradient2_cloud
 
 subroutine EZspline_gradient2_array(spline_o, k1, k2, &
      p1, p2, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -325,7 +325,7 @@ end subroutine EZspline_gradient2_array
 !!!
 
 subroutine EZspline_gradient3(spline_o, p1, p2, p3, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -394,7 +394,7 @@ end subroutine EZspline_gradient3
 
 subroutine EZspline_gradient3_cloud(spline_o, k, &
      p1, p2, p3, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -461,7 +461,7 @@ end subroutine EZspline_gradient3_cloud
 
 subroutine EZspline_gradient3_array(spline_o, k1, k2, k3, &
      p1, p2, p3, df, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o

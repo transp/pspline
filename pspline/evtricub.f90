@@ -1,7 +1,7 @@
 subroutine evtricub(xget,yget,zget,x,nx,y,ny,z,nz, &
      ilinx,iliny,ilinz, &
      f,inf2,inf3,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  use mktricub to set up spline coefficients...
   !
@@ -156,7 +156,7 @@ subroutine fvtricub(ict,ivec,ivecd, &
      fval,ii,jj,kk,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi, &
      fin,inf2,inf3,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  use mktricub to set up spline coefficients...
   !
@@ -4032,7 +4032,7 @@ subroutine fvtricubx(ict,ivec,ivecd, &
      fval,ii,jj,kk,xparam,yparam,zparam, &
      hx,hxi,hy,hyi,hz,hzi, &
      fin,inf2,inf3,nz)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  use mktricub to set up spline coefficients...
   !

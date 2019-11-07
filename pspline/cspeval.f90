@@ -1,7 +1,7 @@
 !  cspeval -- eval cubic spline function and/or derivatives
 !
 subroutine cspeval(xget,iselect,fval,x,nx,ilinx,f,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -91,7 +91,7 @@ end subroutine cspeval
 !  this is the "first part" of cspeval, see comments, above.
 !
 subroutine cspevx(xget,x,nx,ilinx,i,dx,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -178,7 +178,7 @@ end subroutine cspevx
 !  cspevfn -- OK now evaluate the cubic spline
 !
 subroutine cspevfn(ict,ivec,ivd,fval,iv,dxv,f,nx)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input:
   !============

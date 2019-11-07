@@ -1,6 +1,6 @@
 #ifdef _EZCDF
 subroutine ezspline_cdfget3(ncid,zname,fspl,idim1,idim2,idim3,ifail)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZcdf
   implicit NONE
 

@@ -3,7 +3,7 @@
 !
 
 subroutine EZspline_derivative1(spline_o, i1, p1, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -79,7 +79,7 @@ subroutine EZspline_derivative1(spline_o, i1, p1, f, ier)
 end subroutine EZspline_derivative1
 
 subroutine EZspline_derivative1_array(spline_o, i1, k1, p1, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -159,7 +159,7 @@ end subroutine EZspline_derivative1_array
 
 
 subroutine EZspline_derivative2(spline_o, i1, i2, p1, p2, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -257,7 +257,7 @@ end subroutine EZspline_derivative2
 
 subroutine EZspline_derivative2_array(spline_o, i1, i2, &
      k1, k2, p1, p2, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -375,7 +375,7 @@ end subroutine EZspline_derivative2_array
 
 subroutine EZspline_derivative2_cloud(spline_o, i1, i2, &
      k, p1, p2, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -474,7 +474,7 @@ end subroutine EZspline_derivative2_cloud
 
 
 subroutine EZspline_derivative3(spline_o, i1, i2, i3, p1, p2, p3, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -584,7 +584,7 @@ end subroutine EZspline_derivative3
 
 subroutine EZspline_derivative3_array(spline_o, i1, i2, i3, &
      k1, k2, k3, p1, p2, p3, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -718,7 +718,7 @@ end subroutine EZspline_derivative3_array
 
 subroutine EZspline_derivative3_cloud(spline_o, i1, i2, i3, &
      k, p1, p2, p3, f, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o

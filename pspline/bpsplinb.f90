@@ -7,7 +7,7 @@
 subroutine bpsplinb(x,inx,th,inth,fspl,inf3, &
      ibcxmin,bcxmin,ibcxmax,bcxmax, &
      wk,nwk,ilinx,ilinth,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   implicit none
   integer inx,inth,inf3,nwk

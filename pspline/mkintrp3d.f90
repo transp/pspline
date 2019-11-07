@@ -4,7 +4,7 @@ subroutine mkintrp3d(x,nx,y,ny,z,nz,jspline, &
      ibcymin,bcymin,ibcymax,bcymax, &
      ibczmin,bczmin,ibczmax,bczmax, &
      ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  setup a tricubic spline, or tricubic Hermite, or hybrid linear/zonal 2d or
   !  1d with 1d or 2d cubic or Hermite spline interpolation

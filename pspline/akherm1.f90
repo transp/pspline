@@ -1,5 +1,5 @@
 subroutine akherm1(x,nx,fherm,ilinx,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  create a data set for Hermite interpolation, based on Akima's method
   !  [Hiroshi Akima, Communications of the ACM, Jan 1974, Vol. 17 No. 1]
@@ -33,7 +33,7 @@ subroutine akherm1(x,nx,fherm,ilinx,ier)
 end subroutine akherm1
 !----------------------------
 subroutine akherm1p(x,nx,fherm,ilinx,ipx,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  Akima subroutine with boundary condition option:
   !
@@ -182,7 +182,7 @@ subroutine akherm1p(x,nx,fherm,ilinx,ipx,ier)
 end subroutine akherm1p
 !--------------------------------------
 subroutine akherm0(cxmm,cxm,cxp,cxpp,wx,slp)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  basic akima formula for 1st derivative at pt p:
   !

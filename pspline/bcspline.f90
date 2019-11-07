@@ -24,7 +24,7 @@ subroutine bcspline(x,inx,th,inth,fspl,inf3, &
      ibcxmin,bcxmin,ibcxmax,bcxmax, &
      ibcthmin,bcthmin,ibcthmax,bcthmax, &
      wk,nwk,ilinx,ilinth,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

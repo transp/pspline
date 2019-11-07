@@ -2,7 +2,7 @@
 ! map point into (xmin, xmax) cell when boundary conditions are periodic.
 
 subroutine EZspline_modulo1(spline_o, p1, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -17,7 +17,7 @@ subroutine EZspline_modulo1(spline_o, p1, ier)
 end subroutine EZspline_modulo1
 
 subroutine EZspline_modulo_array1(spline_o, k1, p1, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -34,7 +34,7 @@ end subroutine EZspline_modulo_array1
 
 
 subroutine EZspline_modulo2(spline_o, p1, p2, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -53,7 +53,7 @@ subroutine EZspline_modulo2(spline_o, p1, p2, ier)
 end subroutine EZspline_modulo2
 
 subroutine EZspline_modulo_array2(spline_o, k1, k2, p1, p2, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -73,7 +73,7 @@ subroutine EZspline_modulo_array2(spline_o, k1, k2, p1, p2, ier)
 end subroutine EZspline_modulo_array2
 
 subroutine EZspline_modulo_cloud2(spline_o, k, p1, p2, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -94,7 +94,7 @@ end subroutine EZspline_modulo_cloud2
 
 
 subroutine EZspline_modulo3(spline_o, p1, p2, p3, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -117,7 +117,7 @@ subroutine EZspline_modulo3(spline_o, p1, p2, p3, ier)
 end subroutine EZspline_modulo3
 
 subroutine EZspline_modulo_array3(spline_o, k1, k2, k3, p1, p2, p3, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o
@@ -141,7 +141,7 @@ subroutine EZspline_modulo_array3(spline_o, k1, k2, k3, p1, p2, p3, ier)
 end subroutine EZspline_modulo_array3
 
 subroutine EZspline_modulo_cloud3(spline_o, k, p1, p2, p3, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o

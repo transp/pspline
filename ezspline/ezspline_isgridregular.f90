@@ -1,5 +1,5 @@
 subroutine EZspline_isGridRegular1(spline_o, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_type
   use EZspline_obj
   implicit none
@@ -20,7 +20,7 @@ subroutine EZspline_isGridRegular1(spline_o, ier)
 end subroutine EZspline_isGridRegular1
 
 subroutine EZspline_isGridRegular2(spline_o, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) :: spline_o
@@ -48,7 +48,7 @@ end subroutine EZspline_isGridRegular2
 
 
 subroutine EZspline_isGridRegular3(spline_o, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) :: spline_o

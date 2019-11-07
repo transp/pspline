@@ -1,7 +1,7 @@
 subroutine bcspvec(ict,ivec,xvec,yvec,ivd,fval, &
      nx,xpkg,ny,ypkg,fspl,inf3, &
      iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  vectorized spline evaluation routine -- 2d spline
   !  1.  call vectorized zone lookup routine

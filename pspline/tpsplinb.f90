@@ -7,7 +7,7 @@
 subroutine tpsplinb(x,inx,th,inth,ph,inph,fspl,inf4,inf5, &
      ibcxmin,bcxmin,ibcxmax,bcxmax,inb1, &
      wk,nwk,ilinx,ilinth,ilinph,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   implicit none
   integer inx,inth,inph,inf4,inf5,nwk,inb1

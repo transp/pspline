@@ -9,7 +9,7 @@
 !	BY R.M. WIELAND FOR SPECIAL CASES ... SEE COMMENTS
 
 subroutine spline (N, X, Y, B, C, D)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !============
   implicit none
   integer ip1,ii

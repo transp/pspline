@@ -4,7 +4,7 @@ subroutine gridintrp3d( &
      nx,xpkg,ny,ypkg,nz,zpkg, &
      jspline,fspl,icoeff,ixdim,iydim,izdim, &
      iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  regrid a spline function f defined vs. x,y,z as in xpkg, etc.
   !  to a new grid, given by x_newgrid, y_newgrid, z_newgrid

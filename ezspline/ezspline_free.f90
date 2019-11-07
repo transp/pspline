@@ -1,5 +1,5 @@
 subroutine EZspline_free1(spline_o, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline1) spline_o
@@ -24,7 +24,7 @@ end subroutine EZspline_free1
 
 
 subroutine EZspline_free2(spline_o, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline2) spline_o
@@ -56,7 +56,7 @@ end subroutine EZspline_free2
 
 
 subroutine EZspline_free3(spline_o, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   implicit none
   type(EZspline3) spline_o

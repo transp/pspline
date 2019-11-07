@@ -1,7 +1,7 @@
 subroutine tcspvec(ict,ivec,xvec,yvec,zvec,ivd,fval, &
      nx,xpkg,ny,ypkg,nz,zpkg,fspl,inf4,inf5, &
      iwarn,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  vectorized spline evaluation routine -- 3d spline
   !  1.  call vectorized zone lookup routine

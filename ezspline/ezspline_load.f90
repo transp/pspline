@@ -15,7 +15,7 @@
 !  are recalculated.
 
 subroutine EZspline_load1(spline_o, filename, ier, spl_name)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZcdf
   implicit none
@@ -145,7 +145,7 @@ end subroutine EZspline_load1
 
 
 subroutine EZspline_load2(spline_o, filename, ier, spl_name)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZcdf
   implicit none
@@ -299,7 +299,7 @@ end subroutine EZspline_load2
 
 
 subroutine EZspline_load3(spline_o, filename, ier, spl_name)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj
   use EZcdf
   implicit none

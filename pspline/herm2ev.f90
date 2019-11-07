@@ -1,6 +1,6 @@
 subroutine herm2ev(xget,yget,x,nx,y,ny,ilinx,iliny, &
      f,inf2,ict,fval,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  evaluate a 2d cubic Hermite interpolant on a rectilinear
   !  grid -- this is C1 in both directions.
@@ -103,7 +103,7 @@ end subroutine herm2ev
 !
 subroutine herm2xy(xget,yget,x,nx,y,ny,ilinx,iliny, &
      i,j,xparam,yparam,hx,hxi,hy,hyi,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  input of herm2xy
   !  ================
@@ -259,7 +259,7 @@ end subroutine herm2xy
 subroutine herm2fcn(ict,ivec,ivecd, &
      fval,ii,jj,xparam,yparam,hx,hxi,hy,hyi, &
      fin,inf2,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none
@@ -468,7 +468,7 @@ end subroutine herm2fcn
 subroutine herm2fcnx(ict,ivec,ivecd, &
      fval,ii,jj,xparam,yparam,hx,hxi,hy,hyi, &
      fin,inf2,ny)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !============
   implicit none

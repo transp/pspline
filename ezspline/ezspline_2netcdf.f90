@@ -1,7 +1,7 @@
 #ifdef _EZCDF
 
 subroutine EZspline_2NetCDF_array3(n1, n2, n3, x1, x2, x3, f, filename, ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   use EZspline_obj   
   use EZcdf
   implicit none

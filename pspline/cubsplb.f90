@@ -1,5 +1,5 @@
 subroutine cubsplb ( tau, c, n, ibcbeg, ibcend )
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  from  * a practical guide to splines *  by c. de boor
   !     ************************  input  ***************************

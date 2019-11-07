@@ -3,7 +3,7 @@ subroutine mktricub(x,nx,y,ny,z,nz,f,nf2,nf3, &
      ibcymin,bcymin,ibcymax,bcymax,inb1y, &
      ibczmin,bczmin,ibczmax,bczmax,inb1z, &
      ilinx,iliny,ilinz,ier)
-  use precision_mod, only: fp
+  use psp_precision_mod, only: fp
   !
   !  setup a tricubic spline; store coefficients in compact form
   !  (as per suggestion of L. Zakharov, PPPL, Feb. 1999)
