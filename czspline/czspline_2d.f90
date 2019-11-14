@@ -155,7 +155,7 @@ contains
     return
   end subroutine czspline_free2
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   ! save to file
   subroutine czspline_save2(cname, ier) bind(C)
     use ezspline

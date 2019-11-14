@@ -1,5 +1,5 @@
 module purge
-module load git/2.21.0
+module load git
 
 # Specify compiler (GCC, ICC, PGC):
 export COMPILER=ICC
@@ -18,14 +18,10 @@ module load hdf/4.2.14
 module load hdf5-serial/1.10.5
 module load netcdf-c/4.6.3
 module load netcdf-fortran/4.4.5
-export NETCDFLIB=$NETCDF_FORTRAN_HOME
-export NETCDFINC=$NETCDF_FORTRAN_HOME
 
-# You need to set this if you require NetCDF support:
-export EZCDF_HOME=
-if [ ! -z "$EZCDF_HOME" ]; then
-   export EZCDF_FLAGS=" -D_EZCDF"
-   export L_EZCDF=" -L$EZCDF_HOME/lib -lezcdf -L$NETCDFLIB/lib -lnetcdff"
-   export I_EZCDF=" -I$EZCDF_HOME/include -I$NETCDFINC/include"
-   export LD_LIBRARY_PATH=$EZCDF_HOME/lib:$LD_LIBRARY_PATH
+if [ ! -z "$NETCDF_FORTRAN_HOME" ]; then
+   export NETCDF_FLAGS=" -D_NETCDF"
+   export L_NETCDF=" -L$NETCDF_FORTRAN_HOME/lib -lnetcdff"
+   export I_NETCDF=" -I$NETCDF_FORTRAN_HOME/include"
+#  export LD_LIBRARY_PATH=$EZCDF_HOME/lib:$LD_LIBRARY_PATH
 fi

@@ -77,7 +77,7 @@ void test1d() {
     error_array += std::abs(g[i] - y[i]*y[i]*y[i]);
   error_array /= double(m);
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   // save to file
   char fname[10] = "test1d.nc";
   czspline_save1(fname, &ier);
@@ -88,10 +88,11 @@ void test1d() {
   czspline_free1(&ier);
   assert(ier == 0);
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   // load from file
   czspline_load1(fname, &ier);
   assert(ier == 0);
+
   czspline_free1(&ier);
   assert(ier == 0);
 #endif
@@ -200,19 +201,18 @@ void test2d() {
   }
   error_array /= double(m1 * m2);
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   // save to file
   char fname[10] = "test2d.nc";
   czspline_save2(fname, &ier);
   assert(ier == 0);
-
 #endif
 
   // clean up
   czspline_free2(&ier);
   assert(ier == 0);
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   // load from file
   czspline_load2(fname, &ier);
   assert(ier == 0);
@@ -361,7 +361,7 @@ void test3d() {
   }
   error_array /= double(m1 * m2 * m3);
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   // save to file
   char fname[10] = "test3d.nc";
   czspline_save3(fname, &ier);
@@ -372,7 +372,7 @@ void test3d() {
   czspline_free3(&ier);
   assert(ier == 0);
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   // load from file
   czspline_load3(fname, &ier);
   assert(ier == 0);

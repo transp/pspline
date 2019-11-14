@@ -10,45 +10,37 @@
  derivative imposed are tested, and so are interpolations
  performed on a set of isolated points, on a cloud of points
  and on a grid array of points (grid).
-  
- If you have MATLAB installed on your system, you can view
- the interpolation results saved in the netCDF files *.nc
- provided you also have access to MEXCDF, a netCDF to MATLAB
- interface package freely available at
- http://crusty.er.usgs.gov/~cdenham/MexCDF/nc4ml5.html
- To run the MATLAB script ezspline_test.m, simply type
- "ezspline_test" at the matlab prompt.
  
  > 1-D splines
  
  >> not-a-knot boundary conditions
- grid size  11
+ grid size           11
   point interpolation (x, f, f-exact, error)
   0.000000  0.000000  0.000000 ERROR=>  0.00E+00
   1.570796  0.999740  1.000000 ERROR=> -0.26E-03
-  6.283185  0.000000  0.000000 ERROR=>  0.00E+00
-  cloud interpolation =>"spline1_not.nc" & "spline1_notx.nc" (exact)
+  6.283185 -0.000000 -0.000000 ERROR=>  0.00E+00
+  cloud interpolation =>"spline1_not_.nc" & "spline1_notx.nc" (exact)
  >> periodic boundary conditions
- grid size  11
+ grid size           11
   point interpolation (x, f, f-exact, error)
   0.000000  0.000000  0.000000 ERROR=>  0.00E+00
   1.570796  0.999553  1.000000 ERROR=> -0.45E-03
-  6.283185  0.000000  0.000000 ERROR=>  0.00E+00
-  cloud interpolation => "spline1_per.nc" & "spline1_perx.nc" (exact)
+  6.283185 -0.000000 -0.000000 ERROR=>  0.00E+00
+  cloud interpolation => "spline1_per_.nc" & "spline1_perx.nc" (exact)
  >> 1st derivative boundary conditions
- grid size  11
+ grid size           11
   point interpolation (x, f, f-exact, error)
   0.000000  0.000000  0.000000 ERROR=>  0.00E+00
   1.570796  0.999559  1.000000 ERROR=> -0.44E-03
-  6.283185  0.000000  0.000000 ERROR=>  0.00E+00
+  6.283185 -0.000000 -0.000000 ERROR=>  0.00E+00
   cloud interpolation => "spline1_1st.nc" & "spline_1stx.nc" (exact)
  >> 2nd derivative boundary conditions
- grid size  11
+ grid size           11
   point interpolation (x, f, f-exact, error)
   0.000000  0.000000  0.000000 ERROR=>  0.00E+00
   1.570796  0.999553  1.000000 ERROR=> -0.45E-03
-  6.283185  0.000000  0.000000 ERROR=>  0.00E+00
-  cloud interpolation => "spline1_2nd.nc" & "spline1_2nd.nc" (exact)
+  6.283185 -0.000000 -0.000000 ERROR=>  0.00E+00
+  cloud interpolation => "spline1_2nd.nc" & "spline1_2ndx.nc" (exact)
   point derivative (x, fx, fx-exact, error)
   2.805149 -0.944383 -0.943935 ERROR=> -0.45E-03
   point derivative (x, fxx, fxx-exact, error)
@@ -64,7 +56,7 @@
  sizes  11* 11=      121
   point interpolation (x, y, f, f-exact, error)
   2.677615  4.603673  1.031899  1.034118 ERROR=> -0.22E-02
-  cloud interpolation => "spline2_not_c.nc" & "spline2_not_cx.nc" (exact)
+  cloud interpolation => "spline2_not_c_.nc" & "spline2_not_cx.nc" (exact)
   array interpolation  => "spline2_not_a.nc" & "spline2_not_ax.nc" (exact)
   point derivative (x, y, fx, fx-exact, error)
   2.677615  4.603673 -0.201755 -0.191732 ERROR=> -0.10E-01
@@ -83,14 +75,14 @@
  sizes  11* 11=      121
   point interpolation (x, y, f, f-exact, error)
   2.677615  4.603673  1.031856  1.034118 ERROR=> -0.23E-02
-  cloud interpolation => "spline2_per_c.nc" & "spline2_per_cx.nc"
-  array interpolation "spline2_per_a.nc" & "spline2_per_ax.nc"
+  cloud interpolation => "spline2_per_c_.nc" & "spline2_per_cx.nc"
+  array interpolation "spline2_per_a_.nc" & "spline2_per_ax.nc"
  >> mixed boundary conditions
  sizes  11* 11=      121
   point interpolation (x, y, f, f-exact, error)
   2.677615  4.603673  1.031861  1.034118 ERROR=> -0.23E-02
-  cloud interpolation => "spline2_mix_c.nc" & "spline2_mix_cx.nc"
-  array interpolation "spline2_mix_a.nc" & "spline2_mix_ax.nc"
+  cloud interpolation => "spline2_mix_c_.nc" & "spline2_mix_cx.nc"
+  array interpolation "spline2_mix_a_.nc" & "spline2_mix_ax.nc"
  save spline object in file "spline2.nc"
  
  > 3-D splines
@@ -109,26 +101,26 @@
  gradient (x, y, z, fx, fy, fz)
   2.677615  4.603673  0.202576 -0.200203 -1.624992 -1.577655
   2.677615  4.603673  0.202576 -0.200981 -1.628012 -1.577469
-  cloud interpolation => "spline3_mox__c.nc" & "spline3_mox_cx.nc"
-  array interpolation => "spline3_mox__a.nc" & "spline3_mox_ax.nc"
+  cloud interpolation => "spline3_mox_c_.nc" & "spline3_mox_cx.nc"
+  array interpolation => "spline3_mox_a_.nc" & "spline3_mox_ax.nc"
  
  > 1-D Akima Hermite
  
- grid size  11
+ grid size           11
   point interpolation (x, f, f-exact, error)
   0.000000  0.000000  0.000000 ERROR=>  0.00E+00
   1.570796  1.007185  1.000000 ERROR=>  0.72E-02
-  6.283185  0.000000  0.000000 ERROR=>  0.00E+00
+  6.283185 -0.000000 -0.000000 ERROR=>  0.00E+00
   cloud interpolation =>"akima1__not.nc"
   gradient  (x, fx)
   6.283185  1.114152
   6.283185  1.000000
  >> periodic boundary conditions
- grid size  11
+ grid size           11
   point interpolation (x, f, f-exact, error)
   0.000000  0.000000  0.000000 ERROR=>  0.00E+00
   1.570796  1.007185  1.000000 ERROR=>  0.72E-02
-  6.283185  0.000000  0.000000 ERROR=>  0.00E+00
+  6.283185 -0.000000 -0.000000 ERROR=>  0.00E+00
   gradient  (x, fx)
   6.283185  0.935489
   6.283185  1.000000
@@ -172,11 +164,11 @@
  
  > 1-D Piecewise Linear
  
- grid size  11
+ grid size           11
   point interpolation (x, f, f-exact, error)
   0.000000  0.000000  0.000000 ERROR=>  0.00E+00
   1.570796  0.951057  1.000000 ERROR=> -0.49E-01
-  6.283185  0.000000  0.000000 ERROR=>  0.00E+00
+  6.283185 -0.000000 -0.000000 ERROR=>  0.00E+00
   cloud interpolation =>"pclin1_.nc" & "pclin1x.nc" (exact)
  
  > 2-D Piecewise Linear
@@ -203,4 +195,4 @@
   2.677615  4.603673  0.202576  1.869932  1.856409 ERROR=>  0.14E-01
   cloud interpolation => "pclin3_c.nc" & "pclin3_cx.nc"
   array interpolation => "pclin3_a.nc" & "pclin3_ax.nc"
- *successful end of EZspline test drive*
+  *successful end of EZspline test drive*
