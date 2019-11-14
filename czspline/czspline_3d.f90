@@ -170,7 +170,7 @@ contains
     return
   end subroutine czspline_free3
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   ! save to file
   subroutine czspline_save3(cname, ier) bind(C)
     use ezspline

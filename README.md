@@ -33,8 +33,6 @@ Test programs are included in the source directories.
 
 See the sample configuration used at PPPL: pppl-bashrc
 
-If you want to use the NETCDF I/O capability with EZspline then you must have the EZCDF library installed. It is also on github: https://github.com/transp/ezcdf. See the PPPL configuration file for how to include EZCDF with PSPLINE.
-
 
 ## Build
 

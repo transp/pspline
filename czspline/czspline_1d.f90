@@ -133,7 +133,7 @@ contains
     return
   end subroutine czspline_free1
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   subroutine czspline_save1(cname, ier) bind(C)
     use ezspline
     implicit none

@@ -1,230 +1,238 @@
-#ifdef _EZCDF
+#ifdef _NETCDF
 
 subroutine EZspline_2NetCDF_array3(n1, n2, n3, x1, x2, x3, f, filename, ier)
   use psp_precision_mod, only: fp
   use EZspline_obj   
-  use EZcdf
+  use netcdf
   implicit none
-  integer, intent(in) :: n1, n2, n3
-  real(fp), intent(in) :: x1(:), x2(:), x3(:), f(:, :, :)
-  character(len=*), intent(in) :: filename
-  integer, intent(out) :: ier
-  integer ifail
+  integer,                    intent(in)  :: n1, n2, n3
+  real(fp), dimension(:),     intent(in)  :: x1, x2, x3
+  real(fp), dimension(:,:,:), intent(in)  :: f
+  character(len=*),           intent(in)  :: filename
+  integer,                    intent(out) :: ier
 
-  integer dimlens(3), ncid
+  integer, dimension(3) :: dimid_n
+  integer               :: varid_x1, varid_x2, varid_x3
+  integer               :: varid_f
+  integer               :: ncid
 
-  ier = 0
-  call cdfOpn(ncid, filename, 'w')
-  if(ncid==0) then
-     ier = 34
-     return
-  end if
-  dimlens = (/ 1, 1, 1 /)
-  call cdfDefVar(ncid, 'n1', dimlens, 'INT', ifail)
-  call cdfDefVar(ncid, 'n2', dimlens, 'INT', ifail)
-  call cdfDefVar(ncid, 'n3', dimlens, 'INT', ifail)
-  dimlens = (/ n1, 1, 1 /)
-  call cdfDefVar(ncid, 'x1', dimlens, 'R8', ifail)
-  dimlens = (/ n2, 1, 1 /)
-  call cdfDefVar(ncid, 'x2', dimlens, 'R8', ifail)
-  dimlens = (/ n3, 1, 1 /)
-  call cdfDefVar(ncid, 'x3', dimlens, 'R8', ifail)
-  dimlens = (/ n1, n2, n3 /)
-  call cdfDefVar(ncid, 'f', dimlens, 'R8', ifail)
-  if(ifail/=0) then
-     ier = 38 
-     return
-  end if
-  call cdfPutVar(ncid, 'n1', n1, ifail)
-  call cdfPutVar(ncid, 'n2', n2, ifail)
-  call cdfPutVar(ncid, 'n3', n3, ifail)
-  call cdfPutVar(ncid, 'x1', x1, ifail)
-  call cdfPutVar(ncid, 'x2', x2, ifail)
-  call cdfPutVar(ncid, 'x3', x3, ifail)
-  call cdfPutVar(ncid, 'f', f, ifail)
-  if(ifail/=0) then
-     ier = 35 
-     return
+  ier = nf90_create(filename,IOR(NF90_CLOBBER,NF90_64BIT_OFFSET),ncid)
+  if(ier.ne.NF90_NOERR .or. ncid.eq.0) then
+    ier = 33
+    return
   end if
 
-  call cdfCls(ncid)
+  ier = nf90_def_dim(ncid,'n1',n1,dimid_n(1))
+  if(ier.eq.NF90_NOERR) ier = nf90_def_dim(ncid,'n2',n2,dimid_n(2))
+  if(ier.eq.NF90_NOERR) ier = nf90_def_dim(ncid,'n3',n3,dimid_n(3))
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x1',NF90_DOUBLE,dimid_n(1),varid_x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x2',NF90_DOUBLE,dimid_n(2),varid_x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x3',NF90_DOUBLE,dimid_n(3),varid_x3)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'f',NF90_DOUBLE,dimid_n,varid_f)
+  if(ier.eq.NF90_NOERR) ier = nf90_enddef(ncid)
+  if(ier.ne.NF90_NOERR) then
+    ier = 34
+    return
+  end if
 
+  ier = nf90_put_var(ncid,varid_x1,x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_x2,x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_x3,x3)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_f,f)
+  if(ier.ne.NF90_NOERR) then
+    ier = 35
+    return
+  end if
+
+  ier = nf90_close(ncid)
+  if(ier.ne.NF90_NOERR) ier = 36
+
+  return
 end subroutine EZspline_2NetCDF_array3
 
+
 subroutine EZspline_2NetCDF_array2(n1, n2, x1, x2, f, filename, ier)
+  use psp_precision_mod, only: fp
   use EZspline_obj   
-  use EZcdf
+  use netcdf
   implicit none
-  integer, intent(in) :: n1, n2
-  real(fp), intent(in) :: x1(:), x2(:), f(:,:)
-  character(len=*), intent(in) :: filename
-  integer, intent(out) :: ier
-  integer ifail
+  integer,                  intent(in)  :: n1, n2
+  real(fp), dimension(:),   intent(in)  :: x1, x2
+  real(fp), dimension(:,:), intent(in)  :: f
+  character(len=*),         intent(in)  :: filename
+  integer,                  intent(out) :: ier
 
-  integer dimlens(3), ncid
+  integer, dimension(2) :: dimid_n
+  integer               :: varid_x1, varid_x2
+  integer               :: varid_f
+  integer               :: ncid
 
-  ier = 0
-  call cdfOpn(ncid, filename, 'w')
-  if(ncid==0) then
-     ier = 34
-     return
-  end if
-  dimlens = (/ 1, 1, 1 /)
-  call cdfDefVar(ncid, 'n1', dimlens, 'INT', ifail)
-  call cdfDefVar(ncid, 'n2', dimlens, 'INT', ifail)
-  dimlens = (/ n1, 1, 1 /)
-  call cdfDefVar(ncid, 'x1', dimlens, 'R8', ifail)
-  dimlens = (/ n2, 1, 1 /)
-  call cdfDefVar(ncid, 'x2', dimlens, 'R8', ifail)
-  dimlens = (/ n1, n2, 1 /)
-  call cdfDefVar(ncid, 'f', dimlens, 'R8', ifail)
-  if(ifail/=0) then
-     ier = 38 
-     return
+  ier = nf90_create(filename,IOR(NF90_CLOBBER,NF90_64BIT_OFFSET),ncid)
+  if(ier.ne.NF90_NOERR .or. ncid.eq.0) then
+    ier = 33
+    return
   end if
 
-  call cdfPutVar(ncid, 'n1', n1, ifail)
-  call cdfPutVar(ncid, 'n2', n2, ifail)
-  call cdfPutVar(ncid, 'x1', x1, ifail)
-  call cdfPutVar(ncid, 'x2', x2, ifail)
-  call cdfPutVar(ncid, 'f', f, ifail)
-  if(ifail/=0) then
-     ier = 35 
-     return
+  ier = nf90_def_dim(ncid,'n1',n1,dimid_n(1))
+  if(ier.eq.NF90_NOERR) ier = nf90_def_dim(ncid,'n2',n2,dimid_n(2))
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x1',NF90_DOUBLE,dimid_n(1),varid_x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x2',NF90_DOUBLE,dimid_n(2),varid_x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'f',NF90_DOUBLE,dimid_n,varid_f)
+  if(ier.eq.NF90_NOERR) ier = nf90_enddef(ncid)
+  if(ier.ne.NF90_NOERR) then
+    ier = 34
+    return
   end if
 
-  call cdfCls(ncid)
+  ier = nf90_put_var(ncid,varid_x1,x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_x2,x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_f,f)
+  if(ier.ne.NF90_NOERR) then
+    ier = 35
+    return
+  end if
 
+  ier = nf90_close(ncid)
+  if(ier.ne.NF90_NOERR) ier = 36
+
+  return
 end subroutine EZspline_2NetCDF_array2
 
-subroutine EZspline_2NetCDF1(n1, x1, f, filename, ier)
+
+subroutine EZspline_2NetCDF_array1(n1, x1, f, filename, ier)
+  use psp_precision_mod, only: fp
   use EZspline_obj   
-  use EZcdf
+  use netcdf
   implicit none
-  integer, intent(in) :: n1
-  real(fp), intent(in) :: x1(:), f(:)
-  character(len=*), intent(in) :: filename
-  integer, intent(out) :: ier
-  integer ifail
+  integer,                intent(in)  :: n1
+  real(fp), dimension(:), intent(in)  :: x1
+  real(fp), dimension(:), intent(in)  :: f
+  character(len=*),       intent(in)  :: filename
+  integer,                intent(out) :: ier
 
-  integer dimlens(3), ncid
+  integer :: dimid_n1
+  integer :: varid_x1
+  integer :: varid_f
+  integer :: ncid
 
-  ier = 0
-  call cdfOpn(ncid, filename, 'w')
-  if(ncid==0) then
-     ier = 34
-     return
-  end if
-  dimlens = (/ 1, 1, 1 /)
-  call cdfDefVar(ncid, 'n1', dimlens, 'INT', ifail)
-  dimlens = (/ n1, 1, 1 /)
-  call cdfDefVar(ncid, 'x1', dimlens, 'R8', ifail)
-  dimlens = (/ n1, 1, 1 /)
-  call cdfDefVar(ncid, 'f', dimlens, 'R8', ifail)
-  if(ifail/=0) then
-     ier = 38 
-     return
+  ier = nf90_create(filename,IOR(NF90_CLOBBER,NF90_64BIT_OFFSET),ncid)
+  if(ier.ne.NF90_NOERR .or. ncid.eq.0) then
+    ier = 33
+    return
   end if
 
-  call cdfPutVar(ncid, 'n1', n1, ifail)
-  call cdfPutVar(ncid, 'x1', x1, ifail)
-  call cdfPutVar(ncid, 'f', f, ifail)
-  if(ifail/=0) then
-     ier = 35 
-     return
+  ier = nf90_def_dim(ncid,'n1',n1,dimid_n1)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x1',NF90_DOUBLE,dimid_n1,varid_x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'f',NF90_DOUBLE,dimid_n1,varid_f)
+  if(ier.eq.NF90_NOERR) ier = nf90_enddef(ncid)
+  if(ier.ne.NF90_NOERR) then
+    ier = 34
+    return
   end if
 
-  call cdfCls(ncid)
-end subroutine EZspline_2NetCDF1
+  ier = nf90_put_var(ncid,varid_x1,x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_f,f)
+  if(ier.ne.NF90_NOERR) then
+    ier = 35
+    return
+  end if
+
+  ier = nf90_close(ncid)
+  if(ier.ne.NF90_NOERR) ier = 36
+
+  return
+end subroutine EZspline_2NetCDF_array1
+
 
 subroutine EZspline_2NetCDF_cloud3(n, x1, x2, x3, f, filename, ier)
+  use psp_precision_mod, only: fp
   use EZspline_obj   
-  use EZcdf
+  use netcdf
   implicit none
-  integer, intent(in) :: n
-  real(fp), intent(in) :: x1(:), x2(:), x3(:), f(:)
-  character(len=*), intent(in) :: filename
-  integer, intent(out) :: ier
-  integer ifail
+  integer,                intent(in)  :: n
+  real(fp), dimension(:), intent(in)  :: x1, x2, x3, f
+  character(len=*),       intent(in)  :: filename
+  integer,                intent(out) :: ier
 
-  integer dimlens(3), ncid
+  integer :: dimid_n
+  integer :: varid_x1, varid_x2, varid_x3
+  integer :: varid_f
+  integer :: ncid
 
-  ier = 0
-  call cdfOpn(ncid, filename, 'w')
-  if(ncid==0) then
-     ier = 34
-     return
-  end if
-  dimlens = (/ 1, 1, 1 /)
-  call cdfDefVar(ncid, 'n', dimlens, 'INT', ifail)
-  dimlens = (/ n, 1, 1 /)
-  call cdfDefVar(ncid, 'x1', dimlens, 'R8', ifail)
-  dimlens = (/ n, 1, 1 /)
-  call cdfDefVar(ncid, 'x2', dimlens, 'R8', ifail)
-  dimlens = (/ n, 1, 1 /)
-  call cdfDefVar(ncid, 'x3', dimlens, 'R8', ifail)
-  dimlens = (/ n, 1, 1 /)
-  call cdfDefVar(ncid, 'f', dimlens, 'R8', ifail)
-  if(ifail/=0) then
-     ier = 38 
-     return
+  ier = nf90_create(filename,IOR(NF90_CLOBBER,NF90_64BIT_OFFSET),ncid)
+  if(ier.ne.NF90_NOERR .or. ncid.eq.0) then
+    ier = 33
+    return
   end if
 
-  call cdfPutVar(ncid, 'n', n, ifail)
-  call cdfPutVar(ncid, 'x1', x1, ifail)
-  call cdfPutVar(ncid, 'x2', x2, ifail)
-  call cdfPutVar(ncid, 'x3', x3, ifail)
-  call cdfPutVar(ncid, 'f', f, ifail)
-  if(ifail/=0) then
-     ier = 35 
-     return
+  ier = nf90_def_dim(ncid,'n',n,dimid_n)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x1',NF90_DOUBLE,dimid_n,varid_x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x2',NF90_DOUBLE,dimid_n,varid_x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x3',NF90_DOUBLE,dimid_n,varid_x3)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'f',NF90_DOUBLE,dimid_n,varid_f)
+  if(ier.eq.NF90_NOERR) ier = nf90_enddef(ncid)
+  if(ier.ne.NF90_NOERR) then
+    ier = 34
+    return
   end if
 
-  call cdfCls(ncid)
+  ier = nf90_put_var(ncid,varid_x1,x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_x2,x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_x3,x3)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_f,f)
+  if(ier.ne.NF90_NOERR) then
+    ier = 35
+    return
+  end if
 
+  ier = nf90_close(ncid)
+  if(ier.ne.NF90_NOERR) ier = 36
+
+  return
 end subroutine EZspline_2NetCDF_cloud3
 
 subroutine EZspline_2NetCDF_cloud2(n, x1, x2, f, filename, ier)
+  use psp_precision_mod, only: fp
   use EZspline_obj   
-  use EZcdf
+  use netcdf
   implicit none
-  integer, intent(in) :: n
-  real(fp), intent(in) :: x1(:), x2(:), f(:)
-  character(len=*), intent(in) :: filename
-  integer, intent(out) :: ier
-  integer ifail
+  integer,                intent(in)  :: n
+  real(fp), dimension(:), intent(in)  :: x1, x2
+  real(fp), dimension(:), intent(in)  :: f
+  character(len=*),       intent(in)  :: filename
+  integer,                intent(out) :: ier
 
-  integer dimlens(3), ncid
+  integer :: dimid_n
+  integer :: varid_x1, varid_x2
+  integer :: varid_f
+  integer :: ncid
 
-  ier = 0
-  call cdfOpn(ncid, filename, 'w')
-  if(ncid==0) then
-     ier = 34
-     return
-  end if
-  dimlens = (/ 1, 1, 1 /)
-  call cdfDefVar(ncid, 'n', dimlens, 'INT', ifail)
-  dimlens = (/ n, 1, 1 /)
-  call cdfDefVar(ncid, 'x1', dimlens, 'R8', ifail)
-  dimlens = (/ n, 1, 1 /)
-  call cdfDefVar(ncid, 'x2', dimlens, 'R8', ifail)
-  dimlens = (/ n, 1, 1 /)
-  call cdfDefVar(ncid, 'f', dimlens, 'R8', ifail)
-  if(ifail/=0) then
-     ier = 38 
-     return
+  ier = nf90_create(filename,IOR(NF90_CLOBBER,NF90_64BIT_OFFSET),ncid)
+  if(ier.ne.NF90_NOERR .or. ncid.eq.0) then
+    ier = 33
+    return
   end if
 
-  call cdfPutVar(ncid, 'n', n, ifail)
-  call cdfPutVar(ncid, 'x1', x1, ifail)
-  call cdfPutVar(ncid, 'x2', x2, ifail)
-  call cdfPutVar(ncid, 'f', f, ifail)
-  if(ifail/=0) then
-     ier = 35 
-     return
+  ier = nf90_def_dim(ncid,'n',n,dimid_n)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x1',NF90_DOUBLE,dimid_n,varid_x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'x2',NF90_DOUBLE,dimid_n,varid_x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_def_var(ncid,'f',NF90_DOUBLE,dimid_n,varid_f)
+  if(ier.eq.NF90_NOERR) ier = nf90_enddef(ncid)
+  if(ier.ne.NF90_NOERR) then
+    ier = 34
+    return
   end if
 
-  call cdfCls(ncid)
+  ier = nf90_put_var(ncid,varid_x1,x1)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_x2,x2)
+  if(ier.eq.NF90_NOERR) ier = nf90_put_var(ncid,varid_f,f)
+  if(ier.ne.NF90_NOERR) then
+    ier = 35
+    return
+  end if
+
+  ier = nf90_close(ncid)
+  if(ier.ne.NF90_NOERR) ier = 36
 
   return
 end subroutine EZspline_2NetCDF_cloud2

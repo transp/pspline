@@ -1175,7 +1175,7 @@ module EZspline
 
   end interface
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   interface EZspline_save
     !
     ! Save spline/Akima Hermite/Linear object in netcdf file 'filename'. Use
@@ -1197,7 +1197,7 @@ module EZspline
     !
     subroutine EZspline_save3(spline_o,filename,ier,spl_name,fullsave)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       type(EZspline3) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
@@ -1208,7 +1208,7 @@ module EZspline
 
     subroutine EZspline_save2(spline_o,filename,ier,spl_name,fullsave)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       type(EZspline2) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
@@ -1219,7 +1219,7 @@ module EZspline
 
     subroutine EZspline_save1(spline_o,filename,ier,spl_name,fullsave)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       type(EZspline1), intent(in) :: spline_o
       character(len=*), intent(in) :: filename
       integer, intent(out) :: ier
@@ -1231,7 +1231,7 @@ module EZspline
   end interface
 #endif
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   interface EZspline_load
     !
     ! Load spline/Akima Hermite object from netcdf file 'filename'. Use
@@ -1248,7 +1248,7 @@ module EZspline
 
     subroutine EZspline_load3(spline_o, filename, ier, spl_name)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       type(EZspline3) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
@@ -1257,7 +1257,7 @@ module EZspline
 
     subroutine EZspline_load2(spline_o, filename, ier, spl_name)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       type(EZspline2) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
@@ -1266,7 +1266,7 @@ module EZspline
 
     subroutine EZspline_load1(spline_o, filename, ier, spl_name)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       type(EZspline1) :: spline_o
       character(len=*) :: filename
       integer, intent(out) :: ier
@@ -1352,7 +1352,7 @@ module EZspline
   ! EZspline object-less methods (first argument is NOT an EZspline1,2,3 type).
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-#ifdef _EZCDF
+#ifdef _NETCDF
   interface EZspline_2NetCDF
     !
     ! Save data in netCDF file 'filename'. To save an EZspline1,2,3 object use
@@ -1360,7 +1360,7 @@ module EZspline
     !
     subroutine EZspline_2NetCDF_array3(n1, n2, n3, x1, x2, x3, f, filename, ier)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       implicit none
       integer, intent(in) :: n1, n2, n3
       real(fp), intent(in) :: x1(:), x2(:), x3(:), f(:, :, :)
@@ -1370,7 +1370,7 @@ module EZspline
 
     subroutine EZspline_2NetCDF_array2(n1, n2, x1, x2, f, filename, ier)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       implicit none
       integer, intent(in) :: n1, n2
       real(fp), intent(in) ::  x1(:), x2(:), f(:,:)
@@ -1378,19 +1378,19 @@ module EZspline
       integer, intent(out) :: ier
     end subroutine EZspline_2NetCDF_array2
 
-    subroutine EZspline_2NetCDF1(n1, x1, f, filename, ier)
+    subroutine EZspline_2NetCDF_array1(n1, x1, f, filename, ier)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       implicit none
       integer, intent(in) :: n1
       real(fp), intent(in) :: x1(:), f(:)
       character(len=*), intent(in) :: filename
       integer, intent(out) :: ier
-    end subroutine EZspline_2NetCDF1
+    end subroutine EZspline_2NetCDF_array1
 
     subroutine EZspline_2NetCDF_cloud3(n, x1, x2, x3, f, filename, ier)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       implicit none
       integer, intent(in) :: n
       real(fp), intent(in) :: x1(:), x2(:), x3(:), f(:)
@@ -1400,7 +1400,7 @@ module EZspline
 
     subroutine EZspline_2NetCDF_cloud2(n, x1, x2, f, filename, ier)
       use EZspline_obj
-      use EZcdf
+      use netcdf
       implicit none
       integer, intent(in) :: n
       real(fp), intent(in) :: x1(:), x2(:), f(:)
