@@ -297,9 +297,9 @@ void test3d() {
   assert(ier == 0);
   
   // target axes
-  int m1 = 101;
-  int m2 = 102;
-  int m3 = 103;
+  int m1 = 51;
+  int m2 = 52;
+  int m3 = 53;
   double dy1 = 1.0 / double(m1 - 1);
   double dy2 = 2.0 * pi / double(m2 - 1);
   double dy3 = 2.0 * pi / double(m3 - 1);
