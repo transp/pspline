@@ -1,6 +1,7 @@
 # pspline
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/transp/pspline?include_prereleases)
+![](https://github.com/transp/pspline/workflows/PSPLINE%CI/badge.svg)
 
 ## About
 

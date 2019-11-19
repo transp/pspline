@@ -2,7 +2,7 @@ module purge
 module load git
 
 # Specify compiler (GCC, ICC, PGC):
-export COMPILER=ICC
+export COMPILER=GCC
 
 if [ $COMPILER = 'ICC' ]; then
     module load intel/2019.u3
@@ -23,5 +23,4 @@ if [ ! -z "$NETCDF_FORTRAN_HOME" ]; then
    export NETCDF_FLAGS=" -D_NETCDF"
    export L_NETCDF=" -L$NETCDF_FORTRAN_HOME/lib -lnetcdff"
    export I_NETCDF=" -I$NETCDF_FORTRAN_HOME/include"
-#  export LD_LIBRARY_PATH=$EZCDF_HOME/lib:$LD_LIBRARY_PATH
 fi
