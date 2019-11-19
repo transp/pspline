@@ -56,7 +56,7 @@ $(EXEEZS):
 	$(FC) $(FFLAGS) $(EZSDIR)/$@.f90 -o $@ -L$(SRCDIR) -lpspline $(FLIBS)
 
 $(EXECZS):
-	$(CXX) $(CXXFLAGS) $(CZSDIR)/$@.cc -o $@ -L$(SRCDIR) $(CXXLIBS) -lpspline $(FLIBS)
+	$(CXX) $(CXXFLAGS) $(CZSDIR)/$@.cc -o $@ -L$(SRCDIR) -lpspline $(CXXLIBS) $(FLIBS)
 
 install:
 	@test -d $(LIBDIR) || mkdir -p $(LIBDIR)

@@ -617,8 +617,10 @@ subroutine compare(slbl,x,nx,th,nth,f,fh,fl,ilinx,ilinth, &
   implicit none
   integer nth,ntest,nx,m,icycle,iherm,ier,ijk,iwarn,j,i
   !============
-  real(fp) :: fmin,fmax,fdif,fdifr,zdum,ztime1,ztime2,zth,zx,ff,fs
-  real(fp) :: zctime
+  real(fp) :: fmin,fmax,fdif,fdifr,zdum,zth,zx,ff,fs
+#ifdef _TIMER
+  real(fp) :: ztime1,ztime2,zctime
+#endif
   !============
   common/pspltest_io/ m
   !
@@ -670,33 +672,49 @@ subroutine compare(slbl,x,nx,th,nth,f,fh,fl,ilinx,ilinth, &
   call genxpkg(nth,th,thpkg,1,1,0,zdum,1,ier)
   !
   if(iherm.eq.0) then
+#ifdef _TIMER
      call cpu_time(ztime1)
+#endif
      do ijk=1,icycle
         call bcspgrid(xtest,ntest,thtest,ntest,wk,ntest, &
              nx,xpkg,nth,thpkg,f,nx,iwarn,ier)
      end do
+#ifdef _TIMER
      call cpu_time(ztime2)
+#endif
   else if(iherm.eq.1) then
+#ifdef _TIMER
      call cpu_time(ztime1)
+#endif
      do ijk=1,icycle
         call gridherm2(xtest,ntest,thtest,ntest,wk,ntest, &
              nx,xpkg,nth,thpkg,fh,nx,iwarn,ier)
      end do
+#ifdef _TIMER
      call cpu_time(ztime2)
+#endif
   else if(iherm.eq.2) then
+#ifdef _TIMER
      call cpu_time(ztime1)
+#endif
      do ijk=1,icycle
         call gridbicub(xtest,ntest,thtest,ntest,wk,ntest, &
              nx,xpkg,nth,thpkg,fh,nx,iwarn,ier)
      end do
+#ifdef _TIMER
      call cpu_time(ztime2)
+#endif
   else
+#ifdef _TIMER
      call cpu_time(ztime1)
+#endif
      do ijk=1,icycle
         call gridpc2(xtest,ntest,thtest,ntest,wk,ntest, &
              nx,xpkg,nth,thpkg,fl,nx,iwarn,ier)
      end do
+#ifdef _TIMER
      call cpu_time(ztime2)
+#endif
   end if
   !
   do j=1,ntest
@@ -738,14 +756,21 @@ subroutine compare(slbl,x,nx,th,nth,f,fh,fl,ilinx,ilinth, &
      end do
   end do
   !
+#ifdef _TIMER
   zctime=ztime2-ztime1
+#endif
   write(m,1000) slbl,nx,nth,fmin,fmax,fdif,fdifr
 1000 format(2x,a,' setup on ',i3,' x ',i3,' grid'/ &
        '   fmin=',1pe11.4,' fmax=',1pe11.4,' max(|diff|)=',1pe11.4/ &
        '     max(|diff|/f) = ',1pe11.4)
+#ifdef _TIMER
   write(m,1001) icycle,ntest,ntest,zctime
+#else
+  write(m,1002) icycle,ntest,ntest
+#endif
 1001 format(2x,i3,' x ',i3,' x ',i3,' evaluations, cpu = ', &
        1pe11.4,' (s)')
+1002 format(2x,i3,' x ',i3,' x ',i3,' evaluations')
   !
   return
 end subroutine compare
@@ -952,7 +977,9 @@ subroutine dotest3(x,fx,nx,th,fth,dfth,nth,ph,fph,dfph,nph, &
      end do
   end if
   !
+#ifdef _TIMER
   call cpu_time(ztime1)
+#endif
   call tcspline(x,nx,th,nth,ph,nph,f,nx,nth, &
        nbc,bcx1,nbc,bcx2,nth, &
        nbc,bcth1,nbc,bcth2,nx, &
@@ -962,11 +989,14 @@ subroutine dotest3(x,fx,nx,th,fth,dfth,nth,ph,fph,dfph,nph, &
      write(m,*) ' ?? error in pspltest:  dotest3(tcspline)'
      return
   end if
+#ifdef _TIMER
   call cpu_time(ztime2)
   write(m,7706) nx,ztime2-ztime1
-7706 format( &
-       ' ==> tcspline setup (nx=',i3,') cpu time (s):',1pe11.4, &
-       ' <=================== ')
+7706 format(' ==> tcspline setup (nx=',i3,') cpu time (s):',1pe11.4, ' <== ')
+#else
+  write(m,7706) nx
+7706 format(' ==> tcspline setup (nx=',i3,') <== ')
+#endif
   !
   if(max(nx,nth,nph).le.20) then
      do iph=1,nph
@@ -1064,7 +1094,9 @@ subroutine dotest3(x,fx,nx,th,fth,dfth,nth,ph,fph,dfph,nph, &
      end do
   end do
   !
+#ifdef _TIMER
   call cpu_time(ztime1)
+#endif
   call mktricub(x,nx,th,nth,ph,nph,fh,nx,nth, &
        nbc,bcx1,nbc,bcx2,nth, &
        nbc,bcth1,nbc,bcth2,nx, &
@@ -1074,11 +1106,14 @@ subroutine dotest3(x,fx,nx,th,fth,dfth,nth,ph,fph,dfph,nph, &
      write(m,*) ' ?? error in pspltest:  dotest3(mktricub)'
      return
   end if
+#ifdef _TIMER
   call cpu_time(ztime2)
   write(m,7707) nx,ztime2-ztime1
-7707 format( &
-       ' ==> mktricub setup (nx=',i3,') cpu time (s):',1pe11.4, &
-       ' <=================== ')
+7707 format(' ==> mktricub setup (nx=',i3,') cpu time (s):',1pe11.4, ' <== ')
+#else
+  write(m,7707) nx
+7707 format(' ==> mktricub setup (nx=',i3,') <== ')
+#endif
   !
   call compare3('mktricub', &
        x,nx,th,nth,ph,nph,f,fh,flin, &
@@ -1151,8 +1186,10 @@ subroutine compare3(slbl,x,nx,th,nth,ph,nph,f,fh,flin, &
   implicit none
   integer nth,nph,ntest,nx,m,iherm,ier,k,j,i,iwarn
   !============
-  real(fp) :: fmin,fmax,fdif,fdifr,zdum,ztime1,zph,zth,zx,ff,fs
-  real(fp) :: ztime2,zctime
+  real(fp) :: fmin,fmax,fdif,fdifr,zdum,zph,zth,zx,ff,fs
+#ifdef _TIMER
+  real(fp) :: ztime1,ztime2,zctime
+#endif
   !============
   common/pspltest_io/ m
   !
@@ -1198,7 +1235,9 @@ subroutine compare3(slbl,x,nx,th,nth,ph,nph,f,fh,flin, &
   call genxpkg(nth,th,thpkg,1,1,0,zdum,1,ier)
   call genxpkg(nph,ph,phpkg,1,1,0,zdum,1,ier)
   !
+#ifdef _TIMER
   call cpu_time(ztime1)
+#endif
   do k=1,ntest
      zph=phtest(k)
      do j=1,ntest
@@ -1265,17 +1304,23 @@ subroutine compare3(slbl,x,nx,th,nth,ph,nph,f,fh,flin, &
         end do
      end do
   end do
+#ifdef _TIMER
   call cpu_time(ztime2)
+#endif
   !
   write(m,1000) slbl,nx,nth,nph,fmin,fmax,fdif,fdifr
 1000 format(2x,a,' setup on ',i3,' x ',i3,' x ',i3,' grid'/ &
        '   fmin=',1pe11.4,' fmax=',1pe11.4,' max(|diff|)=',1pe11.4/ &
        '     max(|diff|/f) = ',1pe11.4)
   !
+#ifdef _TIMER
   zctime=ztime2-ztime1
   write(m,1001) ntest,ntest,ntest,zctime
-1001 format('  ',i3,' x ',i3,' x ',i3,' evaluations, cpu = ', &
-       1pe11.4,' (s)')
+#else
+  write(m,1002) ntest,ntest,ntest
+#endif
+1001 format('  ',i3,' x ',i3,' x ',i3,' evaluations, cpu = ',1pe11.4,' (s)')
+1002 format('  ',i3,' x ',i3,' x ',i3,' evaluations')
   !
   return
 end subroutine compare3

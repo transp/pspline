@@ -1,0 +1,34 @@
+name: PSPLINE CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: configure
+      run: |
+        sudo apt-get -y install gfortran
+        sudo apt-get -y install libnetcdf-dev libnetcdff-dev
+    - name: build
+      run: |
+        export COMPILER=GCC
+        export FC=gfortran
+        export CXX=g++
+        export NETCDF_FLAGS=" -D_NETCDF"
+        export L_NETCDF=" -L/usr/lib/x86_64-linux-gnu/lib -lnetcdff"
+        export I_NETCDF=" -I/usr/include"
+        make
+    - name: czspline_test
+      run: ./czspline_test > c.out && diff -w c.out czspline/czspline_test.output
+    - name: ezspline_test
+      run: ./ezspline_test > e.out && diff -w e.out ezspline/ezspline_test.ref
+    - name: lookup_test
+      run: ./lookup_test > l.out && diff -w l.out pspline/lookup_test.output
+    - name: pspltest
+      run: ./pspltest > p.out && diff -w p.out pspline/pspltest.output
+    - name: qk_pspline
+      run: ./qk_pspline > q.out && diff -w q.out ezspline/qk_pspline.output

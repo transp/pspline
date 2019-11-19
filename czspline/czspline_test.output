@@ -1,0 +1,18 @@
+
+czspline_test
+
+1D test interpolation errors
+point: 0
+cloud: 2.06878e-17
+array: 2.06878e-17
+
+2D test interpolation errors
+point: 3.67052e-05
+cloud: 7.41445e-05
+array: 2.6437e-05
+
+3D test interpolation errors
+point: 4.19759e-21
+cloud: 8.56308e-21
+array: 0.00602715
+
