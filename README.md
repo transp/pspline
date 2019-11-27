@@ -32,7 +32,10 @@ Test programs are included in the source directories.
 
 ## Configuration
 
-See the sample configuration used at PPPL: pppl-bashrc
+See the sample configuration files in the config directory:
+
+pppl-bashrc   - configuration file used at PPPL (modules based)
+sample-bashrc - basic example configuration file
 
 
 ## Build
